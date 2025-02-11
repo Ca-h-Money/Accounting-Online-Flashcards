@@ -5,9 +5,9 @@ Accounting Flashcards is a user-friendly flashcard application built for the Acc
 ## Table of Contents
 
 1. [About the Project](#about-the-project)
-2. Local Development
-3. Style Guide
-4. The Team
+2. [Local Development](#local-development-environment-setup)
+3. [Style Guide](#style-guide)
+4. [The Team](#the-team)
 
 ## About the Project
 
@@ -38,3 +38,25 @@ Setup Steps
 4. Run the project with `npm run dev`.
 
 Note: The ESLint extension must be installed in your IDE to get ESLint to work properly.
+
+## Style Guide
+
+This section is to ensure consistency when adding code to the project. ** TBD BY TEAM **
+
+### Project Structure
+
+- Folder Structure
+- Naming files/directories
+
+### Code Formatting
+
+- Documentation
+- Variable naming
+- Function naming
+
+## The Team
+
+- Everett Hanke
+- Garrett Ballreich
+- Matt Miss
+- Tien Han
