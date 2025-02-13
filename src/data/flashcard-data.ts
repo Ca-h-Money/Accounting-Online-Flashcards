@@ -10,7 +10,7 @@ const flashcardData: TFlashcardData = [
          * Flashcard Set 1: Types of Accounts
          * @property {string} category - The name of the flashcard category.
          * @property {string} description - A brief description of the flashcard category.
-         * @property {Array<Flashcard>} flashcards - An array of flashcards related to this category.
+         * @property {TFlashcard[]} flashcards - An array of flashcards related to this category.
          */
         category: "Types of Accounts",
         description: "What type of account is the account listed?",
