@@ -3,7 +3,7 @@
  * The back side contains one or more possible answers.
  * @typedef {Object} TFlashcard
  * @property {string} front - The front side of the flashcard (question).
- * @property {string[]} back - The back side(s) of the flashcard (answer(s)).
+ * @property {string[]} back - The back side of the flashcard (answer(s)).
  */
 export type TFlashcard = {
     front: string;
