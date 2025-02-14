@@ -40,31 +40,20 @@ const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) =
          * - Uses flexbox for centering.
          * - Currently relies on inline styles, which will be replaced by TailwindCSS.
          */
-        <div style={{ 
-            display: "flex", 
-            flexDirection: "column", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            textAlign: "center", 
-        }}>
+        <div className="flex flex-col items-center mt-10">
             {/* Displays flashcard set category and description */}
             <h1>{flashcardSet.category}</h1>
-            <p>{flashcardSet.description}</p>
+            <p className="my-8">{flashcardSet.description}</p>
 
             {/* Displays the front and back of the current flashcard */}
             {/* Will be replaced with Flashcard component */}
-            <p><strong>Front:</strong> {currentFlashcard.front}</p>
-            <p><strong>Back:</strong> {currentFlashcard.back.join(" / ")}</p>
-
+            <div className="py-20 w-full border border-2 border-white rounded-xl">
+                <p><strong>Front:</strong> {currentFlashcard.front}</p>
+                <p><strong>Back:</strong> {currentFlashcard.back.join(" / ")}</p>
+            </div>
+            
             {/* Navigation buttons for switching flashcards */}
-            <div style={{ 
-                display: "flex", 
-                flexDirection: "row", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                textAlign: "center", 
-                gap: "10px"
-            }}>
+            <div className="flex gap-10 items-center mt-10">
                 <button onClick={handlePrev}>← Prev</button>
                 <p>{currentIndex + 1}/{flashcardSet.flashcards.length}</p>  
                 <button onClick={handleNext}>Next →</button>
