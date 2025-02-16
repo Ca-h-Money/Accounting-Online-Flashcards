@@ -12,7 +12,7 @@ import { TFlashcard, TFlashcardSet } from "../types/types";
  */
 const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) => {
     // State to track the current flashcard index
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
 
     /**
      * Moves to the next flashcard in the set.
