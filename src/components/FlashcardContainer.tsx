@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TFlashcard, TFlashcardSet } from "../types/types";
+import FlashCard from "./FlashCard.tsx";
 
 /**
  * FlashcardContainer Component
@@ -13,6 +14,8 @@ import { TFlashcard, TFlashcardSet } from "../types/types";
 const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) => {
     // State to track the current flashcard index
     const [currentIndex, setCurrentIndex] = useState(0);
+    //set isFlipped state to true so that the card is facing front side up
+    const [isFlipped, setIsFlipped] = useState(true);
 
     /**
      * Moves to the next flashcard in the set.
@@ -20,6 +23,7 @@ const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) =
      */
     const handleNext = () => {
         setCurrentIndex((prev) => (prev + 1) % flashcardSet.flashcards.length);
+        setIsFlipped(true);
     };
 
     /**
@@ -28,6 +32,7 @@ const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) =
      */
     const handlePrev = () => {
         setCurrentIndex((prev) => (prev - 1 + flashcardSet.flashcards.length) % flashcardSet.flashcards.length);
+        setIsFlipped(true);
     };
 
     // Store the current flashcard in a variable for better readability
@@ -44,13 +49,8 @@ const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) =
             {/* Displays flashcard set category and description */}
             <h1>{flashcardSet.category}</h1>
             <p className="my-8">{flashcardSet.description}</p>
-
-            {/* Displays the front and back of the current flashcard */}
-            {/* Will be replaced with Flashcard component */}
-            <div className="py-20 w-full border border-2 border-white rounded-xl">
-                <p><strong>Front:</strong> {currentFlashcard.front}</p>
-                <p><strong>Back:</strong> {currentFlashcard.back.join(" / ")}</p>
-            </div>
+            {/* FlashCard Component */}
+            <FlashCard cardData={currentFlashcard} isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
             
             {/* Navigation buttons for switching flashcards */}
             <div className="flex gap-10 items-center mt-10">
