@@ -2,6 +2,11 @@ import { useState } from "react";
 import { TFlashcard, TFlashcardSet } from "../types/types";
 import FlashCard from "./FlashCard.tsx";
 
+interface FlashCardContainerProps
+{
+    flashcardSet: TFlashcardSet
+}
+
 /**
  * FlashcardContainer Component
  * 
@@ -11,7 +16,7 @@ import FlashCard from "./FlashCard.tsx";
  * Props:
  * @param {TFlashcardSet} flashcardSet - The selected set of flashcards to display.
  */
-const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) => {
+const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     // State to track the current flashcard index
     const [currentIndex, setCurrentIndex] = useState(0);
     //set isFlipped state to true so that the card is facing front side up
