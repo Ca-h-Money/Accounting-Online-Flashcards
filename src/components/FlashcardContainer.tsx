@@ -13,16 +13,17 @@ import FlashCard from "./FlashCard.tsx";
  */
 const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) => {
     // State to track the current flashcard index
-    const [currentIndex, setCurrentIndex] = useState(0)
-    const [isFlipped, setIsFlipped] = useState(true)
+    const [currentIndex, setCurrentIndex] = useState(0);
+    //set isFlipped state to true so that the card is facing front side up
+    const [isFlipped, setIsFlipped] = useState(true);
 
     /**
      * Moves to the next flashcard in the set.
      * Loops back to the first card when reaching the end.
      */
     const handleNext = () => {
-        setCurrentIndex((prev) => (prev + 1) % flashcardSet.flashcards.length)
-        setIsFlipped(true)
+        setCurrentIndex((prev) => (prev + 1) % flashcardSet.flashcards.length);
+        setIsFlipped(true);
     };
 
     /**
@@ -30,7 +31,7 @@ const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) =
      * Loops back to the last card when at the first card.
      */
     const handlePrev = () => {
-        setCurrentIndex((prev) => (prev - 1 + flashcardSet.flashcards.length) % flashcardSet.flashcards.length)
+        setCurrentIndex((prev) => (prev - 1 + flashcardSet.flashcards.length) % flashcardSet.flashcards.length);
         setIsFlipped(true);
     };
 
@@ -48,10 +49,8 @@ const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) =
             {/* Displays flashcard set category and description */}
             <h1>{flashcardSet.category}</h1>
             <p className="my-8">{flashcardSet.description}</p>
-
-            {/* Displays the front and back of the current flashcard */}
-            {/* Will be replaced with Flashcard component */}
-            <FlashCard cardData={currentFlashcard} flipped={isFlipped} setIsFlipped={setIsFlipped} />
+            {/* FlashCard Component */}
+            <FlashCard cardData={currentFlashcard} isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
             
             {/* Navigation buttons for switching flashcards */}
             <div className="flex gap-10 items-center mt-10">

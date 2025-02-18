@@ -5,16 +5,15 @@ import { TFlashcard } from '../types/types.ts'
 interface FlashCardProps
 {
     cardData: TFlashcard
-    flipped: boolean
+    isFlipped: boolean
     setIsFlipped: (flipped: boolean) => void;
 }
 
-function FlashCard({cardData, flipped, setIsFlipped}: FlashCardProps) {
+function FlashCard({cardData, isFlipped, setIsFlipped}: FlashCardProps) {
 
-    //const [showAnswer, setShowAnswer] = useState(flipped);
 
     //if logic for showing front and back side of the card. Likely using the useState hook to toggle between the two states.
-    if(flipped) {
+    if(isFlipped) {
         return (
             <motion.button
                 className="w-full h-48 block p-6 bg-white border border-grey-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
