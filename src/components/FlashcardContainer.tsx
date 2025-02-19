@@ -3,6 +3,7 @@ import { TFlashcard, TFlashcardSet } from "../types/types";
 import FlashCard from "./FlashCard.tsx";
 import Button from "./Button.tsx";
 import CheckboxButton from "./CheckboxButton.tsx";
+import { FaShuffle, FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
 interface FlashCardContainerProps
 {
@@ -97,17 +98,34 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
          */
         <div className="flex flex-col items-center mt-10 w-md max-w-md">
             {/* Displays flashcard set category and description */}
-            <h1>{flashcardSet.category}</h1>
+            <h1 className="text-2xl font-bold">{flashcardSet.category}</h1>
             <p className="my-8">{flashcardSet.description}</p>
             {/* FlashCard Component */}
             <FlashCard cardData={currentFlashcard} isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
             
             {/* Navigation buttons for switching flashcards */}
-            <div className="flex gap-10 items-center mt-10">
-                <CheckboxButton isChecked={isRandomized} onToggle={handleToggleRandomize}>Random</CheckboxButton>
-                <Button onClick={handlePrev}>← Prev</Button>
-                <p>{currentIndex + 1}/{flashcardSet.flashcards.length}</p>  
-                <Button onClick={handleNext}>Next →</Button>
+            <div className="w-full flex flex-row gap-10 items-center h-12 mt-10">
+                <CheckboxButton 
+                    className="flex-1 h-full"
+                    isChecked={isRandomized} 
+                    onClick={handleToggleRandomize}>
+                    <FaShuffle color={isRandomized ? "white" : "gray"} size={20}/>
+                </CheckboxButton>
+                <Button 
+                    className="flex-1"
+                    onClick={handlePrev}>
+                    <FaArrowLeftLong size={20} />
+                </Button>
+                <p 
+                    className="flex-1 font-semibold text-lg"
+                >
+                    {currentIndex + 1}/{flashcardSet.flashcards.length}
+                </p>  
+                <Button 
+                    className="flex-1"
+                    onClick={handleNext}>
+                    <FaArrowRightLong size={20} />
+                </Button>
             </div>
         </div>
     );

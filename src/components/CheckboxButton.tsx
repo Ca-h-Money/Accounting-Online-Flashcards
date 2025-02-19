@@ -1,16 +1,17 @@
 
-interface CheckboxButtonProps {
+interface CheckboxButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>  {
     children: React.ReactNode; // Accepts text, icons, or components inside the button
     isChecked: boolean
-    onToggle: () => void;
 }
 
-const CheckboxButton = ({children, isChecked, onToggle} : CheckboxButtonProps) => {
+const CheckboxButton = ({children, isChecked, ...props} : CheckboxButtonProps) => {
 
   return (
     <button
-      onClick={onToggle}
-      className={`${isChecked ? "text-white border-2 border-white" : "text-gray-600"}`}
+        {...props}
+        className={`h-full cursor-pointer rounded-lg border border-transparent px-4 py-2 text-base font-medium 
+                transition duration-200 hover:bg-gray-800 ${isChecked ? "bg-gray-900 text-white" : "text-gray-500"}`}
+      
     >
       {children}
     </button>
