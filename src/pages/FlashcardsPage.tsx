@@ -13,7 +13,7 @@ import { TFlashcardSet } from "../types/types";
 const FlashcardsPage = () => {
     // State to track which flashcard set is currently selected
     // Default set index is 0 (first set in the array)
-    const [selectedFlashcardSetIndex] = useState(2);
+    const [selectedFlashcardSetIndex] = useState(0);
 
     // Store the current flashcardSet in a variable for better readability
     const currentFlashcardSet : TFlashcardSet = flashcardData[selectedFlashcardSetIndex];

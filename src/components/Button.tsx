@@ -23,8 +23,8 @@ const Button= ({children, ...props}: ButtonProps) => {
     return (
         <button 
             {...props}
-            className="h-full cursor-pointer rounded-lg border border-transparent px-4 py-2 text-base font-medium bg-gray-900 text-white 
-                transition duration-200 hover:border-gray-400"
+            className={`cursor-pointer rounded-lg border border-transparent px-4 py-2 text-base 
+                font-medium bg-gray-900 text-white transition duration-200 hover:border-gray-400 ${props.className}`}
         >
             {children}
         </button>
