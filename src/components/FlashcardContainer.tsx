@@ -23,10 +23,10 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     // State to track the current flashcard index
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    //set isFlipped state to true so that the card is facing front side up
+    // Set isFlipped state to true so that the card is facing front side up
     const [isFlipped, setIsFlipped] = useState(true);
 
-    //set isFlipped state to true so that the card is facing front side up
+    // Set isRandomized state to false so the cards retain the order they are loaded in
     const [isRandomized, setIsRandomized] = useState(false);
 
     // Store the current flashcardSet in an array
@@ -52,7 +52,8 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
 
     /**
      * 
-     * Function to shuffle the flashcard set using the Fisher-Yates algorithm
+     * Function to shuffle the flashcard set using the Fisher-Yates algorithm 
+     * (https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle)
      */
     const randomizeSet = () => {
         // Create a copy of the original flashcards array
@@ -96,7 +97,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
          * - Uses flexbox for centering.
          * - Currently relies on inline styles, which will be replaced by TailwindCSS.
          */
-        <div className="flex flex-col items-center mt-10 w-md max-w-md">
+        <div className="flex flex-col items-center mt-4 w-md max-w-md">
             {/* Displays flashcard set category and description */}
             <h1 className="text-2xl font-bold">{flashcardSet.category}</h1>
             <p className="my-8">{flashcardSet.description}</p>
