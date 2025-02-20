@@ -21,9 +21,8 @@ interface FlashCardContainerProps
  */
 const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     // State to track the current flashcard index
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    // Set isFlipped state to true so that the card is facing front side up
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
+    //set isFlipped state to true so that the card is facing front side up
     const [isFlipped, setIsFlipped] = useState(true);
 
     // Set isRandomized state to false so the cards retain the order they are loaded in
