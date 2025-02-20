@@ -64,7 +64,7 @@ const Dropdown = ({
                 {/* The dropdown menu */}
                 {isOpen && (
                     <div aria-label="Dropdown menu">
-                        <ul role="menu" className="absolute left-0 mt-2 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg">
+                        <ul role="menu" className="absolute left-0 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg">
                             {options.map((option, index) => (
                                 <li
                                     key={option}
