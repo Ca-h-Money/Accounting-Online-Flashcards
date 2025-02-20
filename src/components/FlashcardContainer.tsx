@@ -13,7 +13,7 @@ import FlashCard from "./FlashCard.tsx";
  */
 const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) => {
     // State to track the current flashcard index
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
     //set isFlipped state to true so that the card is facing front side up
     const [isFlipped, setIsFlipped] = useState(true);
 
@@ -45,7 +45,7 @@ const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) =
          * - Uses flexbox for centering.
          * - Currently relies on inline styles, which will be replaced by TailwindCSS.
          */
-        <div className="flex flex-col items-center mt-10">
+        <div className="flex flex-col items-center mt-4">
             {/* Displays flashcard set category and description */}
             <h1>{flashcardSet.category}</h1>
             <p className="my-8">{flashcardSet.description}</p>
