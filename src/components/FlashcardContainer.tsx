@@ -104,15 +104,15 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
          * - Uses flexbox for centering.
          * - Currently relies on inline styles, which will be replaced by TailwindCSS.
          */
-        <div className="flex flex-col items-center mt-4 w-md max-w-md">
+        <div className="flex flex-col items-center mt-2 w-md max-w-md">
             {/* Displays flashcard set category and description */}
-            <h1 className="text-2xl font-bold">{flashcardSet.category}</h1>
-            <p className="h-12 my-8">{flashcardSet.description}</p>
+            <h2>{flashcardSet.category}</h2>
+            <p className="h-12 my-4">{flashcardSet.description}</p>
             {/* FlashCard Component */}
             <FlashCard cardData={currentFlashcard} isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
             
             {/* Navigation buttons for switching flashcards */}
-            <div className="w-full flex flex-row gap-10 items-center h-12 mt-10">
+            <div className="w-full flex flex-row gap-10 items-center h-12 mt-4">
                 <CheckboxButton 
                     className="h-full"
                     isChecked={isRandomized} 

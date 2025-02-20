@@ -33,7 +33,6 @@ const FlashcardsPage = () => {
             <div style={{
                 display: "flex",
                 justifyContent: "center",
-                height: "100vh",
                 textAlign: "center"
             }}>
                 {/* Renders the selected flashcard set inside the FlashcardContainer */}

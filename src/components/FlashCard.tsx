@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { motion, MotionConfig } from "motion/react"
+import { motion} from "motion/react"
 import { TFlashcard } from '../types/types.ts'
 
 interface FlashCardProps
@@ -16,7 +15,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped}: FlashCardProps) {
     if(isFlipped) {
         return (
             <motion.button
-                className="w-full h-48 block p-6 bg-white border border-grey-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
+                className="w-full h-48 block p-6 cursor-pointer bg-white border border-grey-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
                 onClick={() => setIsFlipped(false)}
                 initial={{ rotateY: 180 }}
                 animate={{ rotateY: 0 }}
@@ -31,7 +30,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped}: FlashCardProps) {
     else{
         return (
             <motion.button
-                className="w-full h-48 block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
+                className="w-full h-48 block p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}
                 animate={{ rotateY: 180 }}
