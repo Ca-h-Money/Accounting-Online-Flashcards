@@ -45,7 +45,7 @@ const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) =
          * - Uses flexbox for centering.
          * - Currently relies on inline styles, which will be replaced by TailwindCSS.
          */
-        <div className="flex flex-col items-center mt-10">
+        <div className="flex flex-col items-center mt-4">
             {/* Displays flashcard set category and description */}
             <h1>{flashcardSet.category}</h1>
             <p className="my-8">{flashcardSet.description}</p>

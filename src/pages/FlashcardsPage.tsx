@@ -23,7 +23,8 @@ const FlashcardsPage = () => {
         <>
             <h1>Green River College Accounting Flashcards</h1>
             <Dropdown
-                title="Select the accounting topic you'd like to study:"
+                id="select-topic-dropdown"
+                title="Select Accounting Topic:"
                 options={flashcardData.map(flashcardSet => {return flashcardSet.category})}
                 selectedIndex={selectedFlashcardSetIndex}
                 setSelectedIndex={setSelectedFlashcardSetIndex}
@@ -32,7 +33,6 @@ const FlashcardsPage = () => {
             <div style={{
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
                 height: "100vh",
                 textAlign: "center"
             }}>
