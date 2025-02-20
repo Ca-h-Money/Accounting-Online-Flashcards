@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TFlashcard, TFlashcardSet } from "../types/types";
 import FlashCard from "./FlashCard.tsx";
 import Button from "./Button.tsx";
@@ -23,13 +23,21 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     // State to track the current flashcard index
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     //set isFlipped state to true so that the card is facing front side up
-    const [isFlipped, setIsFlipped] = useState(true);
+    const [isFlipped, setIsFlipped] = useState<boolean>(true);
 
     // Set isRandomized state to false so the cards retain the order they are loaded in
-    const [isRandomized, setIsRandomized] = useState(false);
+    const [isRandomized, setIsRandomized] = useState<boolean>(false);
 
     // Store the current flashcardSet in an array
-    const [currentSet, setCurrentSet] = useState(flashcardSet.flashcards);
+    const [currentSet, setCurrentSet] = useState<TFlashcard[]>(flashcardSet.flashcards);
+
+    useEffect(() => {
+        // Reset currentIndex, flipped state, and randomize when flashcardSet changes
+        setCurrentIndex(0);
+        setIsFlipped(true);
+        setIsRandomized(false);
+        setCurrentSet(flashcardSet.flashcards);
+    }, [flashcardSet])
 
     /**
      * Moves to the next flashcard in the set.
@@ -99,7 +107,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
         <div className="flex flex-col items-center mt-4 w-md max-w-md">
             {/* Displays flashcard set category and description */}
             <h1 className="text-2xl font-bold">{flashcardSet.category}</h1>
-            <p className="my-8">{flashcardSet.description}</p>
+            <p className="h-12 my-8">{flashcardSet.description}</p>
             {/* FlashCard Component */}
             <FlashCard cardData={currentFlashcard} isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
             
