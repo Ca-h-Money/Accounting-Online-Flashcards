@@ -114,12 +114,14 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
             {/* Navigation buttons for switching flashcards */}
             <div className="w-full flex flex-row gap-10 items-center h-12 mt-4">
                 <CheckboxButton 
+                    aria-label="Shuffle Button"
                     className="h-full"
                     isChecked={isRandomized} 
                     onClick={handleToggleRandomize}>
                     <FaShuffle color={isRandomized ? "white" : "gray"} size={20}/>
                 </CheckboxButton>
                 <Button 
+                    aria-label="Previous Flashcard Button"
                     className="h-full"
                     onClick={handlePrev}>
                     <FaArrowLeftLong size={20} />
@@ -129,7 +131,8 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                 >
                     {currentIndex + 1}/{flashcardSet.flashcards.length}
                 </p>  
-                <Button 
+                <Button
+                    aria-label="Next Flashcard Button"
                     className="h-full"
                     onClick={handleNext}>
                     <FaArrowRightLong size={20} />
