@@ -22,12 +22,14 @@ interface FlashCardContainerProps
 const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     // State to track the current flashcard index
     const [currentIndex, setCurrentIndex] = useState<number>(0);
-    //set isFlipped state to true so that the card is facing front side up
+    // set isInitialLoad state that is true on page load and false after any interaction
+    const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
+    // set showTooltip state to true on initial container load
+    const [showTooltip, setShowTooltip] = useState<boolean>(false);
+    // set isFlipped state to true so that the card is facing front side up
     const [isFlipped, setIsFlipped] = useState<boolean>(true);
-
     // Set isRandomized state to false so the cards retain the order they are loaded in
     const [isRandomized, setIsRandomized] = useState<boolean>(false);
-
     // Store the current flashcardSet in an array
     const [currentSet, setCurrentSet] = useState<TFlashcard[]>(flashcardSet.flashcards);
 
@@ -39,6 +41,15 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
         setCurrentSet(flashcardSet.flashcards);
     }, [flashcardSet])
 
+    // Wait 1 second after mount, then show tooltip
+    useEffect(() => {
+        const timer = setTimeout(() => {
+          setShowTooltip(true);
+        }, 1000);
+    
+        return () => clearTimeout(timer);
+      }, []);
+
     /**
      * Moves to the next flashcard in the set.
      * Loops back to the first card when reaching the end.
@@ -46,6 +57,8 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     const handleNext = () => {
         setCurrentIndex((prev) => (prev + 1) % flashcardSet.flashcards.length);
         setIsFlipped(true);
+        setShowTooltip(false);
+        setIsInitialLoad(false);
     };
 
     /**
@@ -55,6 +68,8 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     const handlePrev = () => {
         setCurrentIndex((prev) => (prev - 1 + flashcardSet.flashcards.length) % flashcardSet.flashcards.length);
         setIsFlipped(true);
+        setShowTooltip(false);
+        setIsInitialLoad(false);
     };
 
     /**
@@ -108,8 +123,19 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
             {/* Displays flashcard set category and description */}
             <h2>{flashcardSet.category}</h2>
             <p className="h-12 my-4">{flashcardSet.description}</p>
+
+            
+
             {/* FlashCard Component */}
-            <FlashCard cardData={currentFlashcard} isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
+            <FlashCard 
+                cardData={currentFlashcard} 
+                showTooltip={showTooltip}
+                setShowTooltip={setShowTooltip}
+                isFlipped={isFlipped} 
+                setIsFlipped={setIsFlipped} 
+                isInitialLoad={isInitialLoad}
+                setIsInitialLoad={setIsInitialLoad}
+            />
             
             {/* Navigation buttons for switching flashcards */}
             <div className="w-full flex flex-row gap-10 items-center h-12 mt-4">

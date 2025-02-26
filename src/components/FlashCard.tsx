@@ -1,26 +1,41 @@
 import { motion} from "motion/react"
 import { TFlashcard } from '../types/types.ts'
+import Tooltip from "./Tooltip.tsx"
 
 interface FlashCardProps
 {
     cardData: TFlashcard
+    showTooltip: boolean
+    setShowTooltip: (showTooltip: boolean) => void;
     isFlipped: boolean
     setIsFlipped: (flipped: boolean) => void;
+    isInitialLoad: boolean
+    setIsInitialLoad: (isInitialLoad: boolean) => void;
 }
 
-function FlashCard({cardData, isFlipped, setIsFlipped}: FlashCardProps) {
+function FlashCard({cardData, showTooltip, setShowTooltip, isFlipped, setIsFlipped, isInitialLoad, setIsInitialLoad}: FlashCardProps) {
 
 
     //if logic for showing front and back side of the card. Likely using the useState hook to toggle between the two states.
     if(isFlipped) {
+        const rotateYInitial = isInitialLoad ? 0 : 180;
         return (
             <motion.button
-                className="w-full h-48 block p-6 cursor-pointer bg-white border border-grey-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
-                onClick={() => setIsFlipped(false)}
-                initial={{ rotateY: 180 }}
+                className="relative w-full h-48 block p-6 cursor-pointer bg-white border border-grey-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
+                onClick={() => {
+                    setIsFlipped(false);
+                    setShowTooltip(false);
+                    setIsInitialLoad(false);
+                }}
+                initial={{ rotateY: rotateYInitial }}
                 animate={{ rotateY: 0 }}
                 transition={{ duration: 0.5 }}
                 style={{ transformStyle: "preserve-3d" }}>
+            {showTooltip && 
+                <Tooltip 
+                    className="absolute top-2 right-[1/2]" 
+                    content="Click or tap to see the answer!"
+                />}
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h5>
             </motion.button>)
 
