@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { motion, MotionConfig } from "motion/react"
+import { motion} from "motion/react"
 import { TFlashcard } from '../types/types.ts'
 
 

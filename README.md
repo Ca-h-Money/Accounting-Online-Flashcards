@@ -1,6 +1,7 @@
 # Accounting Online Flashcards
 
 Accounting Flashcards is a user-friendly flashcard application built for the Accounting Department at Green River College.
+<a href="https://ca-h-money.github.io/Accounting-Online-Flashcards/">Click here to view the page</a>
 
 ## Table of Contents
 
