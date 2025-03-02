@@ -48,15 +48,15 @@ const FlashcardContainer = ({ flashcardSet }: { flashcardSet: TFlashcardSet }) =
         <div className="flex flex-col items-center mt-10">
             {/* Displays flashcard set category and description */}
             <h1>{flashcardSet.category}</h1>
-            <p className="my-8">{flashcardSet.description}</p>
+            <h1 className="my-8">{flashcardSet.description}</h1>
             {/* FlashCard Component */}
             <FlashCard cardData={currentFlashcard} isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
             
             {/* Navigation buttons for switching flashcards */}
             <div className="flex gap-10 items-center mt-10">
-                <button onClick={handlePrev}>← Prev</button>
+                <button className="button" onClick={handlePrev}>← Prev</button>
                 <p>{currentIndex + 1}/{flashcardSet.flashcards.length}</p>  
-                <button onClick={handleNext}>Next →</button>
+                <button className="button" onClick={handleNext}>Next →</button>
             </div>
         </div>
     );
