@@ -32,21 +32,20 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 animate={{ rotateY: 0 }}
                 transition={{ duration: 0.5 }}
                 style={{ transformStyle: "preserve-3d" }}>
-                {/* {showTooltip && 
+                {showTooltip && 
                     <Tooltip 
-                        className="absolute bottom-2 right-2" 
+                        className="absolute bottom-10 right-10" 
                         content="Click to see the answer"
-                    />} */}
+                    />}
 
-                {/* Outside the card (Above) */}
-                {showTooltip && (
+                
+                {/* {showTooltip && (
                     <Tooltip 
                         className="absolute top-[-50px] left-1/2 transform -translate-x-1/2"
                         content="Click to see the answer"
                     />
                 )}
 
-                {/* Outside the card (Below) */}
                 {showTooltip && (
                     <Tooltip 
                         className="absolute bottom-[-50px] left-1/2 transform -translate-x-1/2"
@@ -54,7 +53,6 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                     />
                 )}
 
-                {/* Outside the card (Far left) */}
                 {showTooltip && (
                     <Tooltip 
                         className="absolute top-1/2 left-[-60px] transform -translate-y-1/2"
@@ -62,7 +60,6 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                     />
                 )}
 
-                {/* Outside the card (Far right) */}
                 {showTooltip && (
                     <Tooltip 
                         className="absolute top-1/2 right-[-60px] transform -translate-y-1/2"
@@ -70,14 +67,13 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                     />
                 )}    
 
-                {/* Inside the card (Top-left) */}
                 {showTooltip && (
                     <Tooltip 
                         className="absolute top-2 left-2"
                         content="Click to see the answer"
                     />
                 )}
-                {/* Inside the card (Top-right) */}
+
                 {showTooltip && (
                     <Tooltip 
                         className="absolute top-2 right-2"
@@ -85,7 +81,6 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                     />
                 )}
 
-                {/* Inside the card (Bottom-left) */}
                 {showTooltip && (
                     <Tooltip 
                         className="absolute bottom-2 left-2"
@@ -93,13 +88,12 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                     />
                 )}
 
-                {/* Inside the card (Bottom-right) */}
                 {showTooltip && (
                     <Tooltip 
                         className="absolute bottom-2 right-2"
                         content="Click to see the answer"
                     />
-                )}
+                )} */}
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h5>
             </motion.button>)
 
