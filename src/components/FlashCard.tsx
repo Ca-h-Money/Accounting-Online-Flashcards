@@ -1,6 +1,7 @@
 import { motion} from "motion/react"
 import { TFlashcard } from '../types/types.ts'
 
+
 interface FlashCardProps
 {
     cardData: TFlashcard
@@ -9,13 +10,12 @@ interface FlashCardProps
 }
 
 function FlashCard({cardData, isFlipped, setIsFlipped}: FlashCardProps) {
-
-
     //if logic for showing front and back side of the card. Likely using the useState hook to toggle between the two states.
     if(isFlipped) {
         return (
             <motion.button
-                className="w-full h-48 block p-6 cursor-pointer bg-white border border-grey-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
+                className="w-full h-48 block p-6 bg-white rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700
+                             dark:hover:bg-gray-700 flex items-center justify-center neon-border neon-border:hover card-styles"
                 onClick={() => setIsFlipped(false)}
                 initial={{ rotateY: 180 }}
                 animate={{ rotateY: 0 }}
@@ -76,7 +76,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped}: FlashCardProps) {
     else{
         return (
             <motion.button
-                className="w-full h-48 block p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
+                className="w-full h-48 block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 
+                            dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center card-styles"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}
                 animate={{ rotateY: 180 }}
@@ -87,7 +88,4 @@ function FlashCard({cardData, isFlipped, setIsFlipped}: FlashCardProps) {
             </motion.button>)
     }
 }
-
-
-
 export default FlashCard;
