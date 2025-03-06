@@ -21,14 +21,15 @@ function FlashCard({cardData, isFlipped, setIsFlipped}: FlashCardProps) {
                 animate={{ rotateY: 0 }}
                 transition={{ duration: 0.5 }}
                 style={{ transformStyle: "preserve-3d" }}>
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h5>
+            <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h3>
             </motion.button>)
 
     }
     else if(cardData.back.length > 1){
         return (
             <motion.button
-                className="w-full h-48 block p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
+                className="w-full h-48 block p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100
+                            dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center card-styles"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}
                 animate={{ rotateY: 180 }}
@@ -84,7 +85,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped}: FlashCardProps) {
                 transition={{ duration: 0.5 }}
                 style={{ transformStyle: "preserve-3d" }}>
             {/*Back Content*/}
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h5>
+            <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
             </motion.button>)
     }
 }

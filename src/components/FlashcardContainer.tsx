@@ -104,35 +104,41 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
          * - Uses flexbox for centering.
          * - Currently relies on inline styles, which will be replaced by TailwindCSS.
          */
-        <div className="flex flex-col items-center mt-2 w-md max-w-md">
+        <div
+            role="region"
+            aria-label={`Flashcard ${currentIndex + 1} of ${flashcardSet.flashcards.length}`}
+            className="flex flex-col items-center mt-2 w-2xl max-w-2xl"
+        >
             {/* Displays flashcard set category and description */}
-            <h2>{flashcardSet.category}</h2>
-            <p className="h-12 my-4">{flashcardSet.description}</p>
+            <h2 className="h-17 my-4 text-2xl">{flashcardSet.description}</h2>
             {/* FlashCard Component */}
             <FlashCard cardData={currentFlashcard} isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
             
             {/* Navigation buttons for switching flashcards */}
             <div className="w-full flex flex-row gap-10 items-center h-12 mt-4">
                 <CheckboxButton 
+                    aria-label="Shuffle Button"
                     className="h-full"
                     isChecked={isRandomized} 
                     onClick={handleToggleRandomize}>
-                    <FaShuffle color={isRandomized ? "white" : "gray"} size={20}/>
+                    <FaShuffle color={isRandomized ? "white" : "gray"} size={20} aria-hidden={true}/>
                 </CheckboxButton>
                 <Button 
+                    aria-label="Previous Flashcard Button"
                     className="h-full"
                     onClick={handlePrev}>
-                    <FaArrowLeftLong size={20} />
+                    <FaArrowLeftLong size={20} aria-hidden={true} />
                 </Button>
                 <p 
                     className="flex-1 font-semibold text-lg"
                 >
                     {currentIndex + 1}/{flashcardSet.flashcards.length}
                 </p>  
-                <Button 
+                <Button
+                    aria-label="Next Flashcard Button"
                     className="h-full"
                     onClick={handleNext}>
-                    <FaArrowRightLong size={20} />
+                    <FaArrowRightLong size={20} aria-hidden={true} />
                 </Button>
             </div>
         </div>
