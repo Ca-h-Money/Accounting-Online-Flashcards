@@ -6,9 +6,9 @@ jobs:
   pa11y:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: 22.x
       - name: Install dependencies
@@ -19,4 +19,4 @@ jobs:
           npm install -g pa11y http-server
       - run: http-server ./dist --port 3000 &
       - name: Run pa11y
-        run: pa11y http://localhost:3000 --no-sandbox || exit 0
+        run: pa11y http://localhost:3000 || exit 0
