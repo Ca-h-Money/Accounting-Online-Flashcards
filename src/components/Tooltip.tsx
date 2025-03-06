@@ -1,8 +1,9 @@
 // Tooltip.tsx
 import { motion } from "framer-motion";
+import { GiClick } from "react-icons/gi";
 
 interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {
-  content: string;
+    content: string;
 }
 
 export default function Tooltip({ content, ...props }: TooltipProps) {
@@ -34,7 +35,7 @@ export default function Tooltip({ content, ...props }: TooltipProps) {
             ${props.className}
         `}
     >
-        {content}
+        <div className="flex gap-2 items-center"><GiClick size={30}/>{content}</div>
     </motion.div>
   );
 }
