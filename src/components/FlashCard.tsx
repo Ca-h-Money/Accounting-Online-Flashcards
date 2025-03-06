@@ -94,7 +94,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         content="Click to see the answer"
                     />
                 )} */}
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h5>
+            <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h3>
             </motion.button>)
 
     }
