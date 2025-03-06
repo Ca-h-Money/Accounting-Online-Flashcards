@@ -8,14 +8,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
-      - uses: actions/setup-node@v2
+        uses: actions/setup-node@v2
         with:
           node-version: 22.x
       - name: Install dependencies
-      - run: npm ci
+        run: npm ci
       - run: npm run build --if-present
       - name: Install Pa11y
-      - run: npm install -g pa11y http-server
+        run: npm install -g pa11y http-server
       - run: http-server ./dist --port 3000 &
       - name: Run pa11y
-      - run: pa11y http://localhost:3000 || exit 0
+        run: pa11y http://localhost:3000 || exit 0
