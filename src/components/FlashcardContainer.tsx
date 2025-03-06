@@ -107,10 +107,10 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
         <div
             role="region"
             aria-label={`Flashcard ${currentIndex + 1} of ${flashcardSet.flashcards.length}`}
-            className="flex flex-col items-center mt-2 w-md max-w-md"
+            className="flex flex-col items-center mt-2 w-2xl max-w-2xl"
         >
             {/* Displays flashcard set category and description */}
-            <h2 className="h-12 my-4 text-2xl">{flashcardSet.description}</h2>
+            <h2 className="h-17 my-4 text-2xl">{flashcardSet.description}</h2>
             {/* FlashCard Component */}
             <FlashCard cardData={currentFlashcard} isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
             
