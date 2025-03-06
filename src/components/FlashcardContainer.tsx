@@ -104,7 +104,11 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
          * - Uses flexbox for centering.
          * - Currently relies on inline styles, which will be replaced by TailwindCSS.
          */
-        <div className="flex flex-col items-center mt-2 w-md max-w-md">
+        <div
+            role="region"
+            aria-label={`Flashcard ${currentIndex + 1} of ${flashcardSet.flashcards.length}`}
+            className="flex flex-col items-center mt-2 w-md max-w-md"
+        >
             {/* Displays flashcard set category and description */}
             <h2>{flashcardSet.category}</h2>
             <p className="h-12 my-4">{flashcardSet.description}</p>
@@ -118,13 +122,13 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                     className="h-full"
                     isChecked={isRandomized} 
                     onClick={handleToggleRandomize}>
-                    <FaShuffle color={isRandomized ? "white" : "gray"} size={20}/>
+                    <FaShuffle color={isRandomized ? "white" : "gray"} size={20} aria-hidden={true}/>
                 </CheckboxButton>
                 <Button 
                     aria-label="Previous Flashcard Button"
                     className="h-full"
                     onClick={handlePrev}>
-                    <FaArrowLeftLong size={20} />
+                    <FaArrowLeftLong size={20} aria-hidden={true} />
                 </Button>
                 <p 
                     className="flex-1 font-semibold text-lg"
@@ -135,7 +139,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                     aria-label="Next Flashcard Button"
                     className="h-full"
                     onClick={handleNext}>
-                    <FaArrowRightLong size={20} />
+                    <FaArrowRightLong size={20} aria-hidden={true} />
                 </Button>
             </div>
         </div>
