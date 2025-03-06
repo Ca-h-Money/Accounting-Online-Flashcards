@@ -38,7 +38,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped}: FlashCardProps) {
                 transition={{ duration: 0.5 }}
                 style={{ transformStyle: "preserve-3d" }}>
                 {/* Note that later on we will need to write in some logic checking the back.length and displaying different styles based on what the back is*/}
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h1>
+            <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h5>
             </motion.button>)
     }
 }
