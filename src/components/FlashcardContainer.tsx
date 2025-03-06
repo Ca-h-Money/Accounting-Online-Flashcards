@@ -110,8 +110,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
             className="flex flex-col items-center mt-2 w-md max-w-md"
         >
             {/* Displays flashcard set category and description */}
-            <h2>{flashcardSet.category}</h2>
-            <p className="h-12 my-4">{flashcardSet.description}</p>
+            <h2 className="h-12 my-4 text-2xl">{flashcardSet.description}</h2>
             {/* FlashCard Component */}
             <FlashCard cardData={currentFlashcard} isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
             

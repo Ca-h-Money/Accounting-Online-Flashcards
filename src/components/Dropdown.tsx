@@ -85,11 +85,11 @@ const Dropdown = ({
                 {/* The dropdown menu */}
                 {isOpen && (
                     <div aria-label={`${ariaLabel} dropdown menu`}>
-                        <ul role="menu" className="absolute left-0 mt-1 w-full bg-white text-gray-900 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg">
+                        <ul role="menu" className="absolute left-0 mt-1 w-full bg-white text-gray-900 dark:text-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg">
                             {options.map((option, index) => (
                                 <li
                                     key={option}
-                                    className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                                    className="px-4 py-2 text-2xl hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                                     onClick={() => { handleSelection(index) }}
                                     >
                                     {option}
