@@ -21,7 +21,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped}: FlashCardProps) {
                 animate={{ rotateY: 0 }}
                 transition={{ duration: 0.5 }}
                 style={{ transformStyle: "preserve-3d" }}>
-            <p className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</p>
+            <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h5>
             </motion.button>)
 
     }
