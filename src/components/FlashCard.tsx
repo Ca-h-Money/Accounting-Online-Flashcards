@@ -2,6 +2,7 @@ import { motion} from "motion/react"
 import { TFlashcard } from '../types/types.ts'
 import Tooltip from "./Tooltip.tsx"
 
+
 interface FlashCardProps
 {
     cardData: TFlashcard;
@@ -20,7 +21,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
     if(isFlipped) {
         return (
             <motion.button
-                className="relative w-full h-48 block p-6 cursor-pointer bg-white border border-grey-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
+                className="relative w-full h-48 block p-6 bg-white rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700
+                             dark:hover:bg-gray-700 flex items-center justify-center neon-border neon-border:hover card-styles"
                 onClick={() => {
                     setIsFlipped(false);
                     setShowTooltip(false);
@@ -105,7 +107,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
     else if(cardData.back.length > 1){
         return (
             <motion.button
-                className="w-full h-48 block p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
+                className="w-full h-48 block p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100
+                            dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center card-styles"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}
                 animate={{ rotateY: 180 }}
@@ -153,18 +156,16 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
     else{
         return (
             <motion.button
-                className="w-full h-48 block p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center"
+                className="w-full h-48 block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 
+                            dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center card-styles"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}
                 animate={{ rotateY: 180 }}
                 transition={{ duration: 0.5 }}
                 style={{ transformStyle: "preserve-3d" }}>
             {/*Back Content*/}
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h5>
+            <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
             </motion.button>)
     }
 }
-
-
-
 export default FlashCard;
