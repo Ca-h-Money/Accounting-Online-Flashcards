@@ -46,10 +46,10 @@ jobs:
       - name: Run pa11y
         run: |
           output=$(npx pa11y http://localhost:4173 --config=pa11y-config.json || true)
-          echo "PA11Y_OUTPUT=$output" >> $GITHUB_ENV
+          echo "$output" > pa11y_output.txt
       - name: Check for accessibility violations and fail the workflow if found
         run: |
-          if echo "${{ env.PA11Y_OUTPUT }}" | grep -q "Error:"; then
+          if grep -q "Error:" pa11y_output.txt; then
             echo "Accessibility violations found!"
             exit 1
           else
