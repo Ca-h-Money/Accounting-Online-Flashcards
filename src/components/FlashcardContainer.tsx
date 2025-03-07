@@ -57,7 +57,6 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     const handleNext = () => {
         setCurrentIndex((prev) => (prev + 1) % flashcardSet.flashcards.length);
         setIsFlipped(true);
-        setShowTooltip(false);
         setIsInitialLoad(false);
     };
 
@@ -68,7 +67,6 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     const handlePrev = () => {
         setCurrentIndex((prev) => (prev - 1 + flashcardSet.flashcards.length) % flashcardSet.flashcards.length);
         setIsFlipped(true);
-        setShowTooltip(false);
         setIsInitialLoad(false);
     };
 
