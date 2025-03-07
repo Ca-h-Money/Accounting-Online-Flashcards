@@ -4,11 +4,6 @@ import ThemeToggle from "./ThemeToggle";
  * Header Component with Navigation
  *
  * This component renders the main header, which includes the navbar and theme toggle.
- * 
- * Accessibility Features:
- * - `<header>`: Provides a **semantic landmark** for assistive technologies.
- * - `role="banner"`: Ensures the header is recognized as the **main site header**.
- * - `<nav>` inside `<header>`: Clearly associates navigation with the site’s structure.
  *
  * @component
  * @returns {JSX.Element} The site header with navigation.
