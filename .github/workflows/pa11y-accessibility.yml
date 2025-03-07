@@ -45,5 +45,5 @@ jobs:
           sleep 10
       - name: Run pa11y
         run: |
-          npx pa11y http://localhost:3000 --chrome-flags="--no-sandbox --disable-dev-shm-usage"
+          npx pa11y http://localhost:3000 --config=pa11y-config.json
         continue-on-error: true
