@@ -45,12 +45,10 @@ jobs:
           sleep 10
       - name: Run pa11y
         run: |
-          output=$(npx pa11y http://localhost:4173 --config=pa11y-config.json || true)
-          echo "$output"
-          echo "::set-output name=pa11y_output::$output"
+          npx pa11y http://localhost:4173 --config=pa11y-config.json || true
       - name: Check for accessibility violations and fail the workflow if found
         run: |
-          if echo "${{ steps.pa11y.outputs.stdout }}" | grep -q "Accessibility violations found"; then
+          if echo "${{ steps.pa11y.outputs.stdout }}" | grep -q "Error"; then
             echo "Accessibility violations found!"
             exit 1
           else
