@@ -41,7 +41,7 @@ jobs:
           xdg-utils
       - name: Start VITE server
         run: |
-          nohup npm run preview --port 4173 &
+          nohup npm run preview &
           sleep 10
       - name: Run pa11y
         run: |
