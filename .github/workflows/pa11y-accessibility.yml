@@ -48,7 +48,7 @@ jobs:
           npx pa11y http://localhost:4173 --config=pa11y-config.json || true
       - name: Check for accessibility violations and fail the workflow if found
         run: |
-          if echo "${{ steps.pa11y.outputs.stdout }}" | grep -q "Error"; then
+          if echo "${{ steps.pa11y.outputs.pa11y_output }}" | grep -q "Error:"; then
             echo "Accessibility violations found!"
             exit 1
           else
