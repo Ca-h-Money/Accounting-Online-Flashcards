@@ -1,4 +1,3 @@
-import './App.css'; // Import global styles
 import FlashcardsPage from './pages/FlashcardsPage';
 import Navbar from './components/Navbar';
 
