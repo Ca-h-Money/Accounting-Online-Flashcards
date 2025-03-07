@@ -1,5 +1,6 @@
 import './App.css'; // Import global styles
 import FlashcardsPage from './pages/FlashcardsPage';
+import Navbar from './components/Navbar';
 
 /**
  * Root component of the application.
@@ -16,7 +17,11 @@ function App() {
          * If additional pages or features are added in the future (e.g., routing),
          * this file will serve as the top-level component.
          */
-        <FlashcardsPage />
+        <>
+            <Navbar />
+            <FlashcardsPage />
+        </>
+        
     );
 }
 
