@@ -41,9 +41,9 @@ jobs:
           xdg-utils
       - name: Start VITE server
         run: |
-          nohup npm run preview --port 3000 &
+          nohup npm run preview --port 4173 &
           sleep 10
       - name: Run pa11y
         run: |
-          npx pa11y http://localhost:3000 --config=pa11y-config.json
+          npx pa11y http://localhost:4173 --config=pa11y-config.json
         continue-on-error: true
