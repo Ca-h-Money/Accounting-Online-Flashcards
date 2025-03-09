@@ -20,7 +20,7 @@ const FlashcardsPage = () => {
     const currentFlashcardSet : TFlashcardSet = flashcardData[selectedFlashcardSetIndex];
 
     return (
-        <>
+        <main role="main">
             <h1>Green River College Accounting Flashcards</h1>
             <Dropdown
                 id="select-topic-dropdown"
@@ -28,17 +28,20 @@ const FlashcardsPage = () => {
                 options={flashcardData.map(flashcardSet => {return flashcardSet.category})}
                 selectedIndex={selectedFlashcardSetIndex}
                 setSelectedIndex={setSelectedFlashcardSetIndex}
+                ariaLabel="flashcard topic"
             />
             {/* Inline styles will be removed once TailwindCSS is added to project */}
             <div style={{
-                display: "flex",
-                justifyContent: "center",
-                textAlign: "center"
-            }}>
+                    display: "flex",
+                    justifyContent: "center",
+                    textAlign: "center"
+                }}
+                role="region"
+                aria-label="Flashcard content">
                 {/* Renders the selected flashcard set inside the FlashcardContainer */}
                 <FlashcardContainer flashcardSet={currentFlashcardSet} />
             </div>
-        </>
+        </main>
     );
 }
 

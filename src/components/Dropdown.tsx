@@ -1,6 +1,26 @@
 import { useEffect, useRef, useState, Dispatch, SetStateAction } from "react";
 
 /**
+ * Represents the objects that the Dropdown component accepts as props.
+ * @type {Object} DropdownProps
+ * @property {string} id - The id of the dropdown, used to differentiate between different dropdowns.
+ * @property {string} title - The header of the dropdown component, typically the instructions.
+ * @property {string[]} options - The array of options to be displayed in the dropdown menu.
+ * @property {number} selectedIndex - The starting element index to display in the dropdown menu.
+ * @property {Dispatch<SetStateAction<number>>} setSelectedIndex - The parent component's "set state"
+ *          method for handling option selection.
+ * @property {string} ariaLabel - The label for what the dropdown component is being used for.
+ */
+type DropdownProps = {
+    id: string;
+    title: string;
+    options: string[];
+    selectedIndex: number;
+    setSelectedIndex: Dispatch<SetStateAction<number>>;
+    ariaLabel: string;
+}
+
+/**
  * Dropdown Component
  * 
  * This component displays a header and a dropdown that shows the passed in string
@@ -15,7 +35,8 @@ const Dropdown = ({
     title,
     options,
     selectedIndex,
-    setSelectedIndex
+    setSelectedIndex,
+    ariaLabel
 }: DropdownProps) => {
     // State to control whether the dropdown menu is open or not.
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -47,11 +68,11 @@ const Dropdown = ({
     return (
         // Dropdown component container
         <div id={id + "-component"} className="relative p-5 max-w-sm mx-auto">
-            <h3 className="p-4 text-lg font-semibold">{title}</h3>
+            <h2 className="p-4 text-lg font-semibold">{title}</h2>
             {/* The dropdown element */}
             <div id={id} ref={dropdownRef} className="relative inline-block w-64">
                 <button
-                    aria-label="Toggle dropdown"
+                    aria-label={`Toggle ${ariaLabel} dropdown`}
                     aria-haspopup="true"
                     aria-expanded={isOpen}
                     type="button"
@@ -63,8 +84,8 @@ const Dropdown = ({
                 </button>
                 {/* The dropdown menu */}
                 {isOpen && (
-                    <div aria-label="Dropdown menu">
-                        <ul role="menu" className="absolute left-0 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg">
+                    <div aria-label={`${ariaLabel} dropdown menu`}>
+                        <ul role="menu" className="absolute left-0 mt-1 w-full bg-white text-gray-900 dark:text-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg z-100">
                             {options.map((option, index) => (
                                 <li
                                     key={option}
@@ -80,24 +101,6 @@ const Dropdown = ({
             </div>
         </div>
     )
-}
-
-/**
- * Represents the objects that the Dropdown component accepts as props.
- * @type {Object} DropdownProps
- * @property {string} id - The id of the dropdown, used to differentiate between different dropdowns.
- * @property {string} title - The header of the dropdown component, typically the instructions.
- * @property {string[]} options - The array of options to be displayed in the dropdown menu.
- * @property {number} selectedIndex - The starting element index to display in the dropdown menu.
- * @property {Dispatch<SetStateAction<number>>} setSelectedIndex - The parent component's "set state"
- *          method for handling option selection.
- */
-type DropdownProps = {
-    id: string;
-    title: string;
-    options: string[];
-    selectedIndex: number;
-    setSelectedIndex: Dispatch<SetStateAction<number>>;
 }
 
 export default Dropdown;
