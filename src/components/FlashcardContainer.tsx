@@ -104,13 +104,10 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
          * - Uses flexbox for centering.
          * - Currently relies on inline styles, which will be replaced by TailwindCSS.
          */
-        
-        <div className="border flex flex-col items-center mt-2 border">
+        <div className="flex flex-col items-center mt-2 w-md max-w-md">
             {/* Displays flashcard set category and description */}
-            <div className="border">
-            <h2 className="self-start">{flashcardSet.category}</h2>
-            <p className="self-start h-12 my-4">{flashcardSet.description}</p>
-            </div>
+            <h2>{flashcardSet.category}</h2>
+            <p className="h-12 my-4">{flashcardSet.description}</p>
             {/* FlashCard Component */}
             <FlashCard cardData={currentFlashcard} isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
             
