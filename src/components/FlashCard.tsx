@@ -94,9 +94,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         content="Click to see the answer"
                     />
                 )} */}
-            <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h3>
+            <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h3>
             </motion.button>)
-
     }
     else if(cardData.back.length > 1){
         return (
@@ -119,13 +118,13 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                     <div className="flex flex-col items-center justify-between p-2">
                         {/*Label*/}
                         <div className="flex flex-col items-center justify-end h-16 w-full">
-                        <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                        <span className="text-lg font-medium text-gray-600 dark:text-gray-300">
                             Debit
                         </span>
                         <div className="w-full h-px bg-gray-400 dark:bg-gray-500 mt-1" /> {/* Horizontal line */}
                         </div>
                         {/* Content */}
-                        <span className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <span className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {cardData.back[0]}
                         </span>
                     </div>
@@ -134,13 +133,13 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                     <div className="flex flex-col items-center justify-between p-2">
                         {/*Label*/}
                         <div className="flex flex-col items-center justify-end h-16 w-full">
-                        <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                        <span className="text-lg font-medium text-gray-600 dark:text-gray-300">
                             Credit
                         </span>
                         <div className="w-full h-px bg-gray-400 dark:bg-gray-500 mt-1" /> {/* Horizontal line */}
                         </div>
                         {/* Content */}
-                        <span className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <span className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {cardData.back[1]}
                         </span>
                     </div>
@@ -158,7 +157,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 transition={{ duration: 0.5 }}
                 style={{ transformStyle: "preserve-3d" }}>
             {/*Back Content*/}
-            <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
+            <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
             </motion.button>)
     }
 }
