@@ -28,6 +28,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  border: solid blue 3px;
 }
 
 h1 {
@@ -99,10 +100,7 @@ body {
 
 body {
     background: linear-gradient(to right, #89CFF0, #1E3A8A);
-    min-height: 100vh; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+   
 }
     
     /* @keyframes gradientShift {
@@ -116,5 +114,7 @@ body {
       background-size: 400% 400%;
       animation: gradientShift 10s ease infinite;
   } */
-
+.maxWidth {
+  width: 100%;
+}
 

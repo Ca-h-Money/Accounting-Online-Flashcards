@@ -21,6 +21,7 @@ const FlashcardsPage = () => {
 
     return (
         <>
+            <div className="border maxWidth">
             <h1>Green River College Accounting Flashcards</h1>
             <Dropdown
                 id="select-topic-dropdown"
@@ -37,6 +38,7 @@ const FlashcardsPage = () => {
             }}>
                 {/* Renders the selected flashcard set inside the FlashcardContainer */}
                 <FlashcardContainer flashcardSet={currentFlashcardSet} />
+            </div>
             </div>
         </>
     );
