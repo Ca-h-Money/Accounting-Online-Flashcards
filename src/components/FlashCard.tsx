@@ -22,7 +22,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
         return (
             <motion.button
                 className="relative w-full h-48 block p-6 bg-white rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700
-                             dark:hover:bg-gray-700 flex items-center justify-center neon-border neon-border:hover card-styles"
+                            dark:hover:bg-gray-700 flex items-center justify-center neon-border neon-border:hover card-styles"
+                id="lines"
                 onClick={() => {
                     setIsFlipped(false);
                     setShowTooltip(false);
@@ -94,7 +95,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         content="Click to see the answer"
                     />
                 )} */}
-            <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h3>
+            <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-black">{cardData.front}</h3>
             </motion.button>)
     }
     else if(cardData.back.length > 1){
@@ -153,8 +154,12 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                             dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center card-styles"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}
-                animate={{ rotateY: 180 }}
-                transition={{ duration: 0.5 }}
+                animate={{ rotateY: 180,
+                   x : [0, 10, -10, 10, -10, 0],
+                 }}
+                transition={{ duration: 0.5,
+                    ease: "easeInOut",
+                 }}
                 style={{ transformStyle: "preserve-3d" }}>
             {/*Back Content*/}
             <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
