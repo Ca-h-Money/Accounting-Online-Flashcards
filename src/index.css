@@ -56,10 +56,10 @@ h1 {
   border-color: #646cff;
 }*/
 
-button:focus,
+/*button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color; /*is this for accessibility?*/
-}
+  outline: 4px auto -webkit-focus-ring-color; /*is this for accessibility?
+}*/
 
 .neon-border {
   border: 3px solid #39FF14; /* Neon Green Border */
@@ -68,8 +68,8 @@ button:focus-visible {
 }
 
 .neon-border:hover {
- /* background-color: #242424;  Light green tint on hover */
-  box-shadow: 0px 0px 20px #39FF14; /* Stronger glow effect on hover */
+  /*background-color: #242424;  /*Light green tint on hover */
+  /*box-shadow: 0px 0px 20px #39FF14; /* Stronger glow effect on hover */
 }
 
 .card-styles {
@@ -91,10 +91,10 @@ body {
  
 
 
-body {
+/*body {
     background: linear-gradient(to right, #89CFF0, #1E3A8A);
-   
-}
+}*/
+
     
     /* @keyframes gradientShift {
       0% { background-position: 0% 50%; }
@@ -111,11 +111,17 @@ body {
   width: 100%;
 }
 
-#lines
+/*#lines
 {
   background: repeating-linear-gradient(
         white 0px, 
         white 24px, 
         lightgray 25px
     );
+}*/
+
+@layer utilities {
+  .transition-bg {
+    transition: 0.5s ease-in-out;
+  }
 }

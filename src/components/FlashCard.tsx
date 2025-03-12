@@ -22,8 +22,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
         return (
             <motion.button
                 className="relative w-full h-48 block p-6 bg-white rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700
-                            dark:hover:bg-gray-700 flex items-center justify-center neon-border neon-border:hover card-styles"
-                id="lines"
+                            dark:hover:bg-gray-700 flex items-center justify-center card-styles"
+                //id="lines"
                 onClick={() => {
                     setIsFlipped(false);
                     setShowTooltip(false);
@@ -95,14 +95,14 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         content="Click to see the answer"
                     />
                 )} */}
-            <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-black">{cardData.front}</h3>
+            <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h3>
             </motion.button>)
     }
     else if(cardData.back.length > 1){
         return (
             <motion.button
                 className="w-full h-48 block p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100
-                            dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center card-styles"
+                            dark:bg-gray-800 dark:border-gray-700 neon-border dark:hover:bg-gray-700 flex items-center justify-center card-styles"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}
                 animate={{ rotateY: 180 }}
@@ -151,7 +151,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
         return (
             <motion.button
                 className="w-full h-48 block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 
-                            dark:border-gray-700 dark:hover:bg-gray-700 flex items-center justify-center card-styles"
+                            dark:border-gray-700 neon-border dark:hover:bg-gray-700 flex items-center justify-center card-styles"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}
                 animate={{ rotateY: 180,

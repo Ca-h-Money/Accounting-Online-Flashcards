@@ -123,7 +123,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
             className="flex flex-col items-center mt-2 w-2xl max-w-2xl"
         >
             {/* Displays flashcard set category and description */}
-            <h2 className="h-17 my-4 text-2xl">{flashcardSet.description}</h2>
+            <h2 className="h-17 my-4 text-2xl dark:text-white light:text-black">{flashcardSet.description}</h2>
             {/* FlashCard Component */}
             <FlashCard 
                 cardData={currentFlashcard} 
@@ -139,7 +139,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
             <div className="w-full flex flex-row gap-10 items-center h-12 mt-4">
                 <CheckboxButton 
                     aria-label="Shuffle Button"
-                    className="h-full"
+                    className="border border-gray-300 rounded-md p-2 h-full"
                     isChecked={isRandomized} 
                     onClick={handleToggleRandomize}>
                     <FaShuffle color={isRandomized ? "white" : "gray"} size={20} aria-hidden={true}/>
@@ -151,7 +151,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                     <FaArrowLeftLong size={20} aria-hidden={true} />
                 </Button>
                 <p 
-                    className="flex-1 font-semibold text-lg"
+                    className="flex-1 font-semibold text-lg dark:text-white light:text-black"
                 >
                     {currentIndex + 1}/{flashcardSet.flashcards.length}
                 </p>  
