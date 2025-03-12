@@ -21,7 +21,7 @@ const FlashcardsPage = () => {
 
     return (
         <main role="main">
-            <h1>Green River College Accounting Flashcards</h1>
+            <h1 className="text-5xl/[1.1]">Green River College Accounting Flashcards</h1>
             <Dropdown
                 id="select-topic-dropdown"
                 title="Select Accounting Topic:"
