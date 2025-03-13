@@ -123,7 +123,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
             className="flex flex-col items-center mt-2 w-2xl max-w-2xl"
         >
             {/* Displays flashcard set category and description */}
-            <h2 className="h-17 my-4 text-2xl dark:text-white light:text-black">{flashcardSet.description}</h2>
+            <h2 className="h-17 my-4 text-2xl text-black dark:text-white">{flashcardSet.description}</h2>
             {/* FlashCard Component */}
             <FlashCard 
                 cardData={currentFlashcard} 
@@ -151,7 +151,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                     <FaArrowLeftLong size={20} aria-hidden={true} />
                 </Button>
                 <p 
-                    className="flex-1 font-semibold text-lg dark:text-white light:text-black"
+                    className="flex-1 font-semibold text-lg text-black dark:text-white"
                 >
                     {currentIndex + 1}/{flashcardSet.flashcards.length}
                 </p>  
