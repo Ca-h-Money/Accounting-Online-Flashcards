@@ -68,7 +68,7 @@ const Dropdown = ({
     return (
         // Dropdown component container
         <div id={id + "-component"} className="relative p-5 max-w-sm mx-auto">
-            <h2 className="p-4 text-lg font-semibold">{title}</h2>
+            <h2 className="p-4 text-lg font-semibold dark:text-white light:text-black">{title}</h2>
             {/* The dropdown element */}
             <div id={id} ref={dropdownRef} className="relative inline-block w-64">
                 <button
@@ -88,6 +88,7 @@ const Dropdown = ({
                         <ul role="menu" className="absolute left-0 mt-1 w-full bg-white text-gray-900 dark:text-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg z-100">
                             {options.map((option, index) => (
                                 <li
+                                    tabIndex={0}
                                     key={option}
                                     className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                                     onClick={() => { handleSelection(index) }}
