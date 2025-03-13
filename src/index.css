@@ -30,16 +30,14 @@ body {
 }
 
 /*----------------------- Flashcard Styles -----------------------*/
+button {
+  cursor: pointer;
+}
+
 .neon-border {
   border: 3px solid #39FF14; /* Neon Green Border */
   box-shadow: 0px 0px 10px #39FF14; /* Glowing Effect */
   transition: box-shadow 0.3s ease-in-out;
-}
-
-.neon-border:hover {
- /* background-color: #242424;  Light green tint on hover */
-  box-shadow: 0px 0px 20px #39FF14; /* Stronger glow effect on hover */
-  cursor:grab;
 }
 
 .card-styles {
@@ -51,11 +49,8 @@ body {
   width: 100%;
 }
 
-#lines
-{
-  background: repeating-linear-gradient(
-        white 0px, 
-        white 24px, 
-        lightgray 25px
-    );
+@layer utilities {
+  .transition-bg {
+    transition: 0.5s ease-in-out;
+  }
 }
