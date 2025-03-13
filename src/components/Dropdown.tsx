@@ -70,14 +70,14 @@ const Dropdown = ({
         <div id={id + "-component"} className="relative p-5 max-w-sm mx-auto">
             <h2 className="p-4 text-lg font-semibold dark:text-white light:text-black">{title}</h2>
             {/* The dropdown element */}
-            <div id={id} ref={dropdownRef} className="relative inline-block w-64">
+            <div id={id} ref={dropdownRef} className="relative inline-block w-64 cursor-pointer">
                 <button
                     aria-label={`Toggle ${ariaLabel} dropdown`}
                     aria-haspopup="true"
                     aria-expanded={isOpen}
                     type="button"
                     onClick={() => setIsOpen(!isOpen)}
-                    className="w-full flex justify-between items-center px-4 py-2 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full flex justify-between items-center px-4 py-2 cursor-pointer text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     {options[selectedIndex]}
                     <span className="ml-2">▼</span>
