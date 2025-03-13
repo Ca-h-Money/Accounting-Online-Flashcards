@@ -41,24 +41,26 @@ h1 {
   line-height: 1.1;
 }
 
-.button {
+button {
+  /*
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #1a1a1a;*/
   cursor: pointer;
-  transition: border-color 0.25s;
+  /*transition: border-color 0.25s;*/
 }
-.button:hover {
+/*.button:hover {
   border-color: #646cff;
-}
-button:focus,
+}*/
+
+/*button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+  outline: 4px auto -webkit-focus-ring-color; /*is this for accessibility?
+}*/
 
 .neon-border {
   border: 3px solid #39FF14; /* Neon Green Border */
@@ -67,8 +69,8 @@ button:focus-visible {
 }
 
 .neon-border:hover {
-  background-color: rgba(57, 255, 20, 0.1); /* Light green tint on hover */
-  box-shadow: 0px 0px 20px #39FF14; /* Stronger glow effect on hover */
+  /*background-color: #242424;  /*Light green tint on hover */
+  /*box-shadow: 0px 0px 20px #39FF14; /* Stronger glow effect on hover */
 }
 
 .card-styles {
@@ -90,13 +92,10 @@ body {
  
 
 
-body {
+/*body {
     background: linear-gradient(to right, #89CFF0, #1E3A8A);
-    min-height: 100vh; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+}*/
+
     
     /* @keyframes gradientShift {
       0% { background-position: 0% 50%; }
@@ -109,5 +108,21 @@ body {
       background-size: 400% 400%;
       animation: gradientShift 10s ease infinite;
   } */
+.maxWidth {
+  width: 100%;
+}
 
+/*#lines
+{
+  background: repeating-linear-gradient(
+        white 0px, 
+        white 24px, 
+        lightgray 25px
+    );
+}*/
 
+@layer utilities {
+  .transition-bg {
+    transition: 0.5s ease-in-out;
+  }
+}
