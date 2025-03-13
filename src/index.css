@@ -20,29 +20,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  background: linear-gradient(to right, #89CFF0, #1E3A8A);
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
 /*----------------------- Flashcard Styles -----------------------*/
 .neon-border {
   border: 3px solid #39FF14; /* Neon Green Border */
   box-shadow: 0px 0px 10px #39FF14; /* Glowing Effect */
   transition: box-shadow 0.3s ease-in-out;
-}
-
-.card-styles {
-  height: 450px;
-  width: 850px;
-}
-
-.maxWidth {
-  width: 100%;
 }
 
 @layer utilities {

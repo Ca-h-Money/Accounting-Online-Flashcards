@@ -115,15 +115,14 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
          * Flashcard display container.
          * 
          * - Uses flexbox for centering.
-         * - Currently relies on inline styles, which will be replaced by TailwindCSS.
          */
         <div
             role="region"
             aria-label={`Flashcard ${currentIndex + 1} of ${flashcardSet.flashcards.length}`}
-            className="flex flex-col items-center mt-2 w-2xl max-w-2xl"
+            className="flex flex-col items-center mt-2 sm:w-2xl sm:max-w-2xl"
         >
             {/* Displays flashcard set category and description */}
-            <h2 className="h-17 my-4 text-2xl text-black dark:text-white">{flashcardSet.description}</h2>
+            <h2 className="text-balance h-35 sm:h-17 my-4 text-2xl text-black dark:text-white">{flashcardSet.description}</h2>
             {/* FlashCard Component */}
             <FlashCard 
                 cardData={currentFlashcard} 
@@ -136,7 +135,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
             />
             
             {/* Navigation buttons for switching flashcards */}
-            <div className="w-full flex flex-row gap-10 items-center h-12 mt-4">
+            <div className="w-full flex flex-row gap-5 sm:gap-10 items-center h-12 mt-4">
                 <CheckboxButton 
                     aria-label="Shuffle Button"
                     title={`Click to ${isRandomized ? "unshuffle" : "shuffle"}`}
