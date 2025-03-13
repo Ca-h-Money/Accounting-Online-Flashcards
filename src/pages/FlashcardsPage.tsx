@@ -20,8 +20,7 @@ const FlashcardsPage = () => {
     const currentFlashcardSet : TFlashcardSet = flashcardData[selectedFlashcardSetIndex];
 
     return (
-        <main role="main">
-            <h1 className="text-5xl/[1.1] text-black dark:text-white">Green River College Accounting Flashcards</h1>
+        <main role="main" className="pb-10">
             <Dropdown
                 id="select-topic-dropdown"
                 title="Select Accounting Topic:"

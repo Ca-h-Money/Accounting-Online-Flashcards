@@ -11,11 +11,12 @@ import ThemeToggle from "./ThemeToggle";
 export default function Header() {
     return (
         <header 
-            className="w-full bg-gray-200 dark:bg-gray-900 shadow-md"
+            className="w-full flex flex-row bg-gray-200 dark:bg-gray-900 shadow-md"
             role="banner"
         >
+            <h1 className="basis-2/3 text-5xl/[1.1] content-center text-black dark:text-white">Green River College Accounting Flashcards</h1>
             <nav 
-                className="w-full flex justify-end items-center px-6 py-4"
+                className="flex basis-1/3 justify-end items-center px-6 py-4"
                 role="navigation"
                 aria-label="Main Navigation"
             >
