@@ -24,8 +24,8 @@ export default function Tooltip({ content, ...props }: TooltipProps) {
         }}
 
         className={`
+            text-black
             dark:text-white
-            light:text-black
             px-3
             py-2
             rounded-lg

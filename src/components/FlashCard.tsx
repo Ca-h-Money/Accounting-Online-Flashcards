@@ -21,8 +21,9 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
     if(isFlipped) {
         return (
             <motion.button
-                className="relative w-full h-48 block p-6 bg-white rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700
-                            dark:hover:bg-gray-700 flex items-center justify-center card-styles"
+                className="w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer rounded-lg shadow-sm
+                        bg-white dark:bg-gray-800  dark:border-gray-700
+                        hover:bg-gray-100 dark:hover:bg-gray-700 items-center justify-center"
                 //id="lines"
                 onClick={() => {
                     setIsFlipped(false);
@@ -35,7 +36,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 style={{ transformStyle: "preserve-3d" }}>
                 {showTooltip && 
                     <Tooltip 
-                        className="absolute bottom-10 right-10" 
+                        className="absolute bottom-5 sm:bottom-10 right-3 sm:right-10"
                         content="Click to see the answer"
                     />}
 
@@ -101,8 +102,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
     else if(cardData.back.length > 1){
         return (
             <motion.button
-                className="w-full h-48 block p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100
-                            dark:bg-gray-800 dark:border-gray-700 neon-border dark:hover:bg-gray-700 flex items-center justify-center card-styles"
+                className="w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100
+                            dark:bg-gray-800 dark:border-gray-700 neon-border dark:hover:bg-gray-700 items-center justify-center"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}
                 animate={{ rotateY: 180 }}
@@ -125,7 +126,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         <div className="w-full h-px bg-gray-400 dark:bg-gray-500 mt-1" /> {/* Horizontal line */}
                         </div>
                         {/* Content */}
-                        <span className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <span className="text-xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {cardData.back[0]}
                         </span>
                     </div>
@@ -140,7 +141,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         <div className="w-full h-px bg-gray-400 dark:bg-gray-500 mt-1" /> {/* Horizontal line */}
                         </div>
                         {/* Content */}
-                        <span className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <span className="text-xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {cardData.back[1]}
                         </span>
                     </div>
@@ -150,8 +151,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
     else{
         return (
             <motion.button
-                className="w-full h-48 block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 
-                            dark:border-gray-700 neon-border dark:hover:bg-gray-700 flex items-center justify-center card-styles"
+                className="w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800
+                            dark:border-gray-700 neon-border dark:hover:bg-gray-700 items-center justify-center"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}
                 animate={{ rotateY: 180,
