@@ -3,7 +3,7 @@ import { TFlashcard, TFlashcardSet } from "../types/types";
 import FlashCard from "./FlashCard.tsx";
 import Button from "./Button.tsx";
 import CheckboxButton from "./CheckboxButton.tsx";
-import { FaShuffle, FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { FaShuffle, FaArrowLeftLong, FaArrowRightLong, FaCircleQuestion } from "react-icons/fa6";
 
 interface FlashCardContainerProps
 {
@@ -110,6 +110,14 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     // Store the current flashcard in a variable for better readability
     const currentFlashcard : TFlashcard = currentSet[currentIndex];
 
+    //function for the help button
+    const handleHelpClick = () => {
+        const currentFlashcard = currentSet[currentIndex];
+        const fullAnswer = String(currentFlashcard.back);
+        const shorten = fullAnswer.substring(0, 1);
+        alert(`Hint: ${shorten}`);
+    };
+
     return (
         /**
          * Flashcard display container.
@@ -160,6 +168,12 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                     className="h-full"
                     onClick={handleNext}>
                     <FaArrowRightLong size={20} aria-hidden={true} />
+                </Button>
+                <Button
+                    aria-label="Help Button"
+                    className="h-full border border-blue-400 text-blue-600 dark:text-blue-300 rounded-md p-2"
+                    onClick={handleHelpClick}>
+                    <FaCircleQuestion size={20} aria-hidden={true} />
                 </Button>
             </div>
         </div>
