@@ -23,7 +23,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
             <motion.button
                 className="w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer rounded-lg shadow-sm
                         bg-white dark:bg-gray-800  dark:border-gray-700
-                        hover:bg-gray-100 dark:hover:bg-gray-700 items-center justify-center"
+                        hover:bg-gray-100 dark:hover:bg-gray-700 items-center justify-center backface-hidden"
                 //id="lines"
                 onClick={() => {
                     setIsFlipped(false);
@@ -34,69 +34,14 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 animate={{ rotateY: 0 }}
                 transition={{ duration: 0.5 }}
                 style={{ transformStyle: "preserve-3d" }}>
+
                 {showTooltip && 
                     <Tooltip 
                         className="absolute bottom-5 sm:bottom-10 right-3 sm:right-10"
                         content="Click to see the answer"
                     />}
 
-                
-                {/* {showTooltip && (
-                    <Tooltip 
-                        className="absolute top-[-50px] left-1/2 transform -translate-x-1/2"
-                        content="Click to see the answer"
-                    />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute bottom-[-50px] left-1/2 transform -translate-x-1/2"
-                        content="Click to see the answer"
-                    />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute top-1/2 left-[-60px] transform -translate-y-1/2"
-                        content="Click to see the answer"
-                    />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute top-1/2 right-[-60px] transform -translate-y-1/2"
-                        content="Click to see the answer"
-                    />
-                )}    
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute top-2 left-2"
-                        content="Click to see the answer"
-                    />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute top-2 right-2"
-                        content="Click to see the answer"
-                    />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute bottom-2 left-2"
-                        content="Click to see the answer"
-                    />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute bottom-2 right-2"
-                        content="Click to see the answer"
-                    />
-                )} */}
-            <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h3>
+                <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white backface-hidden">{cardData.front}</h3>
             </motion.button>)
     }
     else if(cardData.back.length > 1){
@@ -111,7 +56,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 style={{ transformStyle: "preserve-3d" }}>
                 {/* Symmetrical T-shaped layout */}
                 <div
-                className="grid grid-cols-2 grid-rows-[20%_80%] w-full h-full relative"
+                className="grid grid-cols-2 grid-rows-[20%_80%] w-full h-full relative backface-hidden"
                 style={{ transform: "rotateY(180deg)" }}>
                     {/* Vertical center line */}
                     <div className="absolute inset-y-0 left-1/2 w-px bg-gray-400 dark:bg-gray-500 transform -translate-x-1/2" />
@@ -162,8 +107,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                     ease: "easeInOut",
                  }}
                 style={{ transformStyle: "preserve-3d" }}>
-            {/*Back Content*/}
-            <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
+                {/*Back Content*/}
+                <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white backface-hidden" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
             </motion.button>)
     }
 }

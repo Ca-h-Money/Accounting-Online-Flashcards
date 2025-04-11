@@ -3,7 +3,8 @@ import { TFlashcard, TFlashcardSet } from "../types/types";
 import FlashCard from "./FlashCard.tsx";
 import Button from "./Button.tsx";
 import CheckboxButton from "./CheckboxButton.tsx";
-import { FaShuffle, FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import TimerProgressBar from "./TimerProgressBar.tsx";
+import { FaShuffle, FaArrowLeftLong, FaArrowRightLong, FaStopwatch  } from "react-icons/fa6";
 
 interface FlashCardContainerProps
 {
@@ -33,6 +34,10 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     // Store the current flashcardSet in an array
     const [currentSet, setCurrentSet] = useState<TFlashcard[]>(flashcardSet.flashcards);
 
+    const [durationLeft, setDurationLeft] = useState(5);
+    const [timerIndex, setTimerIndex] = useState(0);
+    const [isTimerOn, setIsTimerOn] = useState(false);
+
     useEffect(() => {
         // Reset currentIndex, flipped state, and randomize when flashcardSet changes
         setCurrentIndex(0);
@@ -58,6 +63,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
         setCurrentIndex((prev) => (prev + 1) % flashcardSet.flashcards.length);
         setIsFlipped(true);
         setIsInitialLoad(false);
+        resetTimer();
     };
 
     /**
@@ -68,6 +74,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
         setCurrentIndex((prev) => (prev - 1 + flashcardSet.flashcards.length) % flashcardSet.flashcards.length);
         setIsFlipped(true);
         setIsInitialLoad(false);
+        resetTimer();
     };
 
     /**
@@ -105,7 +112,23 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
         // Reset the flashcard index to the first card and ensure card is flipped
         setCurrentIndex(0); 
         setIsFlipped(true);
+        resetTimer();
     };
+
+    const handleToggleTimer = () => {
+        setIsTimerOn(prevState => !prevState);
+    }
+
+    const handleTimerCompleted = () => {
+        handleNext();
+        // setIsFlipped(false);
+        // setTimeout(() => handleNext(), 1000);
+    }
+
+    const resetTimer = () => {
+        setDurationLeft(5);
+        setTimerIndex(prev => prev + 1);
+    }
 
     // Store the current flashcard in a variable for better readability
     const currentFlashcard : TFlashcard = currentSet[currentIndex];
@@ -133,9 +156,19 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                 isInitialLoad={isInitialLoad}
                 setIsInitialLoad={setIsInitialLoad}
             />
+
+            {isTimerOn ? <TimerProgressBar key={timerIndex} duration={durationLeft} onTimerCompleted={handleTimerCompleted}/> : <div className="h-2"></div>}
             
             {/* Navigation buttons for switching flashcards */}
             <div className="w-full flex flex-row gap-5 sm:gap-10 items-center h-12 mt-4">
+                <CheckboxButton 
+                    aria-label="Timer Button"
+                    title={`Click to ${isTimerOn ? "turn timer off" : "turn timer on"}`}
+                    className="border border-gray-300 rounded-md p-2 h-full"
+                    isChecked={isTimerOn} 
+                    onClick={handleToggleTimer}>
+                    <FaStopwatch size={20} aria-hidden={true}/>
+                </CheckboxButton>
                 <CheckboxButton 
                     aria-label="Shuffle Button"
                     title={`Click to ${isRandomized ? "unshuffle" : "shuffle"}`}
