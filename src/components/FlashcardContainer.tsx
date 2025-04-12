@@ -4,6 +4,7 @@ import FlashCard from "./FlashCard.tsx";
 import Button from "./Button.tsx";
 import CheckboxButton from "./CheckboxButton.tsx";
 import { FaShuffle, FaArrowLeftLong, FaArrowRightLong, FaCircleQuestion } from "react-icons/fa6";
+import HintModal from "./HintModal";
 
 interface FlashCardContainerProps
 {
@@ -32,6 +33,10 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     const [isRandomized, setIsRandomized] = useState<boolean>(false);
     // Store the current flashcardSet in an array
     const [currentSet, setCurrentSet] = useState<TFlashcard[]>(flashcardSet.flashcards);
+
+    //for modal
+    const [showModal, setShowModal] = useState(false);
+    const [hintLetter, setHintLetter] = useState("");
 
     useEffect(() => {
         // Reset currentIndex, flipped state, and randomize when flashcardSet changes
@@ -115,7 +120,8 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
         const currentFlashcard = currentSet[currentIndex];
         const fullAnswer = String(currentFlashcard.back);
         const shorten = fullAnswer.substring(0, 1);
-        alert(`Hint: ${shorten}`);
+        setHintLetter(shorten);
+        setShowModal(true);
     };
 
     return (
@@ -175,6 +181,9 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                     onClick={handleHelpClick}>
                     <FaCircleQuestion size={20} aria-hidden={true} />
                 </Button>
+                {showModal && (
+                <HintModal hintLetter={hintLetter} onClose={() => setShowModal(false)} />
+                )}
             </div>
         </div>
     );
