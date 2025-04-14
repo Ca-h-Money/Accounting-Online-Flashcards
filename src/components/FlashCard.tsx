@@ -96,7 +96,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         content="Click to see the answer"
                     />
                 )} */}
-            <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h3>
+            <h3 className="text-7xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h3>
             </motion.button>)
     }
     else if(cardData.back.length > 1){
@@ -125,8 +125,9 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         </span>
                         <div className="w-full h-px bg-gray-400 dark:bg-gray-500 mt-1" /> {/* Horizontal line */}
                         </div>
-                        {/* Content */}
-                        <span className="text-xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {/* Content 
+                        sm:text-4xl*/}
+                        <span className="text-5xl  font-bold tracking-tight text-gray-900 dark:text-white">
                         {cardData.back[0]}
                         </span>
                     </div>
@@ -140,8 +141,9 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         </span>
                         <div className="w-full h-px bg-gray-400 dark:bg-gray-500 mt-1" /> {/* Horizontal line */}
                         </div>
-                        {/* Content */}
-                        <span className="text-xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {/* Content 
+                        sm:text-4xl*/}
+                        <span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {cardData.back[1]}
                         </span>
                     </div>
@@ -163,7 +165,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                  }}
                 style={{ transformStyle: "preserve-3d" }}>
             {/*Back Content*/}
-            <h3 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
+            <h3 className="text-7xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
             </motion.button>)
     }
 }

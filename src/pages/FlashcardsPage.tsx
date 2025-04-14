@@ -3,6 +3,7 @@ import FlashcardContainer from "../components/FlashcardContainer";
 import flashcardData from "../data/flashcard-data";
 import { TFlashcardSet } from "../types/types";
 import Dropdown from "../components/Dropdown";
+import Instructions from "../components/Instructions";
 
 /**
  * FlashcardsPage Component
@@ -21,6 +22,9 @@ const FlashcardsPage = () => {
 
     return (
         <main role="main" className="pb-10">
+            <div className="flex flex-col sm:flex-row items-start justify-between w-full">
+            <Instructions />
+            
             <Dropdown
                 id="select-topic-dropdown"
                 title="Select Accounting Topic:"
@@ -29,6 +33,7 @@ const FlashcardsPage = () => {
                 setSelectedIndex={setSelectedFlashcardSetIndex}
                 ariaLabel="flashcard topic"
             />
+            </div>
             {/* Inline styles will be removed once TailwindCSS is added to project */}
             <div style={{
                     display: "flex",

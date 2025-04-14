@@ -118,11 +118,20 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     //function for the help button
     //add logic for cardData.back.length > 1
     const handleHelpClick = () => {
+        const backData = currentFlashcard.back 
+        if (Array.isArray(backData) && backData.length > 1) {
+            // Two parts to the answer (e.g., Debit / Credit)
+            const leftHint = backData[0]?.charAt(0) ?? "";
+            const rightHint = backData[1]?.charAt(0) ?? "";
+            setHintLetter(`${leftHint} , ${rightHint}`);
+        }else{
         const currentFlashcard = currentSet[currentIndex];
         const fullAnswer = String(currentFlashcard.back);
         const shorten = fullAnswer.substring(0, 1);
         setHintLetter(shorten);
         setShowModal(true);
+        }
+        setShowModal(true)
     };
 
     return (
@@ -150,21 +159,22 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
             />
             
             {/* Navigation buttons for switching flashcards */}
-            <div className="w-full flex flex-row gap-5 sm:gap-10 items-center h-12 mt-4">
+            <div className="w-full flex flex-row gap-5 sm:gap-10 items-center h-14 mt-4">
                 <CheckboxButton 
                     aria-label="Shuffle Button"
                     title={`Click to ${isRandomized ? "unshuffle" : "shuffle"}`}
                     className="border border-gray-300 rounded-md p-2 h-full"
                     isChecked={isRandomized} 
                     onClick={handleToggleRandomize}>
-                    <FaShuffle  size={20} aria-hidden={true}/>
+                    Shuffle<FaShuffle  size={20} aria-hidden={true}/>
                 </CheckboxButton>
+                
                 <Button 
                     aria-label="Previous Flashcard Button"
                     title={`Click to see previous flashcard`}
                     className="h-full"
                     onClick={handlePrev}>
-                    <FaArrowLeftLong size={20} aria-hidden={true} />
+                    Back<FaArrowLeftLong size={20} aria-hidden={true} />
                 </Button>
                 <p 
                     className="flex-1 font-semibold text-lg text-black dark:text-white"
@@ -176,13 +186,13 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                     title={`Click to see next flashcard`}
                     className="h-full"
                     onClick={handleNext}>
-                    <FaArrowRightLong size={20} aria-hidden={true} />
+                    Next<FaArrowRightLong size={20} aria-hidden={true} />
                 </Button>
                 <Button
                     aria-label="Help Button"
                     className="h-full border border-blue-400 text-blue-600 dark:text-blue-300 rounded-md p-2"
                     onClick={handleHelpClick}>
-                    <FaCircleQuestion size={20} aria-hidden={true} />
+                   Help<FaCircleQuestion size={20} aria-hidden={true} />
                 </Button>
                 {showModal && (
                 <HintModal hintLetter={hintLetter} onClose={() => setShowModal(false)} />
