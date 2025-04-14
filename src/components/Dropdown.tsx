@@ -42,9 +42,11 @@ const Dropdown = ({
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     // Update the index of the selected topic and close the dropdown menu
-    const handleSelection = (item: number) => {
-        setSelectedIndex(item);
-        setIsOpen(false);
+    const handleSelection = (event: React.MouseEvent | React.KeyboardEvent, item: number): void => {
+        if (event.type === "click" || (event.type === "keydown" && (event as React.KeyboardEvent).key === "Enter")) {
+            setSelectedIndex(item);
+            setIsOpen(false);
+        }
     };
 
     // Hold a reference to the dropdown menu
@@ -68,16 +70,18 @@ const Dropdown = ({
     return (
         // Dropdown component container
         <div id={id + "-component"} className="relative p-5 max-w-sm mx-auto">
-            <h2 className="p-4 text-lg font-semibold dark:text-white light:text-black">{title}</h2>
+            <h2 className="p-4 text-lg font-semibold text-black dark:text-white">{title}</h2>
             {/* The dropdown element */}
-            <div id={id} ref={dropdownRef} className="relative inline-block w-64">
+            <div id={id} ref={dropdownRef} className="relative inline-block w-64 cursor-pointer">
                 <button
                     aria-label={`Toggle ${ariaLabel} dropdown`}
                     aria-haspopup="true"
                     aria-expanded={isOpen}
                     type="button"
                     onClick={() => setIsOpen(!isOpen)}
-                    className="w-full flex justify-between items-center px-4 py-2 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full flex justify-between items-center px-4 py-2 cursor-pointer
+                            text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600
+                            rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     {options[selectedIndex]}
                     <span className="ml-2">▼</span>
@@ -85,13 +89,19 @@ const Dropdown = ({
                 {/* The dropdown menu */}
                 {isOpen && (
                     <div aria-label={`${ariaLabel} dropdown menu`}>
-                        <ul role="menu" className="absolute left-0 mt-1 w-full bg-white text-gray-900 dark:text-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg z-100">
+                        <ul
+                            role="menu"
+                            aria-multiselectable={false}
+                            className="absolute left-0 mt-1 w-full bg-white text-gray-900 dark:text-white dark:bg-gray-800 border
+                                    border-gray-300 dark:border-gray-600 rounded-md shadow-lg z-100"
+                        >
                             {options.map((option, index) => (
                                 <li
                                     tabIndex={0}
                                     key={option}
                                     className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-                                    onClick={() => { handleSelection(index) }}
+                                    onClick={(event) => { handleSelection(event, index) }}
+                                    onKeyDown={(event) => handleSelection(event, index)}
                                     >
                                     {option}
                                 </li>

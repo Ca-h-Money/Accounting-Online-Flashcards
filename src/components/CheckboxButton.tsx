@@ -27,9 +27,9 @@ const CheckboxButton = ({children, isChecked, ...props} : CheckboxButtonProps) =
     <button
         {...props}
         className={`h-full cursor-pointer rounded-lg border border-transparent px-4 py-2 text-base font-medium 
-                transition duration-200 hover:bg-gray-800 ${isChecked ? "bg-gray-900 text-white" : "text-gray-500"} 
+                transition duration-200 hover:bg-gray-400 dark:hover:bg-gray-800 
+                ${isChecked ? "text-black bg-white dark:text-white dark:bg-gray-900" : "text-gray-500 bg-white dark:bg-gray-900"} 
                 ${props.className}`}
-      
     >
       {children}
     </button>

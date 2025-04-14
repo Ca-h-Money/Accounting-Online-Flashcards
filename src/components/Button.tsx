@@ -24,7 +24,8 @@ const Button= ({children, ...props}: ButtonProps) => {
         <button 
             {...props}
             className={`cursor-pointer rounded-lg border border-transparent px-4 py-2 text-base 
-                font-medium bg-gray-900 text-white transition duration-200 hover:border-gray-400 ${props.className}`}
+                font-medium transition duration-200  text-black bg-white dark:text-white dark:bg-gray-900
+                hover:bg-gray-400 dark:hover:bg-gray-800 hover:border-gray-400 ${props.className}`}
         >
             {children}
         </button>
