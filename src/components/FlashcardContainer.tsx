@@ -116,6 +116,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     const currentFlashcard : TFlashcard = currentSet[currentIndex];
 
     //function for the help button
+    //add logic for cardData.back.length > 1
     const handleHelpClick = () => {
         const currentFlashcard = currentSet[currentIndex];
         const fullAnswer = String(currentFlashcard.back);
