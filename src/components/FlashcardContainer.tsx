@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { TFlashcard, TFlashcardSet } from "../types/types";
+import { TFlashcard } from "../types/types";
+import { Category, Flashcard } from "../context/flashcards/flashcardsContext.ts";
 import FlashCard from "./FlashCard.tsx";
 import Button from "./Button.tsx";
 import CheckboxButton from "./CheckboxButton.tsx";
@@ -7,7 +8,8 @@ import { FaShuffle, FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
 interface FlashCardContainerProps
 {
-    flashcardSet: TFlashcardSet
+    flashcards: Flashcard[],
+    category: Category
 }
 
 /**
@@ -19,7 +21,7 @@ interface FlashCardContainerProps
  * Props:
  * @param {TFlashcardSet} flashcardSet - The selected set of flashcards to display.
  */
-const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
+const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) => {
     // State to track the current flashcard index
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     // set isInitialLoad state that is true on page load and false after any interaction
@@ -31,15 +33,15 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     // Set isRandomized state to false so the cards retain the order they are loaded in
     const [isRandomized, setIsRandomized] = useState<boolean>(false);
     // Store the current flashcardSet in an array
-    const [currentSet, setCurrentSet] = useState<TFlashcard[]>(flashcardSet.flashcards);
+    const [currentSet, setCurrentSet] = useState<Flashcard[]>(flashcards);
 
     useEffect(() => {
         // Reset currentIndex, flipped state, and randomize when flashcardSet changes
         setCurrentIndex(0);
         setIsFlipped(true);
         setIsRandomized(false);
-        setCurrentSet(flashcardSet.flashcards);
-    }, [flashcardSet])
+        setCurrentSet(flashcards);
+    }, [flashcards])
 
     // Wait 1 second after mount, then show tooltip
     useEffect(() => {
@@ -55,7 +57,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
      * Loops back to the first card when reaching the end.
      */
     const handleNext = () => {
-        setCurrentIndex((prev) => (prev + 1) % flashcardSet.flashcards.length);
+        setCurrentIndex((prev) => (prev + 1) % flashcards.length);
         setIsFlipped(true);
         setIsInitialLoad(false);
     };
@@ -65,7 +67,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
      * Loops back to the last card when at the first card.
      */
     const handlePrev = () => {
-        setCurrentIndex((prev) => (prev - 1 + flashcardSet.flashcards.length) % flashcardSet.flashcards.length);
+        setCurrentIndex((prev) => (prev - 1 + flashcards.length) % flashcards.length);
         setIsFlipped(true);
         setIsInitialLoad(false);
     };
@@ -77,7 +79,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
      */
     const randomizeSet = () => {
         // Create a copy of the original flashcards array
-        const shuffledSet = [...flashcardSet.flashcards]; 
+        const shuffledSet = [...flashcards]; 
 
         for (let i = shuffledSet.length - 1; i > 0; i--) { 
             const j = Math.floor(Math.random() * (i + 1)); // Generate a random index within the remaining unshuffled portion
@@ -93,7 +95,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     const handleToggleRandomize = () => {
         if (isRandomized) {
             // Reset to the original flashcard order if currently randomized
-            setCurrentSet(flashcardSet.flashcards); 
+            setCurrentSet(flashcards); 
         } else {
             // Shuffle and update the flashcard set if not randomized
             setCurrentSet(randomizeSet()); 
@@ -118,11 +120,11 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
          */
         <div
             role="region"
-            aria-label={`Flashcard ${currentIndex + 1} of ${flashcardSet.flashcards.length}`}
+            aria-label={`Flashcard ${currentIndex + 1} of ${flashcards.length}`}
             className="flex flex-col items-center mt-2 sm:w-2xl sm:max-w-2xl"
         >
             {/* Displays flashcard set category and description */}
-            <h2 className="text-balance h-35 sm:h-17 my-4 text-2xl text-black dark:text-white">{flashcardSet.description}</h2>
+            <h2 className="text-balance h-35 sm:h-17 my-4 text-2xl text-black dark:text-white">{category.description}</h2>
             {/* FlashCard Component */}
             <FlashCard 
                 cardData={currentFlashcard} 
@@ -154,7 +156,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                 <p 
                     className="flex-1 font-semibold text-lg text-black dark:text-white"
                 >
-                    {currentIndex + 1}/{flashcardSet.flashcards.length}
+                    {currentIndex + 1}/{flashcards.length}
                 </p>  
                 <Button
                     aria-label="Next Flashcard Button"
