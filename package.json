@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.6",
+    "@tanstack/react-query": "^5.74.3",
     "firebase": "^11.6.0",
     "framer-motion": "^12.4.3",
     "motion": "^12.4.3",

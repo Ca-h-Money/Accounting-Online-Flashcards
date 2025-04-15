@@ -2,8 +2,11 @@ import { Routes, Route } from 'react-router-dom';
 import FlashcardsPage from './pages/FlashcardsPage';
 import AdminPage from './pages/AdminPage';
 import Header from './components/Header';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FlashcardsProvider } from './context/flashcards/FlashcardsProvider';
 import AuthProvider from './context/auth/AuthProvider';
+
+const queryClient = new QueryClient();
 
 /**
  * Root component of the application.
@@ -19,15 +22,17 @@ function App() {
          * If additional pages or features are added in the future (e.g., routing),
          * this file will serve as the top-level component.
          */
-        <AuthProvider>
-            <FlashcardsProvider>
-                <Header />
-                <Routes>
-                    <Route path="/Accounting-Online-Flashcards" element={<FlashcardsPage />} />
-                    <Route path="/Accounting-Online-Flashcards/admin" element={<AdminPage />} />
-                </Routes>
-            </FlashcardsProvider>
-        </AuthProvider>        
+        <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+                <FlashcardsProvider>
+                    <Header />
+                    <Routes>
+                        <Route path="/Accounting-Online-Flashcards" element={<FlashcardsPage />} />
+                        <Route path="/Accounting-Online-Flashcards/admin" element={<AdminPage />} />
+                    </Routes>
+                </FlashcardsProvider>
+            </AuthProvider>  
+        </QueryClientProvider>      
     );
 }
 

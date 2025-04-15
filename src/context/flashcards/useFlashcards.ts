@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { FlashcardsContext } from "../context/flashcards/flashcardsContext";
+import { FlashcardsContext } from "./flashcardsContext";
 
 export const useFlashcards = () => {
   const context = useContext(FlashcardsContext);

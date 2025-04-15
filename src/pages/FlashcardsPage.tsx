@@ -3,7 +3,7 @@ import FlashcardContainer from "../components/FlashcardContainer";
 // import flashcardData from "../data/flashcard-data";
 // import { TFlashcardSet } from "../types/types";
 import Dropdown from "../components/Dropdown";
-import { useFlashcards } from "../hooks/useFlashcards";
+import { useFlashcards } from "../context/flashcards/useFlashcards";
 import { Category, Flashcard } from "../context/flashcards/flashcardsContext";
 
 
