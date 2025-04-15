@@ -17,7 +17,9 @@ export type FlashcardsContextType = {
     categories: Category[];
     flashcards: Flashcard[];
     getFlashcardsByCategory: (categoryId: string) => Flashcard[];
-    isLoading: boolean;
+    isLoadingData: boolean;
+    isDataError: boolean;
+    dataError: Error | null;
     editCategory: (params: { id: string; updates: Partial<Category> }) => void;
     editFlashcard: (params: { id: string; updates: Partial<Flashcard> }) => void;
     deleteCategory: (id: string) => void;

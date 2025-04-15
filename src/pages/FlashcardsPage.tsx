@@ -21,13 +21,13 @@ const FlashcardsPage = () => {
     const [currentFlashcardSet, setCurrentFlashcardSet] = useState<Flashcard[]>(null!);
     const [currentCategory, setCurrentCategory] = useState<Category>(null!);
 
-    const {categories, flashcards, isLoading, getFlashcardsByCategory} = useFlashcards();
+    const {categories, flashcards, isLoadingData, getFlashcardsByCategory} = useFlashcards();
 
     //console.log(flashcards);
     //console.log(categories);
  
     useEffect(() => {
-        if (isLoading) return;
+        if (isLoadingData) return;
 
         if (selectedFlashcardSetIndex !== null && categories.length > 0 && flashcards.length > 0) {
             const selectedCategory = categories[selectedFlashcardSetIndex];
@@ -37,9 +37,9 @@ const FlashcardsPage = () => {
                 setCurrentCategory(selectedCategory);
             }
         }
-    }, [selectedFlashcardSetIndex, categories, flashcards, isLoading, getFlashcardsByCategory]);
+    }, [selectedFlashcardSetIndex, categories, flashcards, isLoadingData, getFlashcardsByCategory]);
     
-    if (isLoading || !currentFlashcardSet || !currentCategory){
+    if (isLoadingData || !currentFlashcardSet || !currentCategory){
         return <div>Loading...</div>
     }
 

@@ -1,63 +1,115 @@
-import { ReactNode, useMemo } from "react";
-import { collection, getDocs, updateDoc, deleteDoc, addDoc, doc } from "firebase/firestore";
+import { ReactNode } from "react";
+import { collection, getDoc, getDocs, updateDoc, deleteDoc, addDoc, doc, setDoc, serverTimestamp, Timestamp } from "firebase/firestore";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { db } from "../../firebase";
 import { Category, Flashcard } from "./flashcardsContext";
 import { FlashcardsContext } from "./flashcardsContext";
+import { getCachedFlashcards, saveFlashcardCache } from "../../utils/cache";
+
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 
-// ----- Data Fetching Functions -----
-async function fetchCategories(): Promise<Category[]> {
-    const catSnap = await getDocs(collection(db, "categories"));
-    return catSnap.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-    })) as Category[];
-}
+// ----- Data Caching Functions -----
 
-async function fetchFlashcards(): Promise<Flashcard[]> {
-    const flashSnap = await getDocs(collection(db, "flashcards"));
-    return flashSnap.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-    })) as Flashcard[];
-}
+// fetch updated_at timestamp from firestore
+const fetchUpdatedAt = async (): Promise<string | null> => {
+    const ref = doc(db, "meta", "globalData");
+    const snap = await getDoc(ref);
+    const data = snap.data();
+    const ts = data?.updated_at as Timestamp | undefined;
+    return ts?.toDate().toISOString() ?? null;
+};
+
+// Update the updated_at timestamp in firestore
+const updateLastModified = async () => {
+    const ref = doc(db, "meta", "globalData");
+  
+    await setDoc(ref, {
+      updated_at: serverTimestamp(),
+    }, { merge: true }); // this avoids overwrite and supports non-existing docs
+};
 
 
 export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
-    /* eslint-disable @typescript-eslint/no-unsafe-call */
-    /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-    /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+    
     const queryClient = useQueryClient();
 
     const {
-        data: categories = [],
-        isLoading: isCategoriesLoading,
-        isError: isCategoriesError,
-        error: categoriesError,
-    
-    } = useQuery({
-        queryKey: ["categories"],
-        queryFn: fetchCategories,
+        data: loadedData = { categories: [], flashcards: [] },
+        isLoading : isLoadingData,
+        isError: isDataError,
+        error: dataError,
+      } = useQuery({
+        queryKey: ["flashcards-and-categories"],
+        queryFn: async (): Promise<{ categories: Category[]; flashcards: Flashcard[] }> => {
+            // Fetch timestamp from Firestore of last update
+            const updatedAt = await fetchUpdatedAt();
+            // Fetch cached data from local storage
+            const cached = getCachedFlashcards();
+        
+            // Return cached data if last updated timestamps match 
+            if (cached && updatedAt && cached.lastUpdated === updatedAt) {
+                console.log("Loaded Data From Local Storage");
+                return {
+                    categories: cached.categories,
+                    flashcards: cached.flashcards,
+                };
+            }
+        
+            // If timestamps are different, fetch new data from Firestore
+            // Fetch Categories and Flashcards from Firestore
+            const [catSnap, flashSnap] = await Promise.all([
+                getDocs(collection(db, "categories")),
+                getDocs(collection(db, "flashcards")),
+            ]);
+        
+            // fetch categories from firestore
+            const categories = catSnap.docs.map((doc) => ({
+                id: doc.id,
+                ...(doc.data() as Omit<Category, "id">),
+            }));
+        
+            // fetch flashcards from firestore
+            const flashcards = flashSnap.docs.map((doc) => ({
+                id: doc.id,
+                ...(doc.data() as Omit<Flashcard, "id">),
+            }));
+        
+            // save newly fetched data from firestore into local storage
+            if (updatedAt) {
+                saveFlashcardCache({ categories, flashcards, lastUpdated: updatedAt });
+            }
+
+            console.log("Loaded Data From Firebase");
+        
+            return { categories, flashcards };
+        },
     });
+
+    const categories = loadedData.categories;
+    const flashcards = loadedData.flashcards;
 
     const addCategoryMutation = useMutation({
         mutationFn: async (newCategory: Omit<Category, "id">) => {
             await addDoc(collection(db, "categories"), newCategory);
+            await updateLastModified();
         },
         onSuccess: () => {
-            void queryClient.invalidateQueries({ queryKey: ["categories"] });
+            void queryClient.invalidateQueries({ queryKey: ["flashcards-and-categories"] });
         },
     });
 
     const editCategoryMutation = useMutation({
         mutationFn: async ({ id, updates }: { id: string; updates: Partial<Category> }) => {
-          const categoryRef = doc(db, "categories", id);
-          await updateDoc(categoryRef, updates);
+            const categoryRef = doc(db, "categories", id);
+            await updateDoc(categoryRef, updates);
+            await updateLastModified();
         },
         onSuccess: () => {
-          // Invalidate the "categories" query so it refetches
-          void queryClient.invalidateQueries({ queryKey: ["categories"] });
+            // Invalidate the "flashcards-and-categories" query so it refetches
+            void queryClient.invalidateQueries({ queryKey: ["flashcards-and-categories"] });
         },
     });
 
@@ -65,28 +117,22 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
         mutationFn: async (id: string) => {
             const categoryRef = doc(db, "categories", id);
             await deleteDoc(categoryRef);
+            await updateLastModified();
         },
         onSuccess: () => {
-            void queryClient.invalidateQueries({ queryKey: ["categories"] });
+            // Invalidate the "flashcards-and-categories" query so it refetches
+            void queryClient.invalidateQueries({ queryKey: ["flashcards-and-categories"] });
         },
-    });
-
-    const {
-        data: flashcards = [],
-        isLoading: isFlashcardsLoading,
-        isError: isFlashcardsError,
-        error: flashcardsError,
-    } = useQuery<Flashcard[]>({
-        queryKey: ["flashcards"], 
-        queryFn: fetchFlashcards
     });
 
     const addFlashcardMutation = useMutation({
         mutationFn: async (newFlashcard: Omit<Flashcard, "id">) => {
             await addDoc(collection(db, "flashcards"), newFlashcard);
+            await updateLastModified();
         },
         onSuccess: () => {
-            void queryClient.invalidateQueries({ queryKey: ["flashcards"] });
+            // Invalidate the "flashcards-and-categories" query so it refetches
+            void queryClient.invalidateQueries({ queryKey: ["flashcards-and-categories"] });
         },
     });
 
@@ -94,10 +140,11 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
         mutationFn: async ({ id, updates }: { id: string; updates: Partial<Flashcard> }) => {
           const flashcardRef = doc(db, "flashcards", id);
           await updateDoc(flashcardRef, updates);
+          await updateLastModified();
         },
         onSuccess: () => {
-          // Refetch flashcards after successful update
-          void queryClient.invalidateQueries({ queryKey: ["flashcards"] });
+            // Invalidate the "flashcards-and-categories" query so it refetches
+            void queryClient.invalidateQueries({ queryKey: ["flashcards-and-categories"] });
         },
     });
 
@@ -105,23 +152,13 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
         mutationFn: async (id: string) => {
             const flashcardRef = doc(db, "flashcards", id);
             await deleteDoc(flashcardRef);
+            await updateLastModified();
         },
         onSuccess: () => {
-            void queryClient.invalidateQueries({ queryKey: ["flashcards"] });
+            // Invalidate the "flashcards-and-categories" query so it refetches
+            void queryClient.invalidateQueries({ queryKey: ["flashcards-and-categories"] });
         },
     });
-      
-      
-    // Combine loading states
-    const isLoading = isCategoriesLoading || isFlashcardsLoading;
-
-    // Optionally handle errors here or inside your components
-    if (isCategoriesError) {
-        console.error("Error fetching categories:", categoriesError);
-    }
-    if (isFlashcardsError) {
-        console.error("Error fetching flashcards:", flashcardsError);
-    }
 
     // Simple helper
     const getFlashcardsByCategory = (categoryId: string): Flashcard[] => {
@@ -130,12 +167,13 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
         );
     };
 
-    // Prepare context value
-    const contextValue = useMemo(
-        () => ({
+    return (
+        <FlashcardsContext.Provider value={{
             categories,
             flashcards,
-            isLoading,
+            isLoadingData,
+            isDataError,
+            dataError,
             getFlashcardsByCategory,
             editCategory: editCategoryMutation.mutate,
             editFlashcard: editFlashcardMutation.mutate,
@@ -143,22 +181,7 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
             deleteFlashcard: deleteFlashcardMutation.mutate,
             addCategory: addCategoryMutation.mutate,
             addFlashcard: addFlashcardMutation.mutate,
-        }),
-        [
-            categories,
-            flashcards,
-            isLoading,
-            editCategoryMutation.mutate,
-            editFlashcardMutation.mutate,
-            deleteCategoryMutation.mutate,
-            deleteFlashcardMutation.mutate,
-            addCategoryMutation.mutate,
-            addFlashcardMutation.mutate,
-        ]
-    );
-
-    return (
-        <FlashcardsContext.Provider value={contextValue}>
+        }}>
             {children}
         </FlashcardsContext.Provider>
     );
