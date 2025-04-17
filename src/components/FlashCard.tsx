@@ -22,8 +22,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
         return (
             <motion.button
                 className="w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer rounded-lg shadow-sm
-                        bg-white dark:bg-gray-800  dark:border-gray-700
-                        hover:bg-gray-100 dark:hover:bg-gray-700 items-center justify-center"
+                        bg-white dark:bg-[#F97316]  dark:border-gray-700 dark:text-black
+                        hover:bg-gray-100 dark:hover:bg-[#ff9600] items-center justify-center"
                 //id="lines"
                 onClick={() => {
                     setIsFlipped(false);
@@ -153,7 +153,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
     else{
         return (
             <motion.button
-                className="w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800
+                className="w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer bg-[#bca594] border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800
                             dark:border-gray-700 neon-border dark:hover:bg-gray-700 items-center justify-center"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}

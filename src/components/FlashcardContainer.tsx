@@ -172,7 +172,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                 <Button 
                     aria-label="Previous Flashcard Button"
                     title={`Click to see previous flashcard`}
-                    className="h-full"
+                    className="h-full text-green-800 font-bold hover:text-green-900"
                     onClick={handlePrev}>
                     Back<FaArrowLeftLong size={20} aria-hidden={true} />
                 </Button>
@@ -184,12 +184,13 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                 <Button
                     aria-label="Next Flashcard Button"
                     title={`Click to see next flashcard`}
-                    className="h-full"
+                    className="h-full text-green-800 font-bold hover:text-green-900"
                     onClick={handleNext}>
                     Next<FaArrowRightLong size={20} aria-hidden={true} />
                 </Button>
                 <Button
                     aria-label="Help Button"
+                    title={'Click to see a hint'}
                     className="h-full border border-blue-400 text-blue-600 dark:text-blue-300 rounded-md p-2"
                     onClick={handleHelpClick}>
                    Help<FaCircleQuestion size={20} aria-hidden={true} />
