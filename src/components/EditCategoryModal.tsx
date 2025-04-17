@@ -44,19 +44,19 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
                 <div>
                     <label className="block text-sm font-medium">Name</label>
                     <input
-                    type="text"
-                    className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-800"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                        type="text"
+                        className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-800"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </div>
                 <div>
                     <label className="block text-sm font-medium">Description</label>
                     <input
-                    type="text"
-                    className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-800"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                        type="text"
+                        className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-800"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
                 <div className="flex justify-end gap-2">

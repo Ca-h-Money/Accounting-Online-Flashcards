@@ -4,15 +4,15 @@ import { Flashcard, Category } from "../context/flashcards/flashcardsContext";
 import { useFlashcards } from "../context/flashcards/useFlashcards";
 
 type EditFlashcardModalProps = {
-  flashcard: Flashcard | null;
-  categories: Category[];
-  onClose: () => void;
+    flashcard: Flashcard | null;
+    categories: Category[];
+    onClose: () => void;
 };
 
 export default function EditFlashcardModal({
-  flashcard,
-  categories,
-  onClose,
+    flashcard,
+    categories,
+    onClose,
 }: EditFlashcardModalProps) {
     const { editFlashcard, addFlashcard } = useFlashcards();
     const [front, setFront] = useState("");
@@ -40,13 +40,13 @@ export default function EditFlashcardModal({
                     categoryId,
                 }
             });
-            } else {
-                addFlashcard({ 
-                    front: front.trim(),
-                    back: back.split(",").map((b) => b.trim()).filter((b) => b),
-                    categoryId
-                });
-            }
+        } else {
+            addFlashcard({ 
+                front: front.trim(),
+                back: back.split(",").map((b) => b.trim()).filter((b) => b),
+                categoryId
+            });
+        }
         onClose();
     };
 
@@ -83,9 +83,9 @@ export default function EditFlashcardModal({
                     onChange={(e) => setCategoryId(e.target.value)}
                 >
                     {categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                        {cat.name}
-                    </option>
+                        <option key={cat.id} value={cat.id}>
+                            {cat.name}
+                        </option>
                     ))}
                 </select>
                 </div>
