@@ -146,7 +146,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
             className="flex flex-col items-center mt-2 sm:w-2xl sm:max-w-2xl"
         >
             {/* Displays flashcard set category and description */}
-            <h2 className="text-balance h-35 sm:h-17 my-4 text-2xl text-black dark:text-white">{flashcardSet.description}</h2>
+            <h2 className="text-balance h-35 sm:h-17 my-4 text-4xl text-black dark:text-white">{flashcardSet.description}</h2>
             {/* FlashCard Component */}
             <FlashCard 
                 cardData={currentFlashcard} 
@@ -193,7 +193,7 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                     title={'Click to see a hint'}
                     className="h-full border border-blue-400 text-blue-600 dark:text-blue-300 rounded-md p-2"
                     onClick={handleHelpClick}>
-                   Help<FaCircleQuestion size={20} aria-hidden={true} />
+                   Hint<FaCircleQuestion size={20} aria-hidden={true} />
                 </Button>
                 {showModal && (
                 <HintModal hintLetter={hintLetter} onClose={() => setShowModal(false)} />

@@ -22,8 +22,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
         return (
             <motion.button
                 className="w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer rounded-lg shadow-sm
-                        bg-white dark:bg-[#F97316]  dark:border-gray-700 dark:text-black
-                        hover:bg-gray-100 dark:hover:bg-[#ff9600] items-center justify-center"
+                        bg-white dark:bg-[#50C878]  dark:border-gray-700 dark:text-black
+                        hover:bg-gray-100 dark:hover:bg-[#00A86B] items-center justify-center"
                 //id="lines"
                 onClick={() => {
                     setIsFlipped(false);

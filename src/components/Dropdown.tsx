@@ -69,7 +69,7 @@ const Dropdown = ({
 
     return (
         // Dropdown component container
-        <div id={id + "-component"} className="relative p-5 max-w-sm mx-auto">
+        <div id={id + "-component"} className="relative p-5 max-w-sm mx-auto pl-0 ml-30 mt-20">
             <h2 className="p-4 text-lg font-semibold text-black dark:text-white">{title}</h2>
             {/* The dropdown element */}
             <div id={id} ref={dropdownRef} className="relative inline-block w-64 cursor-pointer">

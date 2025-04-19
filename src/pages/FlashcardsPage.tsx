@@ -26,6 +26,7 @@ const FlashcardsPage = () => {
             <Instructions />
             
             <Dropdown
+
                 id="select-topic-dropdown"
                 title="Select Accounting Topic:"
                 options={flashcardData.map(flashcardSet => {return flashcardSet.category})}
