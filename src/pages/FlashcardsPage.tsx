@@ -22,7 +22,7 @@ const FlashcardsPage = () => {
 
     return (
         <main role="main" className="pb-10">
-            <div className="flex flex-col sm:flex-row items-start justify-between w-full">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between w-full px-4 sm:px-0">
             <Instructions />
             
             <Dropdown
