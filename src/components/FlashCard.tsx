@@ -96,7 +96,9 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         content="Click to see the answer"
                     />
                 )} */}
-            <h3 className="text-7xl font-bold tracking-tight text-gray-900 dark:text-white">{cardData.front}</h3>
+            <h3 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                text-center break-words px-2">
+                {cardData.front}</h3>
             </motion.button>)
     }
     else if(cardData.back.length > 1){
@@ -127,7 +129,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         </div>
                         {/* Content 
                         sm:text-4xl*/}
-                        <span className="text-5xl  font-bold tracking-tight text-gray-900 dark:text-white">
+                        <span className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white text-center break-words px-2">
                         {cardData.back[0]}
                         </span>
                     </div>
@@ -143,7 +145,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         </div>
                         {/* Content 
                         sm:text-4xl*/}
-                        <span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <span className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white text-center break-words px-2">
                         {cardData.back[1]}
                         </span>
                     </div>
