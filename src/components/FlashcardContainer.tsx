@@ -3,7 +3,8 @@ import { TFlashcard, TFlashcardSet } from "../types/types";
 import FlashCard from "./FlashCard.tsx";
 import Button from "./Button.tsx";
 import CheckboxButton from "./CheckboxButton.tsx";
-import { FaShuffle, FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { FaShuffle, FaArrowLeftLong, FaArrowRightLong, FaCircleQuestion } from "react-icons/fa6";
+import HintModal from "./HintModal";
 
 interface FlashCardContainerProps
 {
@@ -32,6 +33,10 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     const [isRandomized, setIsRandomized] = useState<boolean>(false);
     // Store the current flashcardSet in an array
     const [currentSet, setCurrentSet] = useState<TFlashcard[]>(flashcardSet.flashcards);
+
+    //for modal
+    const [showModal, setShowModal] = useState(false);
+    const [hintLetter, setHintLetter] = useState("");
 
     useEffect(() => {
         // Reset currentIndex, flipped state, and randomize when flashcardSet changes
@@ -110,6 +115,25 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
     // Store the current flashcard in a variable for better readability
     const currentFlashcard : TFlashcard = currentSet[currentIndex];
 
+    //function for the help button
+    //add logic for cardData.back.length > 1
+    const handleHelpClick = () => {
+        const backData = currentFlashcard.back 
+        if (Array.isArray(backData) && backData.length > 1) {
+            // Two parts to the answer (e.g., Debit / Credit)
+            const leftHint = backData[0]?.charAt(0) ?? "";
+            const rightHint = backData[1]?.charAt(0) ?? "";
+            setHintLetter(`${leftHint} , ${rightHint}`);
+        }else{
+        const currentFlashcard = currentSet[currentIndex];
+        const fullAnswer = String(currentFlashcard.back);
+        const shorten = fullAnswer.substring(0, 1);
+        setHintLetter(shorten);
+        setShowModal(true);
+        }
+        setShowModal(true)
+    };
+
     return (
         /**
          * Flashcard display container.
@@ -122,7 +146,9 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
             className="flex flex-col items-center mt-2 sm:w-2xl sm:max-w-2xl"
         >
             {/* Displays flashcard set category and description */}
-            <h2 className="text-balance h-35 sm:h-17 my-4 text-2xl text-black dark:text-white">{flashcardSet.description}</h2>
+            <h2 className="text-balance text-center  my-4 text-2xl sm:text-4xl font-bold
+                 text-black dark:text-white pl-[35px] pr-4 sm:pr-0 mr-2 sm:mr-0">
+                {flashcardSet.description}</h2>
             {/* FlashCard Component */}
             <FlashCard 
                 cardData={currentFlashcard} 
@@ -135,21 +161,23 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
             />
             
             {/* Navigation buttons for switching flashcards */}
-            <div className="w-full flex flex-row gap-5 sm:gap-10 items-center h-12 mt-4">
+            <div className="w-full flex flex-wrap items-center justify-center gap-2 sm:gap-5 mt-4 px-2">
                 <CheckboxButton 
                     aria-label="Shuffle Button"
-                    title={`Click to ${isRandomized ? "unshuffle" : "shuffle"}`}
-                    className="border border-gray-300 rounded-md p-2 h-full"
-                    isChecked={isRandomized} 
-                    onClick={handleToggleRandomize}>
-                    <FaShuffle  size={20} aria-hidden={true}/>
+                     title={`Click to ${isRandomized ? "unshuffle" : "shuffle"}`}
+                     className="border border-gray-300 rounded-md px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base flex items-center gap-1"
+                     isChecked={isRandomized} 
+                     onClick={handleToggleRandomize}>
+                     Shuffle <FaShuffle size={16} aria-hidden={true} />
                 </CheckboxButton>
+                
                 <Button 
                     aria-label="Previous Flashcard Button"
-                    title={`Click to see previous flashcard`}
-                    className="h-full"
-                    onClick={handlePrev}>
-                    <FaArrowLeftLong size={20} aria-hidden={true} />
+                    title="Click to see previous flashcard"
+                    onClick={handlePrev}
+                    className="px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base text-green-800 font-bold hover:text-green-900 flex items-center gap-1"
+                    >
+                    Back <FaArrowLeftLong size={16} aria-hidden={true} />
                 </Button>
                 <p 
                     className="flex-1 font-semibold text-lg text-black dark:text-white"
@@ -158,11 +186,23 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
                 </p>  
                 <Button
                     aria-label="Next Flashcard Button"
-                    title={`Click to see next flashcard`}
-                    className="h-full"
-                    onClick={handleNext}>
-                    <FaArrowRightLong size={20} aria-hidden={true} />
+                    title="Click to see next flashcard"
+                    onClick={handleNext}
+                    className="px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base text-green-800 font-bold hover:text-green-900 flex items-center gap-1"
+                    >
+                     Next <FaArrowRightLong size={16} aria-hidden={true} />
                 </Button>
+                <Button
+                    aria-label="Help Button"
+                    title="Click to see a hint"
+                    onClick={handleHelpClick}
+                    className="px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base border border-blue-400 text-blue-600 dark:text-blue-300 rounded-md flex items-center gap-1"
+                    >
+                    Hint <FaCircleQuestion size={16} aria-hidden={true} />
+                </Button>
+                {showModal && (
+                <HintModal hintLetter={hintLetter} onClose={() => setShowModal(false)} />
+                )}
             </div>
         </div>
     );
