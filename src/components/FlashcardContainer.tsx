@@ -146,8 +146,8 @@ const FlashcardContainer = ({ flashcardSet }: FlashCardContainerProps) => {
             className="flex flex-col items-center mt-2 sm:w-2xl sm:max-w-2xl"
         >
             {/* Displays flashcard set category and description */}
-            <h2 className="text-balance text-center sm:text-left my-4 text-2xl sm:text-4xl font-bold
-                 text-black dark:text-white leading-snug sm:leading-tight pl-[35px] pr-4 sm:pr-0 mr-2 sm:mr-0">
+            <h2 className="text-balance text-center  my-4 text-2xl sm:text-4xl font-bold
+                 text-black dark:text-white pl-[35px] pr-4 sm:pr-0 mr-2 sm:mr-0">
                 {flashcardSet.description}</h2>
             {/* FlashCard Component */}
             <FlashCard 

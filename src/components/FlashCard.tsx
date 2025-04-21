@@ -96,8 +96,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         content="Click to see the answer"
                     />
                 )} */}
-            <h3 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
-                text-center break-words px-2">
+            <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                text-center break-words px-2 backface-hidden">
                 {cardData.front}</h3>
             </motion.button>)
     }
@@ -113,7 +113,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 style={{ transformStyle: "preserve-3d" }}>
                 {/* Symmetrical T-shaped layout */}
                 <div
-                className="grid grid-cols-2 grid-rows-[20%_80%] w-full h-full relative"
+                className="grid grid-cols-2 grid-rows-[20%_80%] w-full h-full relative backface-hidden"
                 style={{ transform: "rotateY(180deg)" }}>
                     {/* Vertical center line */}
                     <div className="absolute inset-y-0 left-1/2 w-px bg-gray-400 dark:bg-gray-500 transform -translate-x-1/2" />
@@ -129,7 +129,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         </div>
                         {/* Content 
                         sm:text-4xl*/}
-                        <span className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white text-center break-words px-2">
+                        <span className="text-2xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white text-center break-words px-2">
                         {cardData.back[0]}
                         </span>
                     </div>
@@ -145,7 +145,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         </div>
                         {/* Content 
                         sm:text-4xl*/}
-                        <span className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white text-center break-words px-2">
+                        <span className="text-2xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white text-center break-words px-2">
                         {cardData.back[1]}
                         </span>
                     </div>
@@ -167,7 +167,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                  }}
                 style={{ transformStyle: "preserve-3d" }}>
             {/*Back Content*/}
-            <h3 className="text-7xl font-bold tracking-tight text-gray-900 dark:text-white" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
+            <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white backface-hidden" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
             </motion.button>)
     }
 }
