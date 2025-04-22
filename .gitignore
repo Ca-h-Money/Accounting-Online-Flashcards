@@ -27,3 +27,4 @@ config.env
 
 # Firebase config
 firebase.ts
+firebase-testing.ts
