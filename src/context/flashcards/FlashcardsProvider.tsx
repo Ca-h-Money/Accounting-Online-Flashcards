@@ -69,13 +69,15 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
             const categories = catSnap.docs.map((doc) => ({
                 id: doc.id,
                 ...(doc.data() as Omit<Category, "id">),
-            }));
+            }))
+            .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
         
             // fetch flashcards from firestore
             const flashcards = flashSnap.docs.map((doc) => ({
                 id: doc.id,
                 ...(doc.data() as Omit<Flashcard, "id">),
-            }));
+            }))
+            .sort((a, b) => a.front.toLowerCase().localeCompare(b.front.toLowerCase()));
         
             // save newly fetched data from firestore into local storage
             if (updatedAt) {
@@ -162,7 +164,7 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
 
     // Simple helper
     const getFlashcardsByCategory = (categoryId: string): Flashcard[] => {
-        return (flashcards as Flashcard[]).filter(
+        return flashcards.filter(
             (flashcard) => flashcard.categoryId === categoryId
         );
     };
