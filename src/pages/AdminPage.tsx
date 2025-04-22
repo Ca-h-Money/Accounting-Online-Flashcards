@@ -48,8 +48,10 @@ const AdminPage = () => {
             <section className="mb-10">
                 <h2 className="text-2xl font-semibold mb-4">Manage Categories</h2>
                 <Button
+                    aria-label={`Add Category Button`}
+                    title={`Add New Category`}
                     onClick={() => setEditingCategory({ id: "", name: "", description: "" })}
-                    className="mb-4 px-4 py-2 bg-green-600 hover:bg-green-700"
+                    className="mb-4 px-4 py-2 !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
                 >
                     + Add Category
                 </Button>
@@ -66,19 +68,18 @@ const AdminPage = () => {
 
                             <div className="flex gap-3">
                                 <Button
-                                    className="px-3 py-1"
+                                    aria-label={`Edit Category Button For ${category.name}`}
+                                    title={`Edit Category For ${category.name}`}
+                                    className="!bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
                                     onClick={() => setEditingCategory(category)}
                                 >
                                     Edit
                                 </Button>
                                 <Button
-                                    className={`px-3 py-1 ${
-                                        isCategoryInUse(category.id)
-                                        ? "bg-gray-400 cursor-not-allowed"
-                                        : "bg-red-600 hover:bg-red-700"
-                                    }`}
+                                    aria-label={`Delete Category Button For ${category.name}`}
+                                    title={`Delete Category For ${category.name}`}
+                                    className="!bg-red-500 dark:!bg-red-600 hover:!bg-red-600 dark:hover:!bg-red-700"
                                     onClick={() => handleDeleteCategory(category)}
-                                    disabled={isCategoryInUse(category.id)}
                                 >
                                     Delete
                                 </Button>
@@ -92,6 +93,8 @@ const AdminPage = () => {
             <section>
                 <h2 className="text-2xl font-semibold mb-4">Manage Flashcards</h2>
                 <Button
+                    aria-label={`Add Flashcard Button`}
+                    title={`Add Flashcard Category`}
                     onClick={() =>
                         setEditingFlashcard({
                             id: "",
@@ -100,7 +103,7 @@ const AdminPage = () => {
                             back: [""],
                         })
                     }
-                    className="mb-4 px-4 py-2 bg-green-600 hover:bg-green-700"
+                    className="mb-4 px-4 py-2 !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
                 >
                     + Add Flashcard
                 </Button>
@@ -131,13 +134,17 @@ const AdminPage = () => {
                                                 </div>
                                                 <div className="flex gap-3">
                                                     <Button
-                                                        className="px-3 py-1 bg-blue-600 hover:bg-blue-700"
+                                                        aria-label={`Edit Flashcard Button For ${card.front}`}
+                                                        title={`Edit Flashcard For ${card.front}`}
+                                                        className="!bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
                                                         onClick={() => setEditingFlashcard(card)}
                                                     >
                                                         Edit
                                                     </Button>
                                                     <Button
-                                                        className="px-3 py-1 bg-red-600 hover:bg-red-700"
+                                                        aria-label={`Delete Flashcard Button For ${card.front}`}
+                                                        title={`Delete Flashcard For ${card.front}`}
+                                                        className="!bg-red-500 dark:!bg-red-600 hover:!bg-red-600 dark:hover:!bg-red-700"
                                                         onClick={() => handleDeleteFlashcard(card)}
                                                     >
                                                         Delete

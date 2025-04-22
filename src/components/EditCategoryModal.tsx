@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Category } from "../context/flashcards/flashcardsContext";
 import { useFlashcards } from "../context/flashcards/useFlashcards";
+import Button from "./Button";
 
 type EditCategoryModalProps = {
     category: Category | null;
@@ -39,10 +40,10 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="bg-white dark:bg-gray-900 p-6 rounded-lg w-full max-w-md shadow-lg text-black dark:text-white">
-                <h2 className="text-xl font-semibold mb-4">Edit Category</h2>
+                <h2 className="text-xl font-semibold mb-4">{`${isEditing ? "Edit" : "Add"} Category`}</h2>
                 <div className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium">Name</label>
+                    <label className="block text-sm font-medium mb-1">Name</label>
                     <input
                         type="text"
                         className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-800"
@@ -51,27 +52,31 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium">Description</label>
-                    <input
-                        type="text"
+                    <label className="block text-sm font-medium mb-1">Description</label>
+                    <textarea
                         className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-800"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        rows={3}
                     />
                 </div>
                 <div className="flex justify-end gap-2">
-                    <button
+                    <Button
+                        aria-label={`Cancel Button`}
+                        title={`Cancel`}
                         onClick={onClose}
-                        className="px-4 py-2 bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 rounded"
+                        className="!bg-red-500 dark:!bg-red-600 hover:!bg-red-600 dark:hover:!bg-red-700"
                     >
                         Cancel
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                        aria-label={`Save Button`}
+                        title={`Save`}
                         onClick={onSubmit}
-                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
+                        className="!bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
                     >
                         Save
-                    </button>
+                    </Button>
                 </div>
                 </div>
             </div>

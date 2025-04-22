@@ -59,7 +59,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
             <Button
                 aria-label="Log In"
                 title="Log In"
-                className="h-full w-full"
+                className="h-full w-full !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
                 type="submit"
             >
                 Log In

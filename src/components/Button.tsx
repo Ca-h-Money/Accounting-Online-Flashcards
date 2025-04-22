@@ -6,8 +6,8 @@
  * @property {React.ReactNode} children - The content inside the button (text, icons, or components).
  * @extends {React.ButtonHTMLAttributes<HTMLButtonElement>}
  */
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    children: React.ReactNode; // Accepts text, icons, or components inside the button
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    className?: string;
 }
 
 /**
@@ -18,14 +18,14 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
  * @param {ButtonProps} props - The props for the button component.
  *
  */
-const Button= ({children, ...props}: ButtonProps) => {
+const Button= ({className = "", children, ...props}: ButtonProps) => {
 
     return (
         <button 
             {...props}
             className={`cursor-pointer rounded-lg border border-transparent px-4 py-2 text-base 
                 font-medium transition duration-200  text-black bg-white dark:text-white dark:bg-gray-900
-                hover:bg-gray-300 dark:hover:bg-gray-800 hover:border-gray-400 ${props.className}`}
+                hover:bg-gray-300 dark:hover:bg-gray-800 hover:border-gray-400 ${className}`}
         >
             {children}
         </button>
