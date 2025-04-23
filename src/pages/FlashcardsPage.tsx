@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FlashcardContainer from "../components/FlashcardContainer";
-import flashcardData from "../data/flashcard-data";
-import { TFlashcardSet } from "../types/types";
+// import flashcardData from "../data/flashcard-data";
+// import { TFlashcardSet } from "../types/types";
 import Dropdown from "../components/Dropdown";
+import { useFlashcards } from "../context/flashcards/useFlashcards";
+import { Category, Flashcard } from "../context/flashcards/flashcardsContext";
+
 import Instructions from "../components/Instructions";
 
 /**
@@ -15,10 +18,31 @@ import Instructions from "../components/Instructions";
 const FlashcardsPage = () => {
     // State to track which flashcard set is currently selected
     // Default set index is 0 (first set in the array)
-    const [selectedFlashcardSetIndex, setSelectedFlashcardSetIndex] = useState(0);
+    const [selectedFlashcardSetIndex, setSelectedFlashcardSetIndex] = useState<number>(0);
+    const [currentFlashcardSet, setCurrentFlashcardSet] = useState<Flashcard[]>(null!);
+    const [currentCategory, setCurrentCategory] = useState<Category>(null!);
 
-    // Store the current flashcardSet in a variable for better readability
-    const currentFlashcardSet : TFlashcardSet = flashcardData[selectedFlashcardSetIndex];
+    const {categories, flashcards, isLoadingData, getFlashcardsByCategory} = useFlashcards();
+
+    //console.log(flashcards);
+    //console.log(categories);
+ 
+    useEffect(() => {
+        if (isLoadingData) return;
+
+        if (selectedFlashcardSetIndex !== null && categories.length > 0 && flashcards.length > 0) {
+            const selectedCategory = categories[selectedFlashcardSetIndex];
+            if (selectedCategory) {
+                const flashcards = getFlashcardsByCategory(selectedCategory.id);
+                setCurrentFlashcardSet(flashcards);
+                setCurrentCategory(selectedCategory);
+            }
+        }
+    }, [selectedFlashcardSetIndex, categories, flashcards, isLoadingData, getFlashcardsByCategory]);
+    
+    if (isLoadingData || !currentFlashcardSet || !currentCategory){
+        return <div>Loading...</div>
+    }
 
     return (
         <main role="main" className="pb-10">
@@ -30,7 +54,7 @@ const FlashcardsPage = () => {
 
                 id="select-topic-dropdown"
                 title="Select Accounting Topic:"
-                options={flashcardData.map(flashcardSet => {return flashcardSet.category})}
+                options={categories.map(category => {return category.name})}
                 selectedIndex={selectedFlashcardSetIndex}
                 setSelectedIndex={setSelectedFlashcardSetIndex}
                 ariaLabel="flashcard topic"
@@ -47,7 +71,7 @@ const FlashcardsPage = () => {
                 role="region"
                 aria-label="Flashcard content">
                 {/* Renders the selected flashcard set inside the FlashcardContainer */}
-                <FlashcardContainer flashcardSet={currentFlashcardSet} />
+                <FlashcardContainer flashcards={currentFlashcardSet} category={currentCategory} />
             </div>
         </main>
     );
