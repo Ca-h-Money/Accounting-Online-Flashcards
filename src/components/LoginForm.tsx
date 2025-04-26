@@ -91,7 +91,6 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
     // Map Firebase error codes to friendly custom messages
     const getAuthErrorMessage = (error: unknown): string => {
         if (error instanceof FirebaseError) {
-            console.log(error.code)
             switch (error.code) {
                 case "auth/invalid-email":
                     return "The email address is not valid.";
@@ -114,26 +113,36 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
 
     if (showPassReset){
         return (
-            <div className="p-4 max-w-md mx-auto">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-md mt-20 mx-4 md:mx-auto">
                 <h1 className="text-2xl font-bold mb-4 text-black dark:text-white">Reset Password</h1>
-                <form onSubmit={(e) => void handleRequestPasswordReset(e)} className="space-y-4">
-                    <div>
-                        <label className="text-sm font-medium text-black dark:text-white">Email</label>
+                <form onSubmit={(e) => void handleRequestPasswordReset(e)} className="space-y-6">
+                    {/* Email Field with "Back to Login" link */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-black dark:text-white ml-1 mr-auto">
+                                Email
+                            </label>
                         <input
                             type="email"
-                            className="mt-1 w-full px-3 py-2 border border-gray-300 text-black dark:text-white rounded"
+                            className="mt-1 w-full px-3 py-2 border border-2 border-gray-400 text-black dark:text-white rounded"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
-                    {error && <p className="font-bold p-1 bg-red-500 text-sm text-black dark:text-white rounded">{error}</p>}
 
+                    {/* Error Message */}
+                    {error && (
+                        <p className="font-bold p-1 bg-red-500 text-sm text-black dark:text-white rounded">
+                            {error}
+                        </p>
+                    )}
+
+                    {/* Submit Button */}
                     <Button
                         aria-label="Send Reset Code Button"
                         title="Send Reset Code"
-                        className="h-full w-full !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
+                        className="w-full !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
                         type="submit"
-                    >
+                        >
                         Send Reset Code
                     </Button>
                     
@@ -141,7 +150,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
                 <Button
                         aria-label="Back to Login Button"
                         title="Back to Log In"
-                        className="h-full w-full mt-4 !bg-red-500 dark:!bg-red-600 hover:!bg-red-600 dark:hover:!bg-red-700"
+                        className="w-full mt-4 !bg-red-400 dark:!bg-red-500 hover:!bg-red-500 dark:hover:!bg-red-600"
                         onClick={() => handleForgotPassword(false)}
                     >
                         Back to Login
@@ -151,29 +160,52 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
     }
 
     return (
-        <div className="p-4 max-w-md mx-auto">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-md mt-20 mx-4 md:mx-auto">
             <h1 className="text-2xl font-bold mb-4 text-black dark:text-white">Admin Login</h1>
-            <form onSubmit={(e) => void handleLogin(e)} className="space-y-4">
-                <div>
-                    <label className="text-sm font-medium text-black dark:text-white">Email</label>
+            <form onSubmit={(e) => void handleLogin(e)} className="space-y-6">
+                {/* Email Field */}
+                <div className="flex flex-col">
+                    <label className="text-sm font-medium text-black dark:text-white ml-1 mr-auto">
+                        Email
+                    </label>
                     <input
                         type="email"
-                        className="mt-1 w-full px-3 py-2 border border-gray-300 text-black dark:text-white rounded"
+                        className="mt-1 w-full px-3 py-2 border border-2 border-gray-400 text-black dark:text-white rounded"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <div>
-                    <label className="block text-sm font-medium text-black dark:text-white">Password</label>
+
+                {/* Password Field with Forgot Password Link */}
+                <div className="flex flex-col">
+                    <div className="flex justify-between items-center">
+                        <label className="text-sm font-medium text-black dark:text-white ml-1">
+                            Password
+                        </label>
+                        <button
+                            type="button"
+                            onClick={() => handleForgotPassword(true)}
+                            className="cursor-pointer text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none"
+                        >
+                            Forgot Password?
+                        </button>
+                    </div>
                     <input
                         type="password"
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 text-black dark:text-white rounded"
+                        className="mt-1 block w-full px-3 py-2 border border-2 border-gray-400 text-black dark:text-white rounded"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                {error && <p className="font-bold p-1 bg-red-500 text-sm text-black dark:text-white rounded">{error}</p>}
 
+                {/* Error Message */}
+                {error && (
+                    <p className="font-bold p-1 bg-red-500 text-sm text-black dark:text-white rounded">
+                        {error}
+                    </p>
+                )}
+
+                {/* Submit Button */}
                 <Button
                     aria-label="Log In Button"
                     title="Log In"
@@ -182,16 +214,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
                 >
                     Log In
                 </Button>
-                
             </form>
-            <Button
-                    aria-label="Forgot Password Button"
-                    title="Forgot Password"
-                    className="h-full w-full mt-4 !bg-red-500 dark:!bg-red-600 hover:!bg-red-600 dark:hover:!bg-red-700"
-                    onClick={() => handleForgotPassword(true)}
-                >
-                    Forgot Password
-            </Button>
         </div>
     );
 }
