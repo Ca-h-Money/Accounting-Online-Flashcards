@@ -7,9 +7,15 @@ import EditFlashcardModal from "../components/EditFlashcardModal";
 import { Category, Flashcard } from "../context/flashcards/flashcardsContext";
 import Button from "../components/Button";
 
+//How many flashcards to display at a time
+const ITEMS_PER_PAGE = 5;
+
 const AdminPage = () => {
     const { currentUser } = useAuth();
     const { categories, flashcards, deleteCategory, deleteFlashcard } = useFlashcards();
+
+    const [activeCategoryId, setActiveCategoryId] = useState(categories[0]?.id || "");
+    const [ currentPage, setCurrentPage] = useState(1);
 
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
     const [editingFlashcard, setEditingFlashcard] = useState<Flashcard | null>(null);
@@ -34,16 +40,32 @@ const AdminPage = () => {
         }
     };
 
-    const handleDeleteFlashcard = (flashcard: Flashcard) => {
-        if (confirm(`Are you sure you want to delete the flashcard ${flashcard.front}?`)) {
-            deleteFlashcard(flashcard.id);
+    const handleDeleteFlashcard = (flashcardId: string, front: string) => {
+        if (confirm(`Are you sure you want to delete the flashcard ${front}?`)) {
+          deleteFlashcard(flashcardId);
+        }
+      };
+    //filter flashcards by active category
+    const filteredFlashcards = flashcards.filter(card => card.categoryId === activeCategoryId);
+
+    //pagination logic
+    const totalPages = Math.ceil(filteredFlashcards.length / ITEMS_PER_PAGE);
+    const paginatedFlashcards = filteredFlashcards.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    );
+
+    const handlePageChange = (page: number) => {
+        if (page >= 1 && page <= totalPages){
+            setCurrentPage(page);
         }
     };
+
 
     return (
         <div className="p-6 max-w-4xl mx-auto text-black dark:text-white">
             <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
-
+            {/* ---------- REPLACE WITH MODIFIED DROP DOWN SELECTOR ---------- */}
             {/* ---------- CATEGORIES ---------- */}
             <section className="mb-10">
                 <h2 className="text-2xl font-semibold mb-4">Manage Categories</h2>
@@ -55,6 +77,26 @@ const AdminPage = () => {
                 >
                     + Add Category
                 </Button>
+            {/*---------------- TABS ----------------*/}
+            <div className="flex gap-2 mb-4">
+                {categories.map(category => (
+                    <button
+                    key={category.id}
+                    className = {`px-4 py-2 rounded border text-sm font-medium transition-all ${
+                        activeCategoryId === category.id
+                          ? "bg-green-500 text-white border-green-600"
+                          : "bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      }`}
+                      onClick={() =>{
+                        setActiveCategoryId(category.id);
+                        setCurrentPage(1);
+                      }}
+                      >
+                        {category.name}
+                      </button>
+                ))}
+            </div>
+
                 <ul className="space-y-3">
                     {categories.map((category) => (
                         <li
@@ -107,58 +149,80 @@ const AdminPage = () => {
                 >
                     + Add Flashcard
                 </Button>
-                {
-                    // Group flashcards by category
-                    categories.map((category) => {
-                        // Get all flashcards in this category
-                        const cards = flashcards.filter((flashcard) => flashcard.categoryId === category.id);
-                        return (
-                            <div key={category.id} className="mb-6">
-                                <h3 className="text-xl font-bold mb-2">{category.name}</h3>
-                                {cards.length === 0 ? (
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                                        No flashcards in this category.
-                                    </p>
-                                ) : (
-                                    <ul className="space-y-3">
-                                        {cards.map((card) => (
-                                            <li
-                                                key={card.id}
-                                                className="flex justify-between items-center border border-gray-300 dark:border-gray-700 p-3 rounded"
-                                            >
-                                                <div>
-                                                    <p className="text-start font-medium">Front: {card.front}</p>
-                                                    <p className="text-start text-sm text-gray-600 dark:text-gray-400">
-                                                        Back: {card.back.join(", ")}
-                                                    </p>
-                                                </div>
-                                                <div className="flex gap-3">
-                                                    <Button
-                                                        aria-label={`Edit Flashcard Button For ${card.front}`}
-                                                        title={`Edit Flashcard For ${card.front}`}
-                                                        className="!bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
-                                                        onClick={() => setEditingFlashcard(card)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        aria-label={`Delete Flashcard Button For ${card.front}`}
-                                                        title={`Delete Flashcard For ${card.front}`}
-                                                        className="!bg-red-500 dark:!bg-red-600 hover:!bg-red-600 dark:hover:!bg-red-700"
-                                                        onClick={() => handleDeleteFlashcard(card)}
-                                                    >
-                                                        Delete
-                                                    </Button>
-                                                </div>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
-                            </div>
-                        );
-                    })
-                }
-            </section>
+
+        {/* Table with Flashcards */}
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto border-collapse border border-gray-300 dark:border-gray-700">
+            <thead className="bg-gray-100 dark:bg-gray-800">
+              <tr>
+                <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Front</th>
+                <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Back</th>
+                <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {paginatedFlashcards.map(card => (
+                <tr
+                  key={card.id}
+                  className="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-900 dark:even:bg-gray-800"
+                >
+                  <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">{card.front}</td>
+                  <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">{card.back.join(", ")}</td>
+                  <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
+                    <div className="flex gap-2">
+                      <Button
+                        aria-label={`Edit Flashcard Button For ${card.front}`}
+                        title={`Edit Flashcard For ${card.front}`}
+                        className="!bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
+                        onClick={() => setEditingFlashcard(card)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        aria-label={`Delete Flashcard Button For ${card.front}`}
+                        title={`Delete Flashcard For ${card.front}`}
+                        className="!bg-red-500 dark:!bg-red-600 hover:!bg-red-600 dark:hover:!bg-red-700"
+                        onClick={() => handleDeleteFlashcard(card.id, card.front)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+              
+          {/* Pagination */}
+          <div className="mt-4 flex justify-center gap-2">
+            <button
+              className="px-3 py-1 border rounded disabled:opacity-50"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+              <button
+                key={page}
+                className={`px-3 py-1 border rounded ${
+                  page === currentPage ? "bg-green-500 text-white" : ""
+                }`}
+                onClick={() => handlePageChange(page)}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              className="px-3 py-1 border rounded disabled:opacity-50"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </section>
 
             {/* ---------- MODALS ---------- */}
             <EditCategoryModal
@@ -172,6 +236,6 @@ const AdminPage = () => {
             />
         </div>
     );
-}
+};
 
 export default AdminPage;
