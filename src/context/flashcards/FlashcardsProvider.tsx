@@ -5,10 +5,13 @@ import { db } from "../../firebase";
 import { Category, Flashcard } from "./flashcardsContext";
 import { FlashcardsContext } from "./flashcardsContext";
 import { getCachedFlashcards, saveFlashcardCache } from "../../utils/cache";
+import { v4 as uuidv4 } from "uuid";
 
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 
 
 // ----- Data Caching Functions -----
@@ -60,32 +63,33 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
         
             // If timestamps are different, fetch new data from Firestore
             // Fetch Categories and Flashcards from Firestore
-            const [catSnap, flashSnap] = await Promise.all([
-                getDocs(collection(db, "categories")),
-                getDocs(collection(db, "flashcards")),
-            ]);
-        
-            // fetch categories from firestore
+            const catSnap = await getDocs(collection(db, "categories"));
             const categories = catSnap.docs.map((doc) => ({
                 id: doc.id,
                 ...(doc.data() as Omit<Category, "id">),
-            }))
-            .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
-        
-            // fetch flashcards from firestore
-            const flashcards = flashSnap.docs.map((doc) => ({
-                id: doc.id,
-                ...(doc.data() as Omit<Flashcard, "id">),
-            }))
-            .sort((a, b) => a.front.toLowerCase().localeCompare(b.front.toLowerCase()));
-        
-            // save newly fetched data from firestore into local storage
+            })).sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+
+            const flashcardFetches = await Promise.all(
+                categories.map(async (cat) => {
+                    const catDoc = doc(db, "flashcards", cat.id);
+                    const snap = await getDoc(catDoc);
+                    if (!snap.exists()) return [];
+                    const data = snap.data();
+                    const flashcardsObj = data?.flashcards ?? {};
+                    return (Object.values(flashcardsObj) as Flashcard[]).map((fc) => ({
+                        ...fc,
+                        categoryId: cat.id,
+                    }));
+                })
+            );
+
+            const flashcards = flashcardFetches.flat().sort((a, b) => a.front.toLowerCase().localeCompare(b.front.toLowerCase()));
+
             if (updatedAt) {
                 saveFlashcardCache({ categories, flashcards, lastUpdated: updatedAt });
             }
 
             console.log("Loaded Data From Firebase");
-        
             return { categories, flashcards };
         },
     });
@@ -129,35 +133,65 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
 
     const addFlashcardMutation = useMutation({
         mutationFn: async (newFlashcard: Omit<Flashcard, "id">) => {
-            await addDoc(collection(db, "flashcards"), newFlashcard);
+            // Create a new id for the flashcard and add to the flashcard
+            const id = uuidv4();
+            const flashcardWithId = { ...newFlashcard, id };
+            // Find the reference for the flashcards using the categoryId
+            const ref = doc(db, "flashcards", newFlashcard.categoryId);
+            const snap = await getDoc(ref);
+            // Get the pre existing flashcards if they exist already
+            const current = snap.exists() ? snap.data()?.flashcards ?? {} : {};
+            // Add the new flashcard to the pre existing flashcards
+            await setDoc(ref, {
+                categoryId: newFlashcard.categoryId,
+                flashcards: { ...current, [id]: flashcardWithId },
+            }, { merge: true });
             await updateLastModified();
         },
         onSuccess: () => {
-            // Invalidate the "flashcards-and-categories" query so it refetches
             void queryClient.invalidateQueries({ queryKey: ["flashcards-and-categories"] });
         },
     });
 
     const editFlashcardMutation = useMutation({
-        mutationFn: async ({ id, updates }: { id: string; updates: Partial<Flashcard> }) => {
-          const flashcardRef = doc(db, "flashcards", id);
-          await updateDoc(flashcardRef, updates);
-          await updateLastModified();
+        mutationFn: async (flashcard: Flashcard) => {
+            const { id, categoryId, ...updates } = flashcard;
+
+            // Find the reference for the flashcards using the categoryId
+            const ref = doc(db, "flashcards", categoryId);
+            const snap = await getDoc(ref);
+            if (!snap.exists()) return;
+
+            // Get the pre existing flashcards if they exist already
+            const current = snap.data()?.flashcards ?? {};
+            // Update the pre existing target flashcard using the id
+            current[id] = { ...current[id], ...updates };
+            // Update the flashcards document with the new data
+            await updateDoc(ref, { flashcards: current });
+            await updateLastModified();
         },
         onSuccess: () => {
-            // Invalidate the "flashcards-and-categories" query so it refetches
             void queryClient.invalidateQueries({ queryKey: ["flashcards-and-categories"] });
         },
     });
 
     const deleteFlashcardMutation = useMutation({
-        mutationFn: async (id: string) => {
-            const flashcardRef = doc(db, "flashcards", id);
-            await deleteDoc(flashcardRef);
+        mutationFn: async (flashcard: Flashcard) => {
+            const { id, categoryId } = flashcard;
+
+            // Find the reference for the flashcards using the categoryId
+            const ref = doc(db, "flashcards", categoryId);
+            const snap = await getDoc(ref);
+            if (!snap.exists()) return;
+            // Get the pre existing flashcards if they exist already
+            const current = snap.data()?.flashcards ?? {};
+            // Delete the pre existing target flashcard using the id
+            delete current[id];
+            // Update the flashcards document with the new data
+            await updateDoc(ref, { flashcards: current });
             await updateLastModified();
         },
         onSuccess: () => {
-            // Invalidate the "flashcards-and-categories" query so it refetches
             void queryClient.invalidateQueries({ queryKey: ["flashcards-and-categories"] });
         },
     });

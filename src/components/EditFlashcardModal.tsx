@@ -31,23 +31,24 @@ export default function EditFlashcardModal({
     }, [flashcard]);
 
     const onSubmit = () => {
-        if (!flashcard) return;
-
-        if (isEditing) {
-            editFlashcard({ id: flashcard.id,
-                updates: {
-                    front: front.trim(),
-                    back: back.split(",").map((b) => b.trim()).filter((b) => b),
-                    categoryId,
-                }
+        const trimmedFront = front.trim();
+        const trimmedBackArray = back.split(",").map((b) => b.trim()).filter((b) => b);
+    
+        if (isEditing && flashcard) {
+            editFlashcard({
+                id: flashcard.id,
+                categoryId: flashcard.categoryId,
+                front: trimmedFront,
+                back: trimmedBackArray,
             });
         } else {
-            addFlashcard({ 
-                front: front.trim(),
-                back: back.split(",").map((b) => b.trim()).filter((b) => b),
-                categoryId
+            addFlashcard({
+                front: trimmedFront,
+                back: trimmedBackArray,
+                categoryId,
             });
         }
+    
         onClose();
     };
 
