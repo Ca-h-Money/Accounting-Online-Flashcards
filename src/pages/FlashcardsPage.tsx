@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import FlashcardContainer from "../components/FlashcardContainer";
-// import flashcardData from "../data/flashcard-data";
-// import { TFlashcardSet } from "../types/types";
 import Dropdown from "../components/Dropdown";
 import { useFlashcards } from "../context/flashcards/useFlashcards";
 import { Category, Flashcard } from "../context/flashcards/flashcardsContext";
@@ -23,9 +21,6 @@ const FlashcardsPage = () => {
     const [currentCategory, setCurrentCategory] = useState<Category>(null!);
 
     const {categories, flashcards, isLoadingData, getFlashcardsByCategory} = useFlashcards();
-
-    //console.log(flashcards);
-    //console.log(categories);
  
     useEffect(() => {
         if (isLoadingData) return;

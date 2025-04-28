@@ -11,6 +11,7 @@ export type Flashcard = {
     categoryId: string;
     front: string;
     back: string[];
+    imgSrc?: string;
 };
   
 export type FlashcardsContextType = {
