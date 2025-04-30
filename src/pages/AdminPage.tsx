@@ -6,19 +6,27 @@ import EditCategoryModal from "../components/EditCategoryModal";
 import EditFlashcardModal from "../components/EditFlashcardModal";
 import { Category, Flashcard } from "../context/flashcards/flashcardsContext";
 import Button from "../components/Button";
+import {useEffect} from "react";
 
 //How many flashcards to display at a time
 const ITEMS_PER_PAGE = 5;
+const PAGE_WINDOW = 5;
 
 const AdminPage = () => {
     const { currentUser } = useAuth();
     const { categories, flashcards, deleteCategory, deleteFlashcard } = useFlashcards();
 
-    const [activeCategoryId, setActiveCategoryId] = useState(categories[0]?.id || "");
+    const [activeCategoryId, setActiveCategoryId] = useState("");
     const [ currentPage, setCurrentPage] = useState(1);
 
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
     const [editingFlashcard, setEditingFlashcard] = useState<Flashcard | null>(null);
+
+    useEffect(() => {
+      if(categories.length > 0 && !activeCategoryId){
+        setActiveCategoryId(categories[0].id);
+      }
+    }, [categories, activeCategoryId]);
 
     // SHow the login form if no admin is signed in
     if (!currentUser) return <LoginForm />;
@@ -60,8 +68,21 @@ const AdminPage = () => {
             setCurrentPage(page);
         }
     };
+    const getPageNumbers = () => {
+      const pages = [];
+      let startPage = Math.max(1, currentPage - Math.floor(PAGE_WINDOW/2));
+      let endPage = startPage + PAGE_WINDOW -1;
 
-
+      if(endPage > totalPages){
+        endPage = totalPages;
+        startPage = Math.max(1, endPage - PAGE_WINDOW +1);
+      }
+      for(let i = startPage; i <= endPage; i++){
+        pages.push(i);
+      }
+      return {pages, startPage, endPage};
+    }
+    const{ pages: pageNumbers, startPage, endPage} = getPageNumbers();
     return (
         <div className="p-6 max-w-4xl mx-auto text-black dark:text-white">
             <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
@@ -197,32 +218,60 @@ const AdminPage = () => {
           {/* Pagination */}
           <div className="mt-4 flex justify-center gap-2">
             <button
-              className="px-3 py-1 border rounded disabled:opacity-50"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
             >
-              Prev
+            Prev
             </button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-              <button
-                key={page}
-                className={`px-3 py-1 border rounded ${
-                  page === currentPage ? "bg-green-500 text-white" : ""
-                }`}
-                onClick={() => handlePageChange(page)}
-              >
-                {page}
-              </button>
-            ))}
+
+            {startPage > 1 && (
+            <>
             <button
-              className="px-3 py-1 border rounded disabled:opacity-50"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
+             className="px-3 py-1 border rounded"
+             onClick={() => handlePageChange(1)}
             >
-              Next
+            1
             </button>
-          </div>
+            {startPage > 2 && <span className="px-2">...</span>}
+            </>
+           )}
+
+          {pageNumbers.map((page) => (
+          <button
+            key={page}
+            className={`px-3 py-1 border rounded ${
+            page === currentPage ? "bg-green-500 text-white" : ""
+            }`}
+            onClick={() => handlePageChange(page)}
+            >
+            {page}
+            </button>
+            ))}
+
+           {endPage < totalPages && (
+          <>
+          {endPage < totalPages - 1 && <span className="px-2">...</span>}
+          {endPage < totalPages - 1 && (
+          <button
+           className="px-3 py-1 border rounded"
+          onClick={() => handlePageChange(totalPages)}
+          >
+          {totalPages}
+          </button>
+          )}
+          </>
+          )}
+
+          <button
+          className="px-3 py-1 border rounded disabled:opacity-50"
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          >
+           Next
+          </button>
         </div>
+      </div>
       </section>
 
             {/* ---------- MODALS ---------- */}
