@@ -3,7 +3,6 @@ import { TFlashcard } from "../types/types";
 import { Category, Flashcard } from "../context/flashcards/flashcardsContext.ts";
 import FlashCard from "./FlashCard.tsx";
 import Button from "./Button.tsx";
-import CheckboxButton from "./CheckboxButton.tsx";
 import { FaShuffle, FaArrowLeftLong, FaArrowRightLong, FaCircleQuestion } from "react-icons/fa6";
 import HintModal from "./HintModal";
 
@@ -31,8 +30,6 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
     const [showTooltip, setShowTooltip] = useState<boolean>(false);
     // set isFlipped state to true so that the card is facing front side up
     const [isFlipped, setIsFlipped] = useState<boolean>(true);
-    // Set isRandomized state to false so the cards retain the order they are loaded in
-    const [isRandomized, setIsRandomized] = useState<boolean>(false);
     // Store the current flashcardSet in an array
     const [currentSet, setCurrentSet] = useState<Flashcard[]>(flashcards);
 
@@ -44,8 +41,7 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
         // Reset currentIndex, flipped state, and randomize when flashcardSet changes
         setCurrentIndex(0);
         setIsFlipped(true);
-        setIsRandomized(false);
-        setCurrentSet(flashcards);
+        setCurrentSet(randomizeSet()); 
     }, [flashcards])
 
     // Wait 1 second after mount, then show tooltip
@@ -97,17 +93,9 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
     /** 
      * Function to toggle between randomized and original order of flashcards
      */ 
-    const handleToggleRandomize = () => {
-        if (isRandomized) {
-            // Reset to the original flashcard order if currently randomized
-            setCurrentSet(flashcards); 
-        } else {
-            // Shuffle and update the flashcard set if not randomized
-            setCurrentSet(randomizeSet()); 
-        }
-
-        // Toggle the isRandomized state
-        setIsRandomized((prevState) => !prevState); 
+    const handleRandomize = () => {
+        // Shuffle and update the flashcard set if not randomized
+        setCurrentSet(randomizeSet()); 
 
         // Reset the flashcard index to the first card and ensure card is flipped
         setCurrentIndex(0); 
@@ -164,14 +152,13 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
             
             {/* Navigation buttons for switching flashcards */}
             <div className="w-full flex flex-wrap items-center justify-center gap-2 sm:gap-5 mt-4 px-2">
-                <CheckboxButton 
+                <Button 
                     aria-label="Shuffle Button"
-                     title={`Click to ${isRandomized ? "unshuffle" : "shuffle"}`}
+                     title="Click to shuffle"
                      className="border border-gray-300 rounded-md px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base flex items-center gap-1"
-                     isChecked={isRandomized} 
-                     onClick={handleToggleRandomize}>
+                     onClick={handleRandomize}>
                      Shuffle <FaShuffle size={16} aria-hidden={true} />
-                </CheckboxButton>
+                </Button>
                 
                 <Button 
                     aria-label="Previous Flashcard Button"
