@@ -136,63 +136,73 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
             className="flex flex-col items-center mt-2 sm:w-2xl sm:max-w-2xl"
         >
             {/* Displays flashcard set category and description */}
-            <h2 className="text-balance text-center  my-4 text-2xl sm:text-4xl font-bold
-                 text-black dark:text-white pl-[35px] pr-4 sm:pr-0 mr-2 sm:mr-0">
+            <h2 className="text-balance text-center my-4 mx-1 text-2xl sm:text-4xl font-bold
+                 text-black dark:text-white px-4">
                 {category.description}</h2>
+
             {/* FlashCard Component */}
-            <FlashCard 
-                cardData={currentFlashcard} 
-                showTooltip={showTooltip}
-                setShowTooltip={setShowTooltip}
-                isFlipped={isFlipped} 
-                setIsFlipped={setIsFlipped} 
-                isInitialLoad={isInitialLoad}
-                setIsInitialLoad={setIsInitialLoad}
-            />
-            
-            {/* Navigation buttons for switching flashcards */}
-            <div className="w-full flex flex-wrap items-center justify-center gap-2 sm:gap-5 mt-4 px-2">
-                <Button 
-                    aria-label="Shuffle Button"
-                     title="Click to shuffle"
-                     className="border border-gray-300 rounded-md px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base flex items-center gap-1"
-                     onClick={handleRandomize}>
-                     Shuffle <FaShuffle size={16} aria-hidden={true} />
-                </Button>
-                
-                <Button 
-                    aria-label="Previous Flashcard Button"
-                    title="Click to see previous flashcard"
-                    onClick={handlePrev}
-                    className="px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base text-green-800 font-bold hover:text-green-900 flex items-center gap-1"
-                    >
-                    Back <FaArrowLeftLong size={16} aria-hidden={true} />
-                </Button>
-                <p 
-                    className="flex-1 font-semibold text-lg text-black dark:text-white"
-                >
-                    {currentIndex + 1}/{flashcards.length}
-                </p>  
-                <Button
-                    aria-label="Next Flashcard Button"
-                    title="Click to see next flashcard"
-                    onClick={handleNext}
-                    className="px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base text-green-800 font-bold hover:text-green-900 flex items-center gap-1"
-                    >
-                     Next <FaArrowRightLong size={16} aria-hidden={true} />
-                </Button>
-                <Button
-                    aria-label="Help Button"
-                    title="Click to see a hint"
-                    onClick={handleHelpClick}
-                    className="px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base border border-blue-400 text-blue-600 dark:text-blue-300 rounded-md flex items-center gap-1"
-                    >
-                    Hint <FaCircleQuestion size={16} aria-hidden={true} />
-                </Button>
-                {showModal && (
-                <HintModal hintLetter={hintLetter} onClose={() => setShowModal(false)} />
-                )}
-            </div>
+            {
+                currentFlashcard ? 
+                <>
+                    <FlashCard 
+                        cardData={currentFlashcard} 
+                        showTooltip={showTooltip}
+                        setShowTooltip={setShowTooltip}
+                        isFlipped={isFlipped} 
+                        setIsFlipped={setIsFlipped} 
+                        isInitialLoad={isInitialLoad}
+                        setIsInitialLoad={setIsInitialLoad}
+                    /> 
+                    {/* Navigation buttons for switching flashcards */}
+                    <div className="w-full flex flex-wrap items-center justify-center gap-2 sm:gap-5 mt-4 px-2">
+                        <Button 
+                            aria-label="Shuffle Button"
+                            title="Click to shuffle"
+                            className="border border-gray-300 rounded-md px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base flex items-center gap-1"
+                            onClick={handleRandomize}>
+                            Shuffle <FaShuffle size={16} aria-hidden={true} />
+                        </Button>
+                        
+                        <Button 
+                            aria-label="Previous Flashcard Button"
+                            title="Click to see previous flashcard"
+                            onClick={handlePrev}
+                            className="px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base text-green-800 font-bold hover:text-green-900 flex items-center gap-1"
+                            >
+                            Back <FaArrowLeftLong size={16} aria-hidden={true} />
+                        </Button>
+                        <p 
+                            className="flex-1 font-semibold text-lg text-black dark:text-white"
+                        >
+                            {currentIndex + 1}/{flashcards.length}
+                        </p>  
+                        <Button
+                            aria-label="Next Flashcard Button"
+                            title="Click to see next flashcard"
+                            onClick={handleNext}
+                            className="px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base text-green-800 font-bold hover:text-green-900 flex items-center gap-1"
+                            >
+                            Next <FaArrowRightLong size={16} aria-hidden={true} />
+                        </Button>
+                        <Button
+                            aria-label="Help Button"
+                            title="Click to see a hint"
+                            onClick={handleHelpClick}
+                            className="px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base border border-blue-400 text-blue-600 dark:text-blue-300 rounded-md flex items-center gap-1"
+                            >
+                            Hint <FaCircleQuestion size={16} aria-hidden={true} />
+                        </Button>
+                        {showModal && (
+                        <HintModal hintLetter={hintLetter} onClose={() => setShowModal(false)} />
+                        )}
+                    </div>
+                </>
+            : 
+                <h3 className="p-20 text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                text-center break-words px-2 backface-hidden">
+                    No flashcards exist in this category
+                </h3>
+            }
         </div>
     );
 };
