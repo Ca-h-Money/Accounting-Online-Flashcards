@@ -20,6 +20,39 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
     //if logic for showing front and back side of the card. Likely using the useState hook to toggle between the two states.
     if(isFlipped) {
         return (
+            <>
+            <motion.button
+                className="mt-4 w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer rounded-lg shadow-sm
+                        bg-white dark:bg-[#31A959]  dark:border-gray-700 dark:text-black
+                        hover:bg-gray-100 dark:hover:bg-[#00A86B] items-center justify-center"
+                //id="lines"
+                onClick={() => {
+                    setIsFlipped(false);
+                    setShowTooltip(false);
+                    setIsInitialLoad(false);
+                }}
+                initial={{ rotateY: isInitialLoad ? 0 : 180 }}
+                animate={{ rotateY: 0 }}
+                transition={{ duration: 0.5 }}
+                style={{ transformStyle: "preserve-3d" }}>
+                {showTooltip && 
+                    <Tooltip 
+                        className="absolute bottom-5 sm:bottom-10 right-3 sm:right-10"
+                        content="Click to see the answer"
+                    />}
+                {/* <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                    text-center break-words px-2 backface-hidden">
+                {cardData.front}</h3> */}
+                <div className="flex items-center justify-center gap-4 w-full h-full relative backface-hidden">
+
+                    {/* Text content */}
+                    <h3 className="flex-auto text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                        text-center break-words px-2 backface-hidden">
+                        {cardData.front}
+                    </h3>
+                                       
+                </div>
+            </motion.button>
             <motion.button
                 className="w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer rounded-lg shadow-sm
                         bg-white dark:bg-[#31A959]  dark:border-gray-700 dark:text-black
@@ -39,67 +72,200 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         className="absolute bottom-5 sm:bottom-10 right-3 sm:right-10"
                         content="Click to see the answer"
                     />}
-
-                
-                {/* {showTooltip && (
-                    <Tooltip 
-                        className="absolute top-[-50px] left-1/2 transform -translate-x-1/2"
-                        content="Click to see the answer"
+                {/* <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                    text-center break-words px-2 backface-hidden">
+                {cardData.front}</h3> */}
+                <div className="flex flex-col items-center justify-center gap-4 w-full h-full relative backface-hidden">
+                    {/* Image - you can move this div around to test position */}
+                    <img
+                        src="https://i.imgur.com/EA5Cnpq.png"
+                        alt="Card visual"
+                        className="max-w-full max-h-30 object-contain"
                     />
-                )}
 
-                {showTooltip && (
+                    {/* Text content */}
+                    <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                        text-center break-words px-2 backface-hidden">
+                        {cardData.front}
+                    </h3>
+                </div>
+            </motion.button>
+            <motion.button
+                className="mt-4 w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer rounded-lg shadow-sm
+                        bg-white dark:bg-[#31A959]  dark:border-gray-700 dark:text-black
+                        hover:bg-gray-100 dark:hover:bg-[#00A86B] items-center justify-center"
+                //id="lines"
+                onClick={() => {
+                    setIsFlipped(false);
+                    setShowTooltip(false);
+                    setIsInitialLoad(false);
+                }}
+                initial={{ rotateY: isInitialLoad ? 0 : 180 }}
+                animate={{ rotateY: 0 }}
+                transition={{ duration: 0.5 }}
+                style={{ transformStyle: "preserve-3d" }}>
+                {showTooltip && 
                     <Tooltip 
-                        className="absolute bottom-[-50px] left-1/2 transform -translate-x-1/2"
+                        className="absolute bottom-5 sm:bottom-10 right-3 sm:right-10"
                         content="Click to see the answer"
+                    />}
+                {/* <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                    text-center break-words px-2 backface-hidden">
+                {cardData.front}</h3> */}
+                <div className="flex flex-col items-center justify-center gap-4 w-full h-full relative backface-hidden">
+                    {/* Text content */}
+                    <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                        text-center break-words px-2 backface-hidden">
+                        {cardData.front}
+                    </h3>
+                    {/* Image - you can move this div around to test position */}
+                    <img
+                        src="https://i.imgur.com/EA5Cnpq.png"
+                        alt="Card visual"
+                        className="max-w-full max-h-30 object-contain"
                     />
-                )}
 
-                {showTooltip && (
+                    
+                </div>
+            </motion.button>
+            <motion.button
+                className="mt-4 w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer rounded-lg shadow-sm
+                        bg-white dark:bg-[#31A959]  dark:border-gray-700 dark:text-black
+                        hover:bg-gray-100 dark:hover:bg-[#00A86B] items-center justify-center"
+                //id="lines"
+                onClick={() => {
+                    setIsFlipped(false);
+                    setShowTooltip(false);
+                    setIsInitialLoad(false);
+                }}
+                initial={{ rotateY: isInitialLoad ? 0 : 180 }}
+                animate={{ rotateY: 0 }}
+                transition={{ duration: 0.5 }}
+                style={{ transformStyle: "preserve-3d" }}>
+                {showTooltip && 
                     <Tooltip 
-                        className="absolute top-1/2 left-[-60px] transform -translate-y-1/2"
+                        className="absolute bottom-5 sm:bottom-10 right-3 sm:right-10"
                         content="Click to see the answer"
+                    />}
+                {/* <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                    text-center break-words px-2 backface-hidden">
+                {cardData.front}</h3> */}
+                <div className="flex items-center justify-center gap-4 w-full h-full relative backface-hidden">
+                    {/* Text content */}
+                    <h3 className="flex-auto text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                        text-center break-words px-2 backface-hidden">
+                        {cardData.front}
+                    </h3>
+                    {/* Image - you can move this div around to test position */}
+                    <img
+                        src="https://i.imgur.com/EA5Cnpq.png"
+                        alt="Card visual"
+                        className="max-w-full max-h-30 object-contain"
                     />
-                )}
 
-                {showTooltip && (
+                    
+                </div>
+            </motion.button>
+            <motion.button
+                className="mt-4 w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer rounded-lg shadow-sm
+                        bg-white dark:bg-[#31A959]  dark:border-gray-700 dark:text-black
+                        hover:bg-gray-100 dark:hover:bg-[#00A86B] items-center justify-center"
+                //id="lines"
+                onClick={() => {
+                    setIsFlipped(false);
+                    setShowTooltip(false);
+                    setIsInitialLoad(false);
+                }}
+                initial={{ rotateY: isInitialLoad ? 0 : 180 }}
+                animate={{ rotateY: 0 }}
+                transition={{ duration: 0.5 }}
+                style={{ transformStyle: "preserve-3d" }}>
+                {showTooltip && 
                     <Tooltip 
-                        className="absolute top-1/2 right-[-60px] transform -translate-y-1/2"
+                        className="absolute bottom-5 sm:bottom-10 right-3 sm:right-10"
                         content="Click to see the answer"
+                    />}
+                {/* <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                    text-center break-words px-2 backface-hidden">
+                {cardData.front}</h3> */}
+                <div className="flex items-center justify-center gap-4 w-full h-full relative backface-hidden">
+                    {/* Image - you can move this div around to test position */}
+                    <img
+                        src="https://i.imgur.com/EA5Cnpq.png"
+                        alt="Card visual"
+                        className="max-w-full max-h-30 object-contain"
                     />
-                )}    
-
-                {showTooltip && (
+                    {/* Text content */}
+                    <h3 className="flex-auto text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                        text-center break-words px-2 backface-hidden">
+                        {cardData.front}
+                    </h3>
+                                       
+                </div>
+            </motion.button>
+            <motion.button
+                className="mt-4 w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-1 cursor-pointer rounded-lg shadow-sm
+                        bg-white dark:bg-[#31A959]  dark:border-gray-700 dark:text-black
+                        hover:bg-gray-100 dark:hover:bg-[#00A86B] items-center justify-center"
+                //id="lines"
+                onClick={() => {
+                    setIsFlipped(false);
+                    setShowTooltip(false);
+                    setIsInitialLoad(false);
+                }}
+                initial={{ rotateY: isInitialLoad ? 0 : 180 }}
+                animate={{ rotateY: 0 }}
+                transition={{ duration: 0.5 }}
+                style={{ transformStyle: "preserve-3d" }}>
+                {showTooltip && 
                     <Tooltip 
-                        className="absolute top-2 left-2"
+                        className="absolute bottom-5 sm:bottom-10 right-3 sm:right-10"
                         content="Click to see the answer"
+                    />}
+                {/* <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
+                    text-center break-words px-2 backface-hidden">
+                {cardData.front}</h3> */}
+                <div className="flex items-center justify-center gap-4 w-full h-full relative backface-hidden">
+                    {/* Image - you can move this div around to test position */}
+                    <img
+                        src="https://i.imgur.com/EA5Cnpq.png"
+                        alt="Card visual"
+                        className="absolute left-0 bottom-0 max-w-full max-h-30 object-contain"
                     />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute top-2 right-2"
-                        content="Click to see the answer"
+                    <img
+                        src="https://i.imgur.com/EA5Cnpq.png"
+                        alt="Card visual"
+                        className="absolute left-0 top-0 max-w-full max-h-30 object-contain"
                     />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute bottom-2 left-2"
-                        content="Click to see the answer"
+                    <img
+                        src="https://i.imgur.com/EA5Cnpq.png"
+                        alt="Card visual"
+                        className="absolute right-0 bottom-0 max-w-full max-h-30 object-contain"
                     />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute bottom-2 right-2"
-                        content="Click to see the answer"
+                    <img
+                        src="https://i.imgur.com/EA5Cnpq.png"
+                        alt="Card visual"
+                        className="absolute right-0 top-0 max-w-full max-h-30 object-contain"
                     />
-                )} */}
-            <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
-                text-center break-words px-2 backface-hidden">
-                {cardData.front}</h3>
-            </motion.button>)
+                    <img
+                        src="https://i.imgur.com/EA5Cnpq.png"
+                        alt="Card visual"
+                        className="absolute top-0 max-w-full max-h-30 object-contain"
+                    />
+                    <img
+                        src="https://i.imgur.com/EA5Cnpq.png"
+                        alt="Card visual"
+                        className="absolute bottom-0 max-w-full max-h-30 object-contain"
+                    />
+                    {/* Text content */}
+                    <h3 className="py-20 flex-auto text-3xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white 
+                        text-center break-words backface-hidden">
+                        {cardData.front}
+                    </h3>
+                                       
+                </div>
+            </motion.button>
+            </>)
     }
     else if(cardData.back.length > 1){
         return (
