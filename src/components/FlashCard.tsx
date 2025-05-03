@@ -1,11 +1,11 @@
 import { motion} from "motion/react"
-import { TFlashcard } from '../types/types.ts'
+import { Flashcard } from "../context/flashcards/flashcardsContext.ts";
 import Tooltip from "./Tooltip.tsx"
 
 
 interface FlashCardProps
 {
-    cardData: TFlashcard;
+    cardData: Flashcard;
     isFlipped: boolean;
     setIsFlipped: (flipped: boolean) => void;
     showTooltip: boolean;
@@ -15,7 +15,7 @@ interface FlashCardProps
 }
 
 function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowTooltip, isInitialLoad, setIsInitialLoad}: FlashCardProps) {
-
+    console.log(cardData);
 
     //if logic for showing front and back side of the card. Likely using the useState hook to toggle between the two states.
     if(isFlipped) {
@@ -24,7 +24,6 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 className="w-[280px] h-[280px] sm:w-[850px] sm:h-[450px] flex p-6 cursor-pointer rounded-lg shadow-sm
                         bg-white dark:bg-[#31A959]  dark:border-gray-700 dark:text-black
                         hover:bg-gray-100 dark:hover:bg-[#00A86B] items-center justify-center"
-                //id="lines"
                 onClick={() => {
                     setIsFlipped(false);
                     setShowTooltip(false);
@@ -38,64 +37,8 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                     <Tooltip 
                         className="absolute bottom-5 sm:bottom-10 right-3 sm:right-10"
                         content="Click to see the answer"
-                    />}
-
-                
-                {/* {showTooltip && (
-                    <Tooltip 
-                        className="absolute top-[-50px] left-1/2 transform -translate-x-1/2"
-                        content="Click to see the answer"
                     />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute bottom-[-50px] left-1/2 transform -translate-x-1/2"
-                        content="Click to see the answer"
-                    />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute top-1/2 left-[-60px] transform -translate-y-1/2"
-                        content="Click to see the answer"
-                    />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute top-1/2 right-[-60px] transform -translate-y-1/2"
-                        content="Click to see the answer"
-                    />
-                )}    
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute top-2 left-2"
-                        content="Click to see the answer"
-                    />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute top-2 right-2"
-                        content="Click to see the answer"
-                    />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute bottom-2 left-2"
-                        content="Click to see the answer"
-                    />
-                )}
-
-                {showTooltip && (
-                    <Tooltip 
-                        className="absolute bottom-2 right-2"
-                        content="Click to see the answer"
-                    />
-                )} */}
+                }
             <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
                 text-center break-words px-2 backface-hidden">
                 {cardData.front}</h3>
@@ -127,8 +70,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         </span>
                         <div className="w-full h-px bg-gray-400 dark:bg-gray-500 mt-1" /> {/* Horizontal line */}
                         </div>
-                        {/* Content 
-                        sm:text-4xl*/}
+                        {/* Content */}
                         <span className="text-2xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white text-center break-words px-2">
                         {cardData.back[0]}
                         </span>
@@ -143,8 +85,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         </span>
                         <div className="w-full h-px bg-gray-400 dark:bg-gray-500 mt-1" /> {/* Horizontal line */}
                         </div>
-                        {/* Content 
-                        sm:text-4xl*/}
+                        {/* Content */}
                         <span className="text-2xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white text-center break-words px-2">
                         {cardData.back[1]}
                         </span>
