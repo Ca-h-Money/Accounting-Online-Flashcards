@@ -139,7 +139,7 @@ const AdminPage = () => {
             <section>
               <div className="border">
                 <h2 className="text-2xl font-semibold mb-0">Manage Flashcards</h2>
-                <div className="border flex items-center mb-4 pt-0 mt-0">
+                <div className="border flex flex-col items-center mb-0 pt-0 mt-0">
                 <Button
                     aria-label={`Add Flashcard Button`}
                     title={`Add Flashcard Category`}
@@ -151,11 +151,12 @@ const AdminPage = () => {
                             back: [""],
                         })
                     }
-                    className="mb-4 px-4 py-2 !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
+                    className="mb-0 px-4 py-2 !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
                 >
                     + Add Flashcard
                 </Button>
-                
+                <div className="border flex justify-center pt-0 mt-0">
+                  
                 <Dropdown
                         id="category-dropdown"
                         title="Select a Category"
@@ -169,8 +170,9 @@ const AdminPage = () => {
                          }
                         }}
                         ariaLabel="Category Selector"
+                        
                         />
-                    
+                    </div>
                  </div>       
               </div>      
                 {/*---------------- TABS ----------------*/}
