@@ -7,6 +7,7 @@ import EditFlashcardModal from "../components/EditFlashcardModal";
 import { Category, Flashcard } from "../context/flashcards/flashcardsContext";
 import Button from "../components/Button";
 import {useEffect} from "react";
+import Dropdown from "../components/Dropdown";
 
 //How many flashcards to display at a time
 const ITEMS_PER_PAGE = 5;
@@ -136,7 +137,9 @@ const AdminPage = () => {
 
             {/* ---------- FLASHCARDS ---------- */}
             <section>
-                <h2 className="text-2xl font-semibold mb-4">Manage Flashcards</h2>
+              <div className="border">
+                <h2 className="text-2xl font-semibold mb-0">Manage Flashcards</h2>
+                <div className="border flex items-center mb-4 pt-0 mt-0">
                 <Button
                     aria-label={`Add Flashcard Button`}
                     title={`Add Flashcard Category`}
@@ -152,10 +155,27 @@ const AdminPage = () => {
                 >
                     + Add Flashcard
                 </Button>
-             
+                
+                <Dropdown
+                        id="category-dropdown"
+                        title="Select a Category"
+                        options={categories.map((c) => c.name)}
+                        selectedIndex={categories.findIndex((c) => c.id === activeCategoryId)}
+                        setSelectedIndex={(index: number) => {
+                         if(index >= 0 && index < categories.length){
+                          const selected = categories[index];
+                          setActiveCategoryId(selected.id);
+                          setCurrentPage(1);
+                         }
+                        }}
+                        ariaLabel="Category Selector"
+                        />
+                    
+                 </div>       
+              </div>      
                 {/*---------------- TABS ----------------*/}
-                <div className="flex gap-2 mb-4">
-                    {categories.map(category => (
+                <div className="flex flex-wrap gap-2 mb-4 items-center">
+                    {/* {categories.map(category => (
                         <button
                         key={category.id}
                         className = {`px-4 py-2 rounded border text-sm font-medium transition-all ${
@@ -170,7 +190,7 @@ const AdminPage = () => {
                           >
                             {category.name}
                           </button>
-                    ))}
+                    ))} */}
                 </div>
         {/* Table with Flashcards */}
         <div className="overflow-x-auto">
