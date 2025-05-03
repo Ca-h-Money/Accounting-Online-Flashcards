@@ -155,7 +155,7 @@ const AdminPage = () => {
                 >
                     + Add Flashcard
                 </Button>
-                <div className="border flex justify-center pt-0 mt-0">
+               
                   
                 <Dropdown
                         id="category-dropdown"
@@ -172,7 +172,7 @@ const AdminPage = () => {
                         ariaLabel="Category Selector"
                         
                         />
-                    </div>
+                    
                  </div>       
               </div>      
                 {/*---------------- TABS ----------------*/}
