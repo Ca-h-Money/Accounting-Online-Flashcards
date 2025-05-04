@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { TFlashcard } from "../types/types";
 import { Category, Flashcard } from "../context/flashcards/flashcardsContext.ts";
 import FlashCard from "./FlashCard.tsx";
 import Button from "./Button.tsx";
@@ -19,8 +18,6 @@ interface FlashCardContainerProps
  * This component displays a flashcard set and allows the user to navigate 
  * through the flashcards using "Next" and "Prev" buttons.
  * 
- * Props:
- * @param {TFlashcardSet} flashcardSet - The selected set of flashcards to display.
  */
 const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) => {
     // State to track the current flashcard index
@@ -115,7 +112,7 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
     };
 
     // Store the current flashcard in a variable for better readability
-    const currentFlashcard : TFlashcard = currentSet[currentIndex];
+    const currentFlashcard : Flashcard = currentSet[currentIndex];
 
     //function for the help button
     //add logic for cardData.back.length > 1

@@ -49,9 +49,9 @@ const AdminPage = () => {
         }
     };
 
-    const handleDeleteFlashcard = (flashcardId: string, front: string) => {
-        if (confirm(`Are you sure you want to delete the flashcard ${front}?`)) {
-          deleteFlashcard(flashcardId);
+    const handleDeleteFlashcard = (flashcard: Flashcard) => {
+        if (confirm(`Are you sure you want to delete the flashcard ${flashcard.front}?`)) {
+            deleteFlashcard(flashcard);
         }
       };
     //filter flashcards by active category
@@ -71,19 +71,22 @@ const AdminPage = () => {
     };
     const getPageNumbers = () => {
       const pages = [];
-      let startPage = Math.max(1, currentPage - Math.floor(PAGE_WINDOW/2));
+      let startPage = Math.max(1, currentPage - Math.floor(PAGE_WINDOW / 2));
       let endPage = startPage + PAGE_WINDOW -1;
 
       if(endPage > totalPages){
         endPage = totalPages;
-        startPage = Math.max(1, endPage - PAGE_WINDOW +1);
+        startPage = Math.max(1, endPage - PAGE_WINDOW + 1);
       }
+
       for(let i = startPage; i <= endPage; i++){
         pages.push(i);
       }
-      return {pages, startPage, endPage};
+      return pages;
     }
-    const{ pages: pageNumbers, startPage, endPage} = getPageNumbers();
+    const pageNumbers = getPageNumbers();
+
+
     return (
         <div className="p-6 max-w-4xl mx-auto text-black dark:text-white">
             <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
@@ -137,9 +140,9 @@ const AdminPage = () => {
 
             {/* ---------- FLASHCARDS ---------- */}
             <section>
-              <div className="border">
+              <div className="">
                 <h2 className="text-2xl font-semibold mb-0">Manage Flashcards</h2>
-                <div className="border flex flex-col items-center mb-0 pt-0 mt-0">
+                <div className="flex flex-row items-center justify-start space-x-4">
                 <Button
                     aria-label={`Add Flashcard Button`}
                     title={`Add Flashcard Category`}
@@ -151,7 +154,7 @@ const AdminPage = () => {
                             back: [""],
                         })
                     }
-                    className="mb-0 px-4 py-2 !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
+                    className="ml-32 px-4 py-2 !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
                 >
                     + Add Flashcard
                 </Button>
@@ -170,7 +173,7 @@ const AdminPage = () => {
                          }
                         }}
                         ariaLabel="Category Selector"
-                        
+                        className="pr-0 mr-0"
                         />
                     
                  </div>       
@@ -226,7 +229,7 @@ const AdminPage = () => {
                         aria-label={`Delete Flashcard Button For ${card.front}`}
                         title={`Delete Flashcard For ${card.front}`}
                         className="!bg-red-500 dark:!bg-red-600 hover:!bg-red-600 dark:hover:!bg-red-700"
-                        onClick={() => handleDeleteFlashcard(card.id, card.front)}
+                        onClick={() => handleDeleteFlashcard(card)}
                       >
                         Delete
                       </Button>
@@ -242,56 +245,28 @@ const AdminPage = () => {
             <button
             className="px-3 py-1 border rounded disabled:opacity-50"
             onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
+            disabled = {currentPage === 1}
             >
-            Prev
+              Prev
             </button>
-
-            {startPage > 1 && (
-            <>
-            <button
-             className="px-3 py-1 border rounded"
-             onClick={() => handlePageChange(1)}
-            >
-            1
-            </button>
-            {startPage > 2 && <span className="px-2">...</span>}
-            </>
-           )}
-
-          {pageNumbers.map((page) => (
-          <button
-            key={page}
-            className={`px-3 py-1 border rounded ${
-            page === currentPage ? "bg-green-500 text-white" : ""
-            }`}
-            onClick={() => handlePageChange(page)}
-            >
-            {page}
-            </button>
+            {pageNumbers.map((page) =>(
+              <button
+              key={page}
+              className={`px-3 py-1 border rounded ${
+                page === currentPage ? "bg-green-500 text-white" : ""
+              }`}
+              onClick={() => handlePageChange(page)}
+              >
+                {page}
+              </button>
             ))}
-
-           {endPage < totalPages && (
-          <>
-          {endPage < totalPages - 1 && <span className="px-2">...</span>}
-          {endPage < totalPages - 1 && (
-          <button
-           className="px-3 py-1 border rounded"
-          onClick={() => handlePageChange(totalPages)}
-          >
-          {totalPages}
-          </button>
-          )}
-          </>
-          )}
-
-          <button
-          className="px-3 py-1 border rounded disabled:opacity-50"
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          >
-           Next
-          </button>
+              <button
+              className="px-3 py-1 border rounded disabled:opacity-50"
+              onClick={() => handlePageChange (currentPage + 1)}
+              disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
         </div>
       </div>
       </section>
