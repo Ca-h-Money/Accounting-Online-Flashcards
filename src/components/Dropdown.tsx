@@ -18,6 +18,7 @@ type DropdownProps = {
     selectedIndex: number;
     setSelectedIndex: Dispatch<SetStateAction<number>>;
     ariaLabel: string;
+    className?: string;
 }
 
 /**

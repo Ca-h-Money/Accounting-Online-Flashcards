@@ -23,11 +23,34 @@ const AdminPage = () => {
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
     const [editingFlashcard, setEditingFlashcard] = useState<Flashcard | null>(null);
 
+    const [selectedIndex, setSelectedIndex] = useState(0);
+  
+    //default for first category
     useEffect(() => {
       if(categories.length > 0 && !activeCategoryId){
         setActiveCategoryId(categories[0].id);
+        setSelectedIndex(0);
       }
     }, [categories, activeCategoryId]);
+
+    //sync selectedindex when activecategoryid changes
+    useEffect(() => {
+      const index = categories.findIndex((c) => c.id === activeCategoryId);
+      if(index !== -1 && index !== selectedIndex){
+        setSelectedIndex(index);
+      }
+    }, [activeCategoryId, categories]);
+
+    //sync active categoryid when selectedindex changes
+    useEffect(() => {
+      if(selectedIndex >= 0 && selectedIndex < categories.length){
+        const selected = categories[selectedIndex];
+        if(selected.id !== activeCategoryId){
+            setActiveCategoryId(selected.id);
+            setCurrentPage(1);
+        }
+      }
+    }, [selectedIndex, categories]);
 
     // SHow the login form if no admin is signed in
     if (!currentUser) return <LoginForm />;
@@ -164,14 +187,8 @@ const AdminPage = () => {
                         id="category-dropdown"
                         title="Select a Category"
                         options={categories.map((c) => c.name)}
-                        selectedIndex={categories.findIndex((c) => c.id === activeCategoryId)}
-                        setSelectedIndex={(index: number) => {
-                         if(index >= 0 && index < categories.length){
-                          const selected = categories[index];
-                          setActiveCategoryId(selected.id);
-                          setCurrentPage(1);
-                         }
-                        }}
+                        selectedIndex={selectedIndex}
+                        setSelectedIndex={setSelectedIndex}
                         ariaLabel="Category Selector"
                         className="pr-0 mr-0"
                         />
