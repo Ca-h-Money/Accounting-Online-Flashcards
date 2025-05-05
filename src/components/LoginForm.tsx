@@ -123,6 +123,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
                             </label>
                         <input
                             type="email"
+                            aria-label="email"
                             className="mt-1 w-full px-3 py-2 border border-2 border-gray-400 text-black dark:text-white rounded"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -170,6 +171,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
                     </label>
                     <input
                         type="email"
+                        aria-label="Back to Login Button"
                         className="mt-1 w-full px-3 py-2 border border-2 border-gray-400 text-black dark:text-white rounded"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -184,6 +186,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
                         </label>
                         <button
                             type="button"
+                            aria-label="password"
                             onClick={() => handleForgotPassword(true)}
                             className="cursor-pointer text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none"
                         >
@@ -192,6 +195,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
                     </div>
                     <input
                         type="password"
+                        aria-label="password"
                         className="mt-1 block w-full px-3 py-2 border border-2 border-gray-400 text-black dark:text-white rounded"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
