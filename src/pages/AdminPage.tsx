@@ -36,7 +36,7 @@ const AdminPage = () => {
 
     const handleDeleteFlashcard = (flashcard: Flashcard) => {
         if (confirm(`Are you sure you want to delete the flashcard ${flashcard.front}?`)) {
-            deleteFlashcard(flashcard.id);
+            deleteFlashcard(flashcard);
         }
     };
 
