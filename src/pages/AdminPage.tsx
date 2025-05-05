@@ -269,6 +269,7 @@ const AdminPage = () => {
             <EditFlashcardModal
                 flashcard={editingFlashcard}
                 categories={categories}
+                activeCategoryId={activeCategoryId}
                 onClose={() => setEditingFlashcard(null)}
             />
         </div>
