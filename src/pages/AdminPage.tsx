@@ -129,7 +129,7 @@ const AdminPage = () => {
                                 <p className="text-start text-sm text-gray-600 dark:text-gray-400">{category.description}</p>
                             </div>
 
-                            <div className="flex gap-3">
+                            <div className="flex gap-2 sm:flex-row flex-col">
                                 <Button
                                     aria-label={`Edit Category Button For ${category.name}`}
                                     title={`Edit Category For ${category.name}`}
@@ -154,9 +154,8 @@ const AdminPage = () => {
 
             {/* ---------- FLASHCARDS ---------- */}
             <section>
-              <div className="">
                 <h2 className="text-2xl font-semibold mb-0">Manage Flashcards</h2>
-                <div className="flex flex-row items-center justify-start space-x-4">
+                <div className="flex flex-row flex-wrap items-center justify-start space-x-4">
                 <Button
                     aria-label={`Add Flashcard Button`}
                     title={`Add Flashcard Category`}
@@ -168,7 +167,7 @@ const AdminPage = () => {
                             back: [""],
                         })
                     }
-                    className="ml-32 px-4 py-2 !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
+                    className="mx-auto px-4 py-2 !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
                 >
                     + Add Flashcard
                 </Button>
@@ -183,16 +182,15 @@ const AdminPage = () => {
                         ariaLabel="Category Selector"
                         />
                     
-                 </div>       
-              </div>      
+                 </div>             
         {/* Table with Flashcards */}
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto border-collapse border border-gray-300 dark:border-gray-700">
             <thead className="bg-gray-100 dark:bg-gray-800">
               <tr>
                 <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Front</th>
-                <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Back</th>
-                <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Actions</th>
+                <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left w-1/4">Back</th>
+                <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left w-0 whitespace-nowrap">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -204,7 +202,7 @@ const AdminPage = () => {
                   <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">{card.front}</td>
                   <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">{card.back.join(", ")}</td>
                   <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 sm:flex-row flex-col">
                       <Button
                         aria-label={`Edit Flashcard Button For ${card.front}`}
                         title={`Edit Flashcard For ${card.front}`}
@@ -231,16 +229,19 @@ const AdminPage = () => {
           {/* Pagination */}
           <div className="mt-4 flex justify-center gap-2">
             <button
-            className="px-3 py-1 border rounded disabled:opacity-50"
+            className="px-3 py-1 border rounded disabled:opacity-50 cursor-pointer"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled = {currentPage === 1}
+            aria-label="Previous page"
             >
               Prev
             </button>
             {pageNumbers.map((page) =>(
               <button
+              aria-label={`Page ${page}`}
+              title={`Page ${page}`}
               key={page}
-              className={`px-3 py-1 border rounded ${
+              className={`px-3 py-1 border rounded cursor-pointer ${
                 page === currentPage ? "bg-green-500 text-white" : ""
               }`}
               onClick={() => handlePageChange(page)}
@@ -249,9 +250,10 @@ const AdminPage = () => {
               </button>
             ))}
               <button
-              className="px-3 py-1 border rounded disabled:opacity-50"
+              className="px-3 py-1 border rounded disabled:opacity-50 cursor-pointer"
               onClick={() => handlePageChange (currentPage + 1)}
               disabled={currentPage === totalPages}
+              aria-label="Next page"
               >
                 Next
               </button>
