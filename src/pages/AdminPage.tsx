@@ -26,12 +26,12 @@ const AdminPage = () => {
     const [selectedIndex, setSelectedIndex] = useState(0);
   
     //default for first category
-    useEffect(() => {
-      if(categories.length > 0 && !activeCategoryId){
-        setActiveCategoryId(categories[0].id);
-        setSelectedIndex(0);
-      }
-    }, [categories, activeCategoryId]);
+    // useEffect(() => {
+    //   if(categories.length > 0 && !activeCategoryId){
+    //     setActiveCategoryId(categories[0].id);
+    //     setSelectedIndex(0);
+    //   }
+    // }, [categories, activeCategoryId]);
 
     //sync selectedindex when activecategoryid changes
     useEffect(() => {
@@ -190,7 +190,6 @@ const AdminPage = () => {
                         selectedIndex={selectedIndex}
                         setSelectedIndex={setSelectedIndex}
                         ariaLabel="Category Selector"
-                        className="pr-0 mr-0"
                         />
                     
                  </div>       
