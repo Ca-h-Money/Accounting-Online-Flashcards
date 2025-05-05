@@ -24,14 +24,6 @@ const AdminPage = () => {
     const [editingFlashcard, setEditingFlashcard] = useState<Flashcard | null>(null);
 
     const [selectedIndex, setSelectedIndex] = useState(0);
-  
-    //default for first category
-    // useEffect(() => {
-    //   if(categories.length > 0 && !activeCategoryId){
-    //     setActiveCategoryId(categories[0].id);
-    //     setSelectedIndex(0);
-    //   }
-    // }, [categories, activeCategoryId]);
 
     //sync selectedindex when activecategoryid changes
     useEffect(() => {
@@ -113,7 +105,6 @@ const AdminPage = () => {
     return (
         <div className="p-6 max-w-4xl mx-auto text-black dark:text-white">
             <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
-            {/* ---------- REPLACE WITH MODIFIED DROP DOWN SELECTOR ---------- */}
             {/* ---------- CATEGORIES ---------- */}
             <section className="mb-10">
                 <h2 className="text-2xl font-semibold mb-4">Manage Categories</h2>
@@ -195,24 +186,6 @@ const AdminPage = () => {
                  </div>       
               </div>      
                 {/*---------------- TABS ----------------*/}
-                <div className="flex flex-wrap gap-2 mb-4 items-center">
-                    {/* {categories.map(category => (
-                        <button
-                        key={category.id}
-                        className = {`px-4 py-2 rounded border text-sm font-medium transition-all ${
-                            activeCategoryId === category.id
-                              ? "bg-green-500 text-white border-green-600"
-                              : "bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          }`}
-                          onClick={() =>{
-                            setActiveCategoryId(category.id);
-                            setCurrentPage(1);
-                          }}
-                          >
-                            {category.name}
-                          </button>
-                    ))} */}
-                </div>
         {/* Table with Flashcards */}
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto border-collapse border border-gray-300 dark:border-gray-700">
