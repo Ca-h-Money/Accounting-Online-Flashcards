@@ -35,10 +35,8 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
     const [hintLetter, setHintLetter] = useState("");
 
     useEffect(() => {
-        // Reset currentIndex, flipped state, and randomize when flashcardSet changes
-        setCurrentIndex(0);
-        setIsFlipped(true);
-        setCurrentSet(randomizeSet()); 
+        handleRandomize();
+        resetFlashcards();
     }, [flashcards])
 
     // Wait 1 second after mount, then show tooltip
@@ -72,7 +70,7 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
 
     /**
      * 
-     * Function to shuffle the flashcard set using the Fisher-Yates algorithm 
+     * Shuffle the flashcard set using the Fisher-Yates algorithm 
      * (https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle)
      */
     const randomizeSet = () => {
@@ -88,13 +86,16 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
     };
 
     /** 
-     * Function to toggle between randomized and original order of flashcards
+     * Randomize the flashcard order
      */ 
     const handleRandomize = () => {
-        // Shuffle and update the flashcard set if not randomized
         setCurrentSet(randomizeSet()); 
+    };
 
-        // Reset the flashcard index to the first card and ensure card is flipped
+    /** 
+     * Reset flashcards to first card and ensure card is flipped
+     */ 
+    const resetFlashcards = () => {
         setCurrentIndex(0); 
         setIsFlipped(true);
     };
@@ -154,9 +155,12 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
                     <div className="w-full flex flex-wrap items-center justify-center gap-2 sm:gap-5 mt-4 px-2">
                         <Button 
                             aria-label="Shuffle Button"
-                            title="Click to shuffle"
+                            title="Click to shuffle flashcards"
                             className="border border-gray-300 rounded-md px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base flex items-center gap-1"
-                            onClick={handleRandomize}>
+                            onClick={() => {
+                                handleRandomize();
+                                resetFlashcards();
+                            }}>
                             Shuffle <FaShuffle size={16} aria-hidden={true} />
                         </Button>
                         
