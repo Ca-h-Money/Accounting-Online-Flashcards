@@ -185,7 +185,6 @@ const AdminPage = () => {
                     
                  </div>       
               </div>      
-                {/*---------------- TABS ----------------*/}
         {/* Table with Flashcards */}
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto border-collapse border border-gray-300 dark:border-gray-700">
