@@ -6,12 +6,14 @@ import Button from "./Button";
 type EditFlashcardModalProps = {
     flashcard: Flashcard | null;
     categories: Category[];
+    activeCategoryId: string;
     onClose: () => void;
 };
 
 export default function EditFlashcardModal({
     flashcard,
     categories,
+    activeCategoryId,
     onClose,
 }: EditFlashcardModalProps) {
     const { editFlashcard, addFlashcard } = useFlashcards();
@@ -32,6 +34,12 @@ export default function EditFlashcardModal({
             setCredit("");
             setFront(flashcard.front);
             setCategoryId(flashcard.categoryId);
+
+            if(activeCategoryId != ""){
+                setCategoryId(activeCategoryId);
+            }else{
+                setCategoryId(flashcard.categoryId);
+            }
 
             if (flashcard.back.length === 2) {
                 setUseTChart(true);
