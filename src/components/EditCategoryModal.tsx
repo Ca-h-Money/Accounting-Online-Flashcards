@@ -43,7 +43,7 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
                 <h2 className="text-xl font-semibold mb-4">{`${isEditing ? "Edit" : "Add"} Category`}</h2>
                 <div className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium mb-1">Name</label>
+                    <label className="block text-sm font-medium mb-1 text-left">Name</label>
                     <input
                         type="text"
                         className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-800"
@@ -52,7 +52,7 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium mb-1">Description</label>
+                    <label className="block text-sm font-medium mb-1 text-left">Description</label>
                     <textarea
                         className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-800"
                         value={description}

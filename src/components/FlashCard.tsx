@@ -1,10 +1,10 @@
 import { motion} from "motion/react"
-import { TFlashcard } from '../types/types.ts'
+import { Flashcard } from "../context/flashcards/flashcardsContext.ts";
 import Tooltip from "./Tooltip.tsx"
 
 interface FlashCardProps
 {
-    cardData: TFlashcard;
+    cardData: Flashcard;
     isFlipped: boolean;
     setIsFlipped: (flipped: boolean) => void;
     showTooltip: boolean;
@@ -14,6 +14,7 @@ interface FlashCardProps
 }
 
 function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowTooltip, isInitialLoad, setIsInitialLoad}: FlashCardProps) {
+    console.log(cardData);
 
     //if logic for showing front and back side of the card. Likely using the useState hook to toggle between the two states.
     if(isFlipped) {
@@ -81,8 +82,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         </span>
                         <div className="w-full h-px bg-gray-400 dark:bg-gray-500 mt-1" /> {/* Horizontal line */}
                         </div>
-                        {/* Content 
-                        sm:text-4xl*/}
+                        {/* Content */}
                         <span className="text-2xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white text-center break-words px-2">
                         {cardData.back[0]}
                         </span>
@@ -97,8 +97,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                         </span>
                         <div className="w-full h-px bg-gray-400 dark:bg-gray-500 mt-1" /> {/* Horizontal line */}
                         </div>
-                        {/* Content 
-                        sm:text-4xl*/}
+                        {/* Content */}
                         <span className="text-2xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white text-center break-words px-2">
                         {cardData.back[1]}
                         </span>

@@ -11,6 +11,7 @@ export type Flashcard = {
     categoryId: string;
     front: string;
     back: string[];
+    imgSrc?: string;
 };
   
 export type FlashcardsContextType = {
@@ -21,9 +22,9 @@ export type FlashcardsContextType = {
     isDataError: boolean;
     dataError: Error | null;
     editCategory: (params: { id: string; updates: Partial<Category> }) => void;
-    editFlashcard: (params: { id: string; updates: Partial<Flashcard> }) => void;
+    editFlashcard: (flashcard: Flashcard) => void;
     deleteCategory: (id: string) => void;
-    deleteFlashcard: (id: string) => void;
+    deleteFlashcard: (flashcard: Flashcard) => void;
     addCategory: (category: Omit<Category, "id">) => void;
     addFlashcard: (flashcard: Omit<Flashcard, "id">) => void;
 };
