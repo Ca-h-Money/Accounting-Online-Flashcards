@@ -40,11 +40,11 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 <div className="flex flex-col items-center justify-center w-full h-full relative backface-hidden">
                     {/* Image - you can move this div around to test position */}
                     <div className="flex-1">
-                        <img
+                        {cardData.imgSrc && <img
                             src="https://i.imgur.com/EA5Cnpq.png"
                             alt="Card visual"
                             className="flex-1 max-w-full max-h-30 object-contain"
-                        />
+                        />}
                     </div>
                     {/* Text content */}
                     <h3 className="flex-1 flex items-center text-3xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white 
