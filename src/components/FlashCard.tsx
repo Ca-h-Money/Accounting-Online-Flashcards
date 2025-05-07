@@ -1,6 +1,7 @@
 import { motion} from "motion/react"
 import { Flashcard } from "../context/flashcards/flashcardsContext.ts";
 import Tooltip from "./Tooltip.tsx"
+import { useEffect, useState } from "react";
 
 interface FlashCardProps
 {
@@ -14,7 +15,11 @@ interface FlashCardProps
 }
 
 function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowTooltip, isInitialLoad, setIsInitialLoad}: FlashCardProps) {
-    console.log(cardData);
+    const [imgValid, setImgValid] = useState(true);
+
+    useEffect(() => {
+        setImgValid(true);
+    }, [cardData])
 
     //if logic for showing front and back side of the card. Likely using the useState hook to toggle between the two states.
     if(isFlipped) {
@@ -40,10 +45,11 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 <div className="flex flex-col items-center justify-center w-full h-full relative backface-hidden">
                     {/* Image - you can move this div around to test position */}
                     <div className="flex-1">
-                        {cardData.imgSrc && <img
-                            src="https://i.imgur.com/EA5Cnpq.png"
+                        {typeof cardData.imgSrc === 'string' && cardData.imgSrc !== "" && imgValid && <img
+                            src={cardData.imgSrc}
                             alt="Card visual"
                             className="flex-1 max-w-full max-h-30 object-contain"
+                            onError={() => setImgValid(false)}
                         />}
                     </div>
                     {/* Text content */}

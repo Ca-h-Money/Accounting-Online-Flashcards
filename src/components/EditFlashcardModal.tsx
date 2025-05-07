@@ -24,6 +24,8 @@ export default function EditFlashcardModal({
     const [debit, setDebit] = useState("");
     const [credit, setCredit] = useState("");
     const [categoryId, setCategoryId] = useState("");
+    const [imgSrc, setImgSrc] = useState("");
+    const [imgValid, setImgValid] = useState(true);
 
     const isEditing = !!flashcard?.id;
 
@@ -32,8 +34,10 @@ export default function EditFlashcardModal({
             setBack("");
             setDebit("");
             setCredit("");
+            setImgSrc("");
             setFront(flashcard.front);
             setCategoryId(flashcard.categoryId);
+            setImgValid(true);
 
             if(activeCategoryId != ""){
                 setCategoryId(activeCategoryId);
@@ -49,8 +53,16 @@ export default function EditFlashcardModal({
                 setUseTChart(false);
                 setBack(flashcard.back[0] || "");
             }
+
+            if (flashcard.imgSrc){
+                setImgSrc(flashcard.imgSrc);
+            }
         }
     }, [flashcard]);
+
+    useEffect(() => {
+        setImgValid(true);
+    }, [imgSrc])
 
     const onSubmit = () => {
         const trimmedFront = front.trim();
@@ -65,6 +77,7 @@ export default function EditFlashcardModal({
                 categoryId: flashcard.categoryId,
                 front: trimmedFront,
                 back: trimmedBackArray,
+                imgSrc: imgSrc
             });
         } else {
             addFlashcard({
@@ -169,6 +182,34 @@ export default function EditFlashcardModal({
                                 />
                             </div>
                         )}
+                    </div>
+
+                    {/* Image Section */}
+                    <div className="mt-6">
+                        <hr className="border-gray-500 dark:border-gray-700"/>
+                        <h3 className="text-md font-semibold my-2">Image</h3>
+                        <div className="flex justify-center">
+                            {imgSrc !== "" && imgValid ? (
+                                <img
+                                    src={imgSrc}
+                                    alt="Card visual"
+                                    className="flex-1 max-w-full max-h-30 object-contain"
+                                    onError={() => setImgValid(false)}
+                                />
+                            ) : (
+                                <div className="text-sm text-gray-500 italic">Image unavailable</div>
+                            )}
+                        </div>
+                        
+                        <div className="mt-3">
+                            <label className="block text-sm font-medium mb-1 text-left">Image URL</label>
+                            <input
+                                type="text"
+                                className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-800"
+                                value={imgSrc}
+                                onChange={(e) => setImgSrc(e.target.value)}
+                            />
+                        </div>
                     </div>
 
                     {/* Buttons */}
