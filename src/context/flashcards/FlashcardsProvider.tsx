@@ -145,6 +145,28 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
         },
     });
 
+    const reorderCategoriesMutation = useMutation({
+        mutationFn: async ({ fromIndex, toIndex }: { fromIndex: number; toIndex: number }) => {
+            const categoryA = categories[fromIndex];
+            const categoryB = categories[toIndex];
+    
+            if (!categoryA || !categoryB) return;
+    
+            const refA = doc(db, "categories", categoryA.id);
+            const refB = doc(db, "categories", categoryB.id);
+    
+            await Promise.all([
+                updateDoc(refA, { order: categoryB.order }),
+                updateDoc(refB, { order: categoryA.order }),
+            ]);
+    
+            await updateLastModified();
+        },
+        onSuccess: () => {
+            void queryClient.invalidateQueries({ queryKey: ["flashcards-and-categories"] });
+        },
+    });
+
     // ----- Flashcard Mutations -----
 
     const addFlashcardMutation = useMutation({
@@ -227,12 +249,13 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
             isDataError,
             dataError,
             getFlashcardsByCategory,
-            editCategory: editCategoryMutation.mutate,
-            editFlashcard: editFlashcardMutation.mutate,
-            deleteCategory: deleteCategoryMutation.mutate,
-            deleteFlashcard: deleteFlashcardMutation.mutate,
             addCategory: addCategoryMutation.mutate,
+            editCategory: editCategoryMutation.mutate,
+            deleteCategory: deleteCategoryMutation.mutate,
+            reorderCategories: reorderCategoriesMutation.mutate,
             addFlashcard: addFlashcardMutation.mutate,
+            editFlashcard: editFlashcardMutation.mutate,            
+            deleteFlashcard: deleteFlashcardMutation.mutate,           
         }}>
             {children}
         </FlashcardsContext.Provider>
