@@ -111,7 +111,7 @@ const AdminPage = () => {
                 <Button
                     aria-label={`Add Category Button`}
                     title={`Add New Category`}
-                    onClick={() => setEditingCategory({ id: "", name: "", description: "" })}
+                    onClick={() => setEditingCategory({ id: "", name: "", description: "", order: categories.length })}
                     className="mb-4 px-4 py-2 !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
                 >
                     + Add Category

@@ -29,13 +29,14 @@ export default function SeedButton() {
       
             console.log("Deleted old categories and flashcards");
       
-            for (const category of flashcardData) {
+            for (const [index, category] of flashcardData.entries()) {
                 const { category: name, description, flashcards } = category;
 
                 // 3. Add the category to the 'categories' collection
                 const categoryDoc = await addDoc(collection(db, "categories"), {
                     name,
                     description,
+                    order: index,
                 });
 
                 const categoryId = categoryDoc.id;

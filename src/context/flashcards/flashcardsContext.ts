@@ -4,6 +4,7 @@ export type Category = {
     id: string;
     name: string;
     description: string;
+    order: number;
 };
   
 export type Flashcard = {

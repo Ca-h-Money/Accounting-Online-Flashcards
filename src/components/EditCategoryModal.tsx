@@ -29,7 +29,7 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
         if (isEditing) {
             editCategory({ id: category.id, updates: { name, description } });
           } else {
-            addCategory({ name, description });
+            addCategory({ name, description, order: category.order });
           }
 
         onClose();

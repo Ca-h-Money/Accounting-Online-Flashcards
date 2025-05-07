@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { collection, getDoc, getDocs, updateDoc, deleteDoc, addDoc, doc, setDoc, serverTimestamp, Timestamp } from "firebase/firestore";
+import { collection, getDoc, getDocs, updateDoc, deleteDoc, addDoc, doc, setDoc, serverTimestamp, Timestamp, query, orderBy } from "firebase/firestore";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { db } from "../../firebase";
 import { Category, Flashcard } from "./flashcardsContext";
@@ -49,17 +49,18 @@ const fetchFlashcardsAndCategories = async (): Promise<{
     if (cached && updatedAt && cached.lastUpdated === updatedAt) {
         console.log("Loaded Data From Local Storage");
         return {
-            categories: cached.categories,
+            categories: cached.categories.sort((a, b) => a.order - b.order),
             flashcards: cached.flashcards,
         };
     }
 
     // Otherwise fetch all categories from Firestore
-    const catSnap = await getDocs(collection(db, "categories"));
+    const catQuery = query(collection(db, "categories"), orderBy("order"));
+    const catSnap = await getDocs(catQuery);
     const categories = catSnap.docs.map((doc) => ({
         id: doc.id,
         ...(doc.data() as Omit<Category, "id">),
-    })).sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    }));
 
     // For each category, fetch associated flashcards
     const flashcardFetches = await Promise.all(
