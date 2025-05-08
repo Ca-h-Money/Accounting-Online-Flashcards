@@ -241,6 +241,33 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
         );
     };
 
+    const categoryStatuses = [
+        addCategoryMutation.status,
+        editCategoryMutation.status,
+        deleteCategoryMutation.status,
+        reorderCategoriesMutation.status,
+    ];
+    
+    let categoryStatus: 'pending' | 'error' | 'idle' = 'idle';
+    if (categoryStatuses.some(status => status === 'pending')) {
+        categoryStatus = 'pending';
+    } else if (categoryStatuses.some(status => status === 'error')) {
+        categoryStatus = 'error';
+    }
+
+    const flashcardStatuses = [
+        addFlashcardMutation.status,
+        editFlashcardMutation.status,
+        deleteFlashcardMutation.status,
+    ];
+
+    let flashcardStatus: 'pending' | 'error' | 'idle' = 'idle';
+    if (flashcardStatuses.some(status => status === 'pending')) {
+        flashcardStatus = 'pending';
+    } else if (flashcardStatuses.some(status => status === 'error')) {
+        flashcardStatus = 'error';
+    }
+
     return (
         <FlashcardsContext.Provider value={{
             categories,
@@ -252,10 +279,12 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
             addCategory: addCategoryMutation.mutate,
             editCategory: editCategoryMutation.mutate,
             deleteCategory: deleteCategoryMutation.mutate,
+            categoryStatus: categoryStatus,
             reorderCategories: reorderCategoriesMutation.mutate,
             addFlashcard: addFlashcardMutation.mutate,
             editFlashcard: editFlashcardMutation.mutate,            
-            deleteFlashcard: deleteFlashcardMutation.mutate,           
+            deleteFlashcard: deleteFlashcardMutation.mutate,    
+            flashcardStatus: flashcardStatus,       
         }}>
             {children}
         </FlashcardsContext.Provider>

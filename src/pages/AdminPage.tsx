@@ -9,6 +9,7 @@ import Button from "../components/Button";
 import {useEffect} from "react";
 import Dropdown from "../components/Dropdown";
 import {FaArrowUp, FaArrowDown} from "react-icons/fa";
+import LoadingModal from "../components/LoadingModal";
 
 //How many flashcards to display at a time
 const ITEMS_PER_PAGE = 5;
@@ -16,7 +17,7 @@ const PAGE_WINDOW = 5;
 
 const AdminPage = () => {
     const { currentUser } = useAuth();
-    const { categories, flashcards, deleteCategory, reorderCategories, deleteFlashcard } = useFlashcards();
+    const { categories, flashcards, deleteCategory, reorderCategories, deleteFlashcard, isLoadingData, categoryStatus, flashcardStatus } = useFlashcards();
 
     const [activeCategoryId, setActiveCategoryId] = useState("");
     const [ currentPage, setCurrentPage] = useState(1);
@@ -25,6 +26,7 @@ const AdminPage = () => {
     const [editingFlashcard, setEditingFlashcard] = useState<Flashcard | null>(null);
 
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const [pending, setPending] = useState(false);
 
     //sync selectedindex when activecategoryid changes
     useEffect(() => {
@@ -44,6 +46,10 @@ const AdminPage = () => {
         }
       }
     }, [selectedIndex, categories]);
+
+    useEffect(() => {
+        setPending(categoryStatus === 'pending' || flashcardStatus === 'pending')
+    }, [categoryStatus, flashcardStatus])
 
     // SHow the login form if no admin is signed in
     if (!currentUser) return <LoginForm />;
@@ -72,7 +78,7 @@ const AdminPage = () => {
     };
 
     const handleReorder = (fromIndex: number, toIndex: number) => {
-      reorderCategories({ fromIndex, toIndex });
+        reorderCategories({ fromIndex, toIndex });
     };
 
     //filter flashcards by active category
@@ -107,6 +113,9 @@ const AdminPage = () => {
     }
     const pageNumbers = getPageNumbers();
 
+    if (isLoadingData){
+        return <>Loading...</>
+    }
 
     return (
         <div className="p-6 max-w-4xl mx-auto text-black dark:text-white">
@@ -306,6 +315,7 @@ const AdminPage = () => {
                 activeCategoryId={activeCategoryId}
                 onClose={() => setEditingFlashcard(null)}
             />
+            <LoadingModal isOpen={pending} />
         </div>
     );
 };
