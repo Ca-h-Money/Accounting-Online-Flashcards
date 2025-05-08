@@ -28,14 +28,6 @@ const AdminPage = () => {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [pending, setPending] = useState(false);
 
-    //sync selectedindex when activecategoryid changes
-    useEffect(() => {
-      const index = categories.findIndex((c) => c.id === activeCategoryId);
-      if(index !== -1 && index !== selectedIndex){
-        setSelectedIndex(index);
-      }
-    }, [activeCategoryId, categories]);
-
     //sync active categoryid when selectedindex changes
     useEffect(() => {
       if(selectedIndex >= 0 && selectedIndex < categories.length){
