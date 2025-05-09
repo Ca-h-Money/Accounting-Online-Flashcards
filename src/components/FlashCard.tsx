@@ -1,7 +1,7 @@
 import { motion} from "motion/react"
 import { Flashcard } from "../context/flashcards/flashcardsContext.ts";
 import Tooltip from "./Tooltip.tsx"
-
+import { useEffect, useState } from "react";
 
 interface FlashCardProps
 {
@@ -15,7 +15,11 @@ interface FlashCardProps
 }
 
 function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowTooltip, isInitialLoad, setIsInitialLoad}: FlashCardProps) {
-    console.log(cardData);
+    const [imgValid, setImgValid] = useState(true);
+
+    useEffect(() => {
+        setImgValid(true);
+    }, [cardData])
 
     //if logic for showing front and back side of the card. Likely using the useState hook to toggle between the two states.
     if(isFlipped) {
@@ -32,17 +36,32 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 initial={{ rotateY: isInitialLoad ? 0 : 180 }}
                 animate={{ rotateY: 0 }}
                 transition={{ duration: 0.5 }}
-                style={{ transformStyle: "preserve-3d" }}>
+                style={{ transformStyle: "preserve-3d" }}
+            >
                 {showTooltip && 
                     <Tooltip 
                         className="absolute bottom-5 sm:bottom-10 right-3 sm:right-10"
                         content="Click to see the answer"
-                    />
-                }
-            <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white 
-                text-center break-words px-2 backface-hidden">
-                {cardData.front}</h3>
-            </motion.button>)
+                    />}
+                <div className="flex flex-col items-center justify-center w-full h-full relative backface-hidden">
+                    {/* Image - you can move this div around to test position */}
+                    <div className="flex-1">
+                        {typeof cardData.imgSrc === 'string' && cardData.imgSrc !== "" && imgValid && <img
+                            src={cardData.imgSrc}
+                            alt="Card visual"
+                            className="flex-1 max-w-full max-h-30 object-contain"
+                            onError={() => setImgValid(false)}
+                        />}
+                    </div>
+                    {/* Text content */}
+                    <h3 className="flex-1 flex items-center text-3xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white 
+                        text-center break-words px-2 backface-hidden">
+                        {cardData.front}
+                    </h3>
+                    <div className="flex-1"></div>
+                </div>
+            </motion.button>
+        )
     }
     else if(cardData.back.length > 1){
         return (
@@ -53,11 +72,13 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 initial={{ rotateY: 0 }}
                 animate={{ rotateY: 180 }}
                 transition={{ duration: 0.5 }}
-                style={{ transformStyle: "preserve-3d" }}>
+                style={{ transformStyle: "preserve-3d" }}
+            >
                 {/* Symmetrical T-shaped layout */}
                 <div
-                className="grid grid-cols-2 grid-rows-[20%_80%] w-full h-full relative backface-hidden"
-                style={{ transform: "rotateY(180deg)" }}>
+                    className="grid grid-cols-2 grid-rows-[20%_80%] w-full h-full relative backface-hidden"
+                    style={{ transform: "rotateY(180deg)" }}
+                >
                     {/* Vertical center line */}
                     <div className="absolute inset-y-0 left-1/2 w-px bg-gray-400 dark:bg-gray-500 transform -translate-x-1/2" />
                 
@@ -106,9 +127,10 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 transition={{ duration: 0.5,
                     ease: "easeInOut",
                  }}
-                style={{ transformStyle: "preserve-3d" }}>
-            {/*Back Content*/}
-            <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white backface-hidden" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
+                style={{ transformStyle: "preserve-3d" }}
+            >
+                {/*Back Content*/}
+                <h3 className="text-3xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white backface-hidden" style={{transform: "rotateY(180deg)"}}>{cardData.back[0]}</h3>
             </motion.button>)
     }
 }
