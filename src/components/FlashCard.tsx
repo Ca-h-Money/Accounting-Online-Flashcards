@@ -76,41 +76,33 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
             >
                 {/* Symmetrical T-shaped layout */}
                 <div
-                    className="grid grid-cols-2 grid-rows-[20%_80%] w-full h-full relative backface-hidden"
+                    className="w-full h-full"
                     style={{ transform: "rotateY(180deg)" }}
                 >
-                    {/* Vertical center line */}
-                    <div className="absolute inset-y-0 left-1/2 w-px bg-gray-400 dark:bg-gray-500 transform -translate-x-1/2" />
+                    <table className="w-full h-full table-fixed text-center text-gray-900 dark:text-white">
+                        <thead>
+                            <tr className="bg-gray-100 dark:bg-gray-700 text-sm sm:text-2xl">
+                                <th className="border px-2 py-1 ">Account Name</th>
+                                <th className="border px-2 py-1">Debit</th>
+                                <th className="border px-2 py-1">Credit</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td className="border px-2 py-2 text-xs sm:text-2xl font-bold">{cardData.back[0]}</td>
+                                <td className="border px-2 py-2 text-sm sm:text-2xl font-bold">X</td>
+                                <td className="border px-2 py-2"></td>
+                            </tr>
+                            <tr>
+                                <td className="border px-2 py-2 text-xs sm:text-2xl font-bold">{cardData.back[1]}</td>
+                                <td className="border px-2 py-2"></td>
+                                <td className="border px-2 py-2 text-sm sm:text-2xl font-bold">X</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
                 
-                    {/* Left Section */}
-                    <div className="flex flex-col items-center justify-between p-2">
-                        {/*Label*/}
-                        <div className="flex flex-col items-center justify-end h-16 w-full">
-                        <span className="text-lg font-medium text-gray-600 dark:text-gray-300">
-                            Debit
-                        </span>
-                        <div className="w-full h-px bg-gray-400 dark:bg-gray-500 mt-1" /> {/* Horizontal line */}
-                        </div>
-                        {/* Content */}
-                        <span className="text-2xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white text-center break-words px-2">
-                        {cardData.back[0]}
-                        </span>
-                    </div>
-                
-                    {/* Right Section */}
-                    <div className="flex flex-col items-center justify-between p-2">
-                        {/*Label*/}
-                        <div className="flex flex-col items-center justify-end h-16 w-full">
-                        <span className="text-lg font-medium text-gray-600 dark:text-gray-300">
-                            Credit
-                        </span>
-                        <div className="w-full h-px bg-gray-400 dark:bg-gray-500 mt-1" /> {/* Horizontal line */}
-                        </div>
-                        {/* Content */}
-                        <span className="text-2xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white text-center break-words px-2">
-                        {cardData.back[1]}
-                        </span>
-                    </div>
                 </div>
             </motion.button>) 
     }
