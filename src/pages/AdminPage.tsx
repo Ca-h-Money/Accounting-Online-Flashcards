@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/auth/useAuthContext";
 import { useFlashcards } from "../context/flashcards/useFlashcards";
 import LoginForm from "../components/LoginForm";
@@ -6,9 +6,8 @@ import EditCategoryModal from "../components/EditCategoryModal";
 import EditFlashcardModal from "../components/EditFlashcardModal";
 import { Category, Flashcard } from "../context/flashcards/flashcardsContext";
 import Button from "../components/Button";
-import {useEffect} from "react";
 import Dropdown from "../components/Dropdown";
-import {FaArrowUp, FaArrowDown} from "react-icons/fa";
+import { FaAngleUp, FaAngleDown } from "react-icons/fa";
 import LoadingModal from "../components/LoadingModal";
 
 //How many flashcards to display at a time
@@ -131,57 +130,52 @@ const AdminPage = () => {
                         key={category.id}
                         className="flex items-center justify-between gap-4 border border-gray-300 dark:border-gray-700 rounded p-4"
                       >
+                        {/* Reorder Buttons */}
+                        <div className="flex flex-col gap-1 justify-end">
+                          <Button
+                              aria-label={`Move ${category.name} Up`}
+                              title={`Move ${category.name} Up`}
+                              disabled={index === 0}
+                              onClick={() => handleReorder(index, index - 1)}
+                              className="!bg-gray-300 dark:!bg-gray-700 disabled:opacity-30"
+                          >
+                              <FaAngleUp />
+                          </Button>
+                          <Button
+                              aria-label={`Move ${category.name} Down`}
+                              title={`Move ${category.name} Down`}
+                              disabled={index === categories.length - 1}
+                              onClick={() => handleReorder(index, index + 1)}
+                              className="!bg-gray-300 dark:!bg-gray-700 disabled:opacity-30"
+                          >
+                              <FaAngleDown />
+                          </Button>
+                        </div>
                         {/* Title/Description */}
                         <div className="flex-1">
-                            <h3 className="text-start font-semibold">{category.name}</h3>
-                            <p className="text-start text-sm text-gray-600 dark:text-gray-400">{category.description}</p>
+                            <h3 className="text-start text-lg font-semibold">{category.name}</h3>
+                            <p className="text-start text-gray-800 dark:text-gray-400">{category.description}</p>
                         </div>
                     
-                        {/* Action Buttons: Edit/Delete + Up/Down */}
-                        <div className="flex flex-col sm:flex-row gap-2 shrink-0">
-
-                          {/* Reorder Buttons */}
-                          <div className="flex flex-row gap-2 justify-end">
-                                <Button
-                                    aria-label={`Move ${category.name} Up`}
-                                    title="Move Up"
-                                    disabled={index === 0}
-                                    onClick={() => handleReorder(index, index - 1)}
-                                    className="!bg-blue-500 disabled:opacity-50 px-2"
-                                >
-                                    <FaArrowUp />
-                                </Button>
-                                <Button
-                                    aria-label={`Move ${category.name} Down`}
-                                    title="Move Down"
-                                    disabled={index === categories.length - 1}
-                                    onClick={() => handleReorder(index, index + 1)}
-                                    className="!bg-blue-500 disabled:opacity-50 px-2"
-                                >
-                                    <FaArrowDown />
-                                </Button>
-                            </div>
-
-                            {/* Edit/Delete */}
-                            <div className="flex gap-2 sm:flex-row flex-col">
-                                <Button
-                                    aria-label={`Edit Category Button For ${category.name}`}
-                                    title={`Edit Category For ${category.name}`}
-                                    className="!bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700 px-3"
-                                    onClick={() => setEditingCategory(category)}
-                                >
-                                    Edit
-                                </Button>
-                                <Button
-                                    aria-label={`Delete Category Button For ${category.name}`}
-                                    title={`Delete Category For ${category.name}`}
-                                    className="!bg-red-500 dark:!bg-red-600 hover:!bg-red-600 dark:hover:!bg-red-700 px-3"
-                                    onClick={() => handleDeleteCategory(category)}
-                                >
-                                    Delete
-                                </Button>
-                            </div>                     
-                        </div>
+                        {/* Edit/Delete */}
+                        <div className="flex gap-2 sm:flex-row flex-col">
+                          <Button
+                              aria-label={`Edit Category Button For ${category.name}`}
+                              title={`Edit Category For ${category.name}`}
+                              className="!bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700 px-3"
+                              onClick={() => setEditingCategory(category)}
+                          >
+                              Edit
+                          </Button>
+                          <Button
+                              aria-label={`Delete Category Button For ${category.name}`}
+                              title={`Delete Category For ${category.name}`}
+                              className="!bg-red-500 dark:!bg-red-600 hover:!bg-red-600 dark:hover:!bg-red-700 px-3"
+                              onClick={() => handleDeleteCategory(category)}
+                          >
+                              Delete
+                          </Button>
+                          </div>       
                       </li>
                     ))}
                 </ul>
