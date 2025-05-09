@@ -9,13 +9,14 @@ import Button from "../components/Button";
 import Dropdown from "../components/Dropdown";
 import { FaAngleUp, FaAngleDown } from "react-icons/fa";
 import LoadingModal from "../components/LoadingModal";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 //How many flashcards to display at a time
 const ITEMS_PER_PAGE = 5;
 const PAGE_WINDOW = 5;
 
 const AdminPage = () => {
-    const { currentUser } = useAuth();
+    const { currentUser, isAuthorizing } = useAuth();
     const { categories, flashcards, deleteCategory, reorderCategories, deleteFlashcard, isLoadingData, categoryStatus, flashcardStatus } = useFlashcards();
 
     const [activeCategoryId, setActiveCategoryId] = useState("");
@@ -42,8 +43,18 @@ const AdminPage = () => {
         setPending(categoryStatus === 'pending' || flashcardStatus === 'pending')
     }, [categoryStatus, flashcardStatus])
 
-    // SHow the login form if no admin is signed in
+    // Show signing in text if user is being authorized
+    if (isAuthorizing) {
+      return <div className="fixed inset-0 flex items-center justify-center text-black dark:text-white">Signing In...</div>; 
+    }
+
+    // Show the login form if no admin is signed in
     if (!currentUser) return <LoginForm />;
+
+    // Show loading spinner while data is being loaded
+    if (isLoadingData){
+      return <div className="mt-20"><LoadingSpinner /></div>
+    }
 
     // Check if a category is being used in any flashcard
     const isCategoryInUse = (categoryId: string) => {
@@ -103,10 +114,6 @@ const AdminPage = () => {
       return pages;
     }
     const pageNumbers = getPageNumbers();
-
-    if (isLoadingData){
-        return <>Loading...</>
-    }
 
     return (
         <div className="p-6 max-w-4xl mx-auto text-black dark:text-white">
