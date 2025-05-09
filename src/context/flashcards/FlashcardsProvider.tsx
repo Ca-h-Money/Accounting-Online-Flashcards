@@ -136,7 +136,14 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
     const deleteCategoryMutation = useMutation({
         mutationFn: async (id: string) => {
             const categoryRef = doc(db, "categories", id);
+            const flashcardsRef = doc(db, "flashcards", id);
+            
+            // Delete the category document
             await deleteDoc(categoryRef);
+
+            // Delete the corresponding flashcards document
+            await deleteDoc(flashcardsRef);
+
             await updateLastModified();
         },
         onSuccess: () => {

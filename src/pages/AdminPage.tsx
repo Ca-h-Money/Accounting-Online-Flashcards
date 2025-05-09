@@ -54,7 +54,7 @@ const AdminPage = () => {
     // Only allow category deletion if it's not being used by a flashcard
     const handleDeleteCategory = (category: Category) => {
         if (isCategoryInUse(category.id)) {
-            alert("This category is currently in use and cannot be deleted.");
+            alert("This category contains flashcards and cannot be deleted.");
             return;
         }
 
