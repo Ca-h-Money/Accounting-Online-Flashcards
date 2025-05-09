@@ -189,7 +189,7 @@ export default function EditFlashcardModal({
                         <hr className="border-gray-500 dark:border-gray-700"/>
                         <h3 className="text-md font-semibold my-2">Image</h3>
                         <div className="flex justify-center">
-                            {imgSrc !== "" && imgValid ? (
+                            {imgSrc === "" ? <div className="text-sm text-gray-500 italic">Enter image URL to see preview</div> : imgValid ? (
                                 <img
                                     src={imgSrc}
                                     alt="Card visual"
@@ -202,7 +202,7 @@ export default function EditFlashcardModal({
                         </div>
                         
                         <div className="mt-3">
-                            <label className="block text-sm font-medium mb-1 text-left">Image URL</label>
+                            <label className="block text-sm font-medium mb-1 text-left">Image URL (optional)</label>
                             <input
                                 type="text"
                                 className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-800"
