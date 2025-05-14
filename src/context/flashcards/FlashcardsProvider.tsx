@@ -286,12 +286,12 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
             addCategory: addCategoryMutation.mutate,
             editCategory: editCategoryMutation.mutate,
             deleteCategory: deleteCategoryMutation.mutate,
-            categoryStatus: categoryStatus,
+            categoryStatus,
             reorderCategories: reorderCategoriesMutation.mutate,
             addFlashcard: addFlashcardMutation.mutate,
             editFlashcard: editFlashcardMutation.mutate,            
             deleteFlashcard: deleteFlashcardMutation.mutate,    
-            flashcardStatus: flashcardStatus,       
+            flashcardStatus,       
         }}>
             {children}
         </FlashcardsContext.Provider>
