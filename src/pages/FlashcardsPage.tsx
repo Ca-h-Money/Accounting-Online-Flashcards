@@ -3,8 +3,8 @@ import FlashcardContainer from "../components/FlashcardContainer";
 import Dropdown from "../components/Dropdown";
 import { useFlashcards } from "../context/flashcards/useFlashcards";
 import { Category, Flashcard } from "../context/flashcards/flashcardsContext";
-
 import Instructions from "../components/Instructions";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 /**
  * FlashcardsPage Component
@@ -36,7 +36,7 @@ const FlashcardsPage = () => {
     }, [selectedFlashcardSetIndex, categories, flashcards, isLoadingData, getFlashcardsByCategory]);
     
     if (isLoadingData || !currentFlashcardSet || !currentCategory){
-        return <div>Loading...</div>
+        return <div className="mt-20"><LoadingSpinner /></div>
     }
 
     return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/auth/useAuthContext";
 import { useFlashcards } from "../context/flashcards/useFlashcards";
 import LoginForm from "../components/LoginForm";
@@ -6,16 +6,18 @@ import EditCategoryModal from "../components/EditCategoryModal";
 import EditFlashcardModal from "../components/EditFlashcardModal";
 import { Category, Flashcard } from "../context/flashcards/flashcardsContext";
 import Button from "../components/Button";
-import {useEffect} from "react";
 import Dropdown from "../components/Dropdown";
+import { FaAngleUp, FaAngleDown } from "react-icons/fa";
+import LoadingModal from "../components/LoadingModal";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 //How many flashcards to display at a time
 const ITEMS_PER_PAGE = 5;
 const PAGE_WINDOW = 5;
 
 const AdminPage = () => {
-    const { currentUser } = useAuth();
-    const { categories, flashcards, deleteCategory, deleteFlashcard } = useFlashcards();
+    const { currentUser, isAuthorizing } = useAuth();
+    const { categories, flashcards, deleteCategory, reorderCategories, deleteFlashcard, isLoadingData, categoryStatus, flashcardStatus } = useFlashcards();
 
     const [activeCategoryId, setActiveCategoryId] = useState("");
     const [ currentPage, setCurrentPage] = useState(1);
@@ -24,14 +26,7 @@ const AdminPage = () => {
     const [editingFlashcard, setEditingFlashcard] = useState<Flashcard | null>(null);
 
     const [selectedIndex, setSelectedIndex] = useState(0);
-
-    //sync selectedindex when activecategoryid changes
-    useEffect(() => {
-      const index = categories.findIndex((c) => c.id === activeCategoryId);
-      if(index !== -1 && index !== selectedIndex){
-        setSelectedIndex(index);
-      }
-    }, [activeCategoryId, categories]);
+    const [pending, setPending] = useState(false);
 
     //sync active categoryid when selectedindex changes
     useEffect(() => {
@@ -44,8 +39,22 @@ const AdminPage = () => {
       }
     }, [selectedIndex, categories]);
 
-    // SHow the login form if no admin is signed in
+    useEffect(() => {
+        setPending(categoryStatus === 'pending' || flashcardStatus === 'pending')
+    }, [categoryStatus, flashcardStatus])
+
+    // Show signing in text if user is being authorized
+    if (isAuthorizing) {
+      return <div className="fixed inset-0 flex items-center justify-center text-black dark:text-white">Signing In...</div>; 
+    }
+
+    // Show the login form if no admin is signed in
     if (!currentUser) return <LoginForm />;
+
+    // Show loading spinner while data is being loaded
+    if (isLoadingData){
+      return <div className="mt-20"><LoadingSpinner /></div>
+    }
 
     // Check if a category is being used in any flashcard
     const isCategoryInUse = (categoryId: string) => {
@@ -55,7 +64,7 @@ const AdminPage = () => {
     // Only allow category deletion if it's not being used by a flashcard
     const handleDeleteCategory = (category: Category) => {
         if (isCategoryInUse(category.id)) {
-            alert("This category is currently in use and cannot be deleted.");
+            alert("This category contains flashcards and cannot be deleted.");
             return;
         }
 
@@ -68,7 +77,12 @@ const AdminPage = () => {
         if (confirm(`Are you sure you want to delete the flashcard ${flashcard.front}?`)) {
             deleteFlashcard(flashcard);
         }
-      };
+    };
+
+    const handleReorder = (fromIndex: number, toIndex: number) => {
+        reorderCategories({ fromIndex, toIndex });
+    };
+
     //filter flashcards by active category
     const filteredFlashcards = flashcards.filter(card => card.categoryId === activeCategoryId);
 
@@ -101,7 +115,6 @@ const AdminPage = () => {
     }
     const pageNumbers = getPageNumbers();
 
-
     return (
         <div className="p-6 max-w-4xl mx-auto text-black dark:text-white">
             <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
@@ -111,7 +124,7 @@ const AdminPage = () => {
                 <Button
                     aria-label={`Add Category Button`}
                     title={`Add New Category`}
-                    onClick={() => setEditingCategory({ id: "", name: "", description: "" })}
+                    onClick={() => setEditingCategory({ id: "", name: "", description: "", order: categories.length })}
                     className="mb-4 px-4 py-2 !bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
                 >
                     + Add Category
@@ -119,35 +132,58 @@ const AdminPage = () => {
        
 
                 <ul className="space-y-3">
-                    {categories.map((category) => (
-                        <li
-                            key={category.id}
-                            className="flex items-center justify-between border border-gray-300 dark:border-gray-700 rounded p-4"
-                        >
-                            <div>
-                                <h3 className="text-start font-semibold">{category.name}</h3>
-                                <p className="text-start text-sm text-gray-600 dark:text-gray-400">{category.description}</p>
-                            </div>
-
-                            <div className="flex gap-2 sm:flex-row flex-col">
-                                <Button
-                                    aria-label={`Edit Category Button For ${category.name}`}
-                                    title={`Edit Category For ${category.name}`}
-                                    className="!bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700"
-                                    onClick={() => setEditingCategory(category)}
-                                >
-                                    Edit
-                                </Button>
-                                <Button
-                                    aria-label={`Delete Category Button For ${category.name}`}
-                                    title={`Delete Category For ${category.name}`}
-                                    className="!bg-red-500 dark:!bg-red-600 hover:!bg-red-600 dark:hover:!bg-red-700"
-                                    onClick={() => handleDeleteCategory(category)}
-                                >
-                                    Delete
-                                </Button>
-                            </div>
-                        </li>
+                    {categories.map((category, index) => (
+                      <li
+                        key={category.id}
+                        className="flex items-center justify-between gap-4 border border-gray-300 dark:border-gray-700 rounded p-4"
+                      >
+                        {/* Reorder Buttons */}
+                        <div className="flex flex-col gap-1 justify-end">
+                          <Button
+                              aria-label={`Move ${category.name} Up`}
+                              title={`Move ${category.name} Up`}
+                              disabled={index === 0}
+                              onClick={() => handleReorder(index, index - 1)}
+                              className="!bg-gray-300 dark:!bg-gray-700 disabled:opacity-30"
+                          >
+                              <FaAngleUp />
+                          </Button>
+                          <Button
+                              aria-label={`Move ${category.name} Down`}
+                              title={`Move ${category.name} Down`}
+                              disabled={index === categories.length - 1}
+                              onClick={() => handleReorder(index, index + 1)}
+                              className="!bg-gray-300 dark:!bg-gray-700 disabled:opacity-30"
+                          >
+                              <FaAngleDown />
+                          </Button>
+                        </div>
+                        {/* Title/Description */}
+                        <div className="flex-1">
+                            <h3 className="text-start text-lg font-semibold">{category.name}</h3>
+                            <p className="text-start text-gray-800 dark:text-gray-400">{category.description}</p>
+                        </div>
+                    
+                        {/* Edit/Delete */}
+                        <div className="flex gap-2 sm:flex-row flex-col">
+                          <Button
+                              aria-label={`Edit Category Button For ${category.name}`}
+                              title={`Edit Category For ${category.name}`}
+                              className="!bg-green-500 dark:!bg-green-600 hover:!bg-green-600 dark:hover:!bg-green-700 px-3"
+                              onClick={() => setEditingCategory(category)}
+                          >
+                              Edit
+                          </Button>
+                          <Button
+                              aria-label={`Delete Category Button For ${category.name}`}
+                              title={`Delete Category For ${category.name}`}
+                              className="!bg-red-500 dark:!bg-red-600 hover:!bg-red-600 dark:hover:!bg-red-700 px-3"
+                              onClick={() => handleDeleteCategory(category)}
+                          >
+                              Delete
+                          </Button>
+                          </div>       
+                      </li>
                     ))}
                 </ul>
             </section>
@@ -272,6 +308,7 @@ const AdminPage = () => {
                 activeCategoryId={activeCategoryId}
                 onClose={() => setEditingFlashcard(null)}
             />
+            <LoadingModal isOpen={pending} />
         </div>
     );
 };

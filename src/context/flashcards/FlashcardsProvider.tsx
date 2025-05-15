@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { collection, getDoc, getDocs, updateDoc, deleteDoc, addDoc, doc, setDoc, serverTimestamp, Timestamp } from "firebase/firestore";
+import { collection, getDoc, getDocs, updateDoc, deleteDoc, addDoc, doc, setDoc, serverTimestamp, Timestamp, query, orderBy } from "firebase/firestore";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { db } from "../../firebase";
 import { Category, Flashcard } from "./flashcardsContext";
@@ -49,17 +49,18 @@ const fetchFlashcardsAndCategories = async (): Promise<{
     if (cached && updatedAt && cached.lastUpdated === updatedAt) {
         console.log("Loaded Data From Local Storage");
         return {
-            categories: cached.categories,
+            categories: cached.categories.sort((a, b) => a.order - b.order),
             flashcards: cached.flashcards,
         };
     }
 
     // Otherwise fetch all categories from Firestore
-    const catSnap = await getDocs(collection(db, "categories"));
+    const catQuery = query(collection(db, "categories"), orderBy("order"));
+    const catSnap = await getDocs(catQuery);
     const categories = catSnap.docs.map((doc) => ({
         id: doc.id,
         ...(doc.data() as Omit<Category, "id">),
-    })).sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    }));
 
     // For each category, fetch associated flashcards
     const flashcardFetches = await Promise.all(
@@ -135,11 +136,40 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
     const deleteCategoryMutation = useMutation({
         mutationFn: async (id: string) => {
             const categoryRef = doc(db, "categories", id);
+            const flashcardsRef = doc(db, "flashcards", id);
+            
+            // Delete the category document
             await deleteDoc(categoryRef);
+
+            // Delete the corresponding flashcards document
+            await deleteDoc(flashcardsRef);
+
             await updateLastModified();
         },
         onSuccess: () => {
             // Invalidate the "flashcards-and-categories" query so it refetches
+            void queryClient.invalidateQueries({ queryKey: ["flashcards-and-categories"] });
+        },
+    });
+
+    const reorderCategoriesMutation = useMutation({
+        mutationFn: async ({ fromIndex, toIndex }: { fromIndex: number; toIndex: number }) => {
+            const categoryA = categories[fromIndex];
+            const categoryB = categories[toIndex];
+    
+            if (!categoryA || !categoryB) return;
+    
+            const refA = doc(db, "categories", categoryA.id);
+            const refB = doc(db, "categories", categoryB.id);
+    
+            await Promise.all([
+                updateDoc(refA, { order: categoryB.order }),
+                updateDoc(refB, { order: categoryA.order }),
+            ]);
+    
+            await updateLastModified();
+        },
+        onSuccess: () => {
             void queryClient.invalidateQueries({ queryKey: ["flashcards-and-categories"] });
         },
     });
@@ -218,6 +248,33 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
         );
     };
 
+    const categoryStatuses = [
+        addCategoryMutation.status,
+        editCategoryMutation.status,
+        deleteCategoryMutation.status,
+        reorderCategoriesMutation.status,
+    ];
+    
+    let categoryStatus: 'pending' | 'error' | 'idle' = 'idle';
+    if (categoryStatuses.some(status => status === 'pending')) {
+        categoryStatus = 'pending';
+    } else if (categoryStatuses.some(status => status === 'error')) {
+        categoryStatus = 'error';
+    }
+
+    const flashcardStatuses = [
+        addFlashcardMutation.status,
+        editFlashcardMutation.status,
+        deleteFlashcardMutation.status,
+    ];
+
+    let flashcardStatus: 'pending' | 'error' | 'idle' = 'idle';
+    if (flashcardStatuses.some(status => status === 'pending')) {
+        flashcardStatus = 'pending';
+    } else if (flashcardStatuses.some(status => status === 'error')) {
+        flashcardStatus = 'error';
+    }
+
     return (
         <FlashcardsContext.Provider value={{
             categories,
@@ -226,12 +283,15 @@ export const FlashcardsProvider = ({ children }: { children: ReactNode }) => {
             isDataError,
             dataError,
             getFlashcardsByCategory,
-            editCategory: editCategoryMutation.mutate,
-            editFlashcard: editFlashcardMutation.mutate,
-            deleteCategory: deleteCategoryMutation.mutate,
-            deleteFlashcard: deleteFlashcardMutation.mutate,
             addCategory: addCategoryMutation.mutate,
+            editCategory: editCategoryMutation.mutate,
+            deleteCategory: deleteCategoryMutation.mutate,
+            categoryStatus,
+            reorderCategories: reorderCategoriesMutation.mutate,
             addFlashcard: addFlashcardMutation.mutate,
+            editFlashcard: editFlashcardMutation.mutate,            
+            deleteFlashcard: deleteFlashcardMutation.mutate,    
+            flashcardStatus,       
         }}>
             {children}
         </FlashcardsContext.Provider>
