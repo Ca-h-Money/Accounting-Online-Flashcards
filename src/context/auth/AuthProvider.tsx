@@ -24,11 +24,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
         return () => unsubscribe();
     }, []);
-  
-    if (isAuthorizing) {
-      return <div>Signing In...</div>; 
-    }
-  
+    
     return (
         <AuthContext.Provider value={{ currentUser, isAuthorizing }}>
             {children}
