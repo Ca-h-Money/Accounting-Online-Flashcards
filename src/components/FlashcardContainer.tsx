@@ -152,7 +152,8 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
                         setIsInitialLoad={setIsInitialLoad}
                     /> 
                     {/* Navigation buttons for switching flashcards */}
-                    <div className="w-full flex flex-wrap items-center justify-center gap-2 sm:gap-5 mt-4 px-2">
+                    <div className="flex flex-col flex-wrap justify-center gap-4 md:flex-row mt-4">
+                        <div className="flex justify-center">
                         <Button 
                             aria-label="Shuffle Button"
                             title="Click to shuffle flashcards"
@@ -163,7 +164,9 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
                             }}>
                             Shuffle <FaShuffle size={16} aria-hidden={true} />
                         </Button>
-                        
+                        </div>
+
+                        <div className="flex justify-center items-center gap-4">
                         <Button 
                             aria-label="Previous Flashcard Button"
                             title="Click to see previous flashcard"
@@ -185,6 +188,9 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
                             >
                             Next <FaArrowRightLong size={16} aria-hidden={true} />
                         </Button>
+                        </div>
+                        
+                        <div className="flex justify-center">
                         <Button
                             aria-label="Help Button"
                             title="Click to see a hint"
@@ -193,6 +199,7 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
                             >
                             Hint <FaCircleQuestion size={16} aria-hidden={true} />
                         </Button>
+                        </div>
                         {showModal && (
                         <HintModal hintLetter={hintLetter} onClose={() => setShowModal(false)} />
                         )}
