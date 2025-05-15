@@ -81,10 +81,10 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                 >
                     <table className="w-full h-8/10 table-fixed mt-9 text-gray-900 dark:text-white">
                         <thead>
-                            <tr className="bg-gray-100 dark:bg-gray-700 text-sm sm:text-2xl">
-                                <th className="border px-2 py-1 w-7/10">Account Name</th>
-                                <th className="border px-2 py-1">Debit</th>
-                                <th className="border px-2 py-1">Credit</th>
+                            <tr className="bg-gray-100 dark:bg-gray-700 text-xs sm:text-2xl">
+                                <th className="border px-2 py-1 w-3/5">Account Name</th>
+                                <th className="border px-2 py-1 w-1/5">Debit</th>
+                                <th className="border px-2 py-1 w-1/5">Credit</th>
                             </tr>
                         </thead>
 
@@ -95,7 +95,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                                 <td className="border px-2 py-2"></td>
                             </tr>
                             <tr>
-                                <td className="border-t-2 border-dashed px-2 py-2 text-xs sm:text-4xl font-bold pl-7 h-5/10">{cardData.back[1]}</td>
+                                <td className="border-t-2 border-dashed px-2 py-2 text-xs sm:text-4xl font-bold text-left md:pl-15 pl-10 h-5/10">{cardData.back[1]}</td>
                                 <td className="border px-2 py-2"></td>
                                 <td className="border px-2 py-2 text-sm sm:text-2xl font-bold">X</td>
                             </tr>
