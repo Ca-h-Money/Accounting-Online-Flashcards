@@ -95,7 +95,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
                                 <td className="border px-2 py-2"></td>
                             </tr>
                             <tr>
-                                <td className="border-t-2 border-dashed px-2 py-2 text-xs sm:text-4xl font-bold text-left md:pl-15 pl-10 h-5/10">{cardData.back[1]}</td>
+                                <td className="border-t-2 border-dashed px-2 py-2 text-sm sm:text-4xl font-bold text-left md:pl-15 pl-10 h-5/10">{cardData.back[1]}</td>
                                 <td className="border px-2 py-2"></td>
                                 <td className="border px-2 py-2 text-sm sm:text-2xl font-bold">X</td>
                             </tr>
