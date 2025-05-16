@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, HashRouter } from 'react-router-dom';
 import FlashcardsPage from './pages/FlashcardsPage';
 import AdminPage from './pages/AdminPage';
 import Header from './components/Header';
@@ -26,12 +26,14 @@ function App() {
             <AuthProvider>
                 <FlashcardsProvider>
                     <Header />
-                    <Routes>
-                        <Route path="/Accounting-Online-Flashcards" element={<FlashcardsPage />} />
-                        <Route path="/Accounting-Online-Flashcards/admin" element={<AdminPage />} />
-                    </Routes>
+                    <HashRouter>
+                        <Routes>
+                            <Route index element={<FlashcardsPage />} />
+                            <Route path="/admin" element={<AdminPage />} />
+                        </Routes>
+                    </HashRouter>
                 </FlashcardsProvider>
-            </AuthProvider>  
+            </AuthProvider>
         </QueryClientProvider>      
     );
 }
