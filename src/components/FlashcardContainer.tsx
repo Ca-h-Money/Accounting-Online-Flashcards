@@ -104,12 +104,6 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
     const currentFlashcard : Flashcard = currentSet[currentIndex];
 
     //function for the help button
-    //add logic for cardData.back.length > 1
-    /*
-        const leftHint = backData[0]?.charAt(0) ?? "";
-            const rightHint = backData[1]?.charAt(0) ?? "";
-            setHintLetter(`${leftHint} , ${rightHint}`);
-    */
     const handleHelpClick = () => {
         const backData = currentFlashcard.back 
         if (Array.isArray(backData) && backData.length > 1) {
