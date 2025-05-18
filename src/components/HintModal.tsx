@@ -4,7 +4,6 @@ interface HintModalProps {
   hintLetter: string;
   onClose: () => void;
 }
-//<p className="text-2xl text-blue-600 dark:text-blue-300">{hintLetter}</p>
 const HintModal: React.FC<HintModalProps> = ({ hintLetter, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/10 backdrop-blur-sm">
