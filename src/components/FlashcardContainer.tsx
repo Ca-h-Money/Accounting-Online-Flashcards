@@ -115,7 +115,7 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
         const currentFlashcard = currentSet[currentIndex];
         const fullAnswer = String(currentFlashcard.back);
         const shorten = fullAnswer.substring(0, 1);
-        setHintLetter(shorten);
+        setHintLetter(shorten + "...");
         setShowModal(true);
         }
         setShowModal(true)
