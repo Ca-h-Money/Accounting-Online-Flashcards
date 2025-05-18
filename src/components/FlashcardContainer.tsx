@@ -46,7 +46,26 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
         }, 1000);
     
         return () => clearTimeout(timer);
-      }, []);
+    }, []);
+
+    // Keydown listeners for arrow key/spacebar events
+    useEffect(() => {
+        const handleKeyPress = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowLeft') {
+                handlePrev();
+            } else if (e.key === 'ArrowRight') {
+                handleNext()
+            } else if (e.key === ' ') {
+                setIsFlipped(prevState => !prevState);
+                setShowTooltip(false);
+            }
+	    };
+	    document.addEventListener('keydown', handleKeyPress);
+
+        return function () {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, []);
 
     /**
      * Moves to the next flashcard in the set.
