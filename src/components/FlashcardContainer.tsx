@@ -112,11 +112,9 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
             const creditHint = backData[1].charAt(0) ?? "";
             setHintLetter(`Debit: ${debitHint}...\nCredit: ${creditHint}...`);
         }else{
-        const currentFlashcard = currentSet[currentIndex];
-        const fullAnswer = String(currentFlashcard.back);
-        const shorten = fullAnswer.substring(0, 1);
+        const fullAnswer = backData[0];
+        const shorten = fullAnswer.charAt(0) ?? "";
         setHintLetter(shorten + "...");
-        setShowModal(true);
         }
         setShowModal(true)
     };
