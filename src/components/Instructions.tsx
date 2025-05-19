@@ -31,7 +31,7 @@ const Instructions: React.FC = () => {
           <li>Click on the flashcard to see the answer</li>
           <li>Click the “Next Flashcard” button to move onto the next flashcard</li>
           <li>Click the “Hint” button to see the first letter of the answer</li>
-          <li>Keyboard Shortcuts: ←/→ for Previous/Next, H for Hint, S to Shuffle</li>
+          <li>Keyboard Shortcuts: ←/→ for Previous/Next, Space to Flip, H for Hint, S to Shuffle</li>
         </ul>
       )}
     </div>
