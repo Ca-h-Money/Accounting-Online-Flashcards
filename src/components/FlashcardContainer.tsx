@@ -48,25 +48,6 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
         return () => clearTimeout(timer);
     }, []);
 
-    // Keydown listeners for arrow key/spacebar events
-    useEffect(() => {
-        const handleKeyPress = (e: KeyboardEvent) => {
-            if (e.key === 'ArrowLeft') {
-                handlePrev();
-            } else if (e.key === 'ArrowRight') {
-                handleNext()
-            } else if (e.key === ' ') {
-                setIsFlipped(prevState => !prevState);
-                setShowTooltip(false);
-            }
-	    };
-	    document.addEventListener('keydown', handleKeyPress);
-
-        return function () {
-            document.removeEventListener('keydown', handleKeyPress);
-        };
-    }, []);
-
     /**
      * Moves to the next flashcard in the set.
      * Loops back to the first card when reaching the end.
@@ -131,12 +112,56 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
             const creditHint = backData[1].charAt(0) ?? "";
             setHintLetter(`Debit: ${debitHint}...\nCredit: ${creditHint}...`);
         }else{
-        const fullAnswer = backData[0];
-        const shorten = fullAnswer.charAt(0) ?? "";
-        setHintLetter(shorten + "...");
+            const fullAnswer = backData[0];
+            const shorten = fullAnswer.charAt(0) ?? "";
+            setHintLetter(shorten + "...");
         }
         setShowModal(true)
     };
+
+    /**
+     * Keydown listeners for arrow key/spacebar events
+     * Left and Right arrow keys change to next or previous flashcards
+     * Spacebar flips the flashcard
+     * S key shuffles the flashcards
+     * H key shows/hides the hint modal
+     */
+    useEffect(() => {
+
+        const handleKeyPress = (e: KeyboardEvent) => {
+            switch (e.key){
+                case 'ArrowLeft':
+                    handlePrev();
+                    break;
+                case 'ArrowRight':
+                    handleNext()
+                    break;
+                case ' ':
+                    setIsFlipped(prevState => !prevState);
+                    setShowTooltip(false);
+                    break;
+                case 'S':
+                case 's':
+                    handleRandomize();
+                    resetFlashcards();
+                    break;
+                case 'H':
+                case 'h':
+                    if (showModal){
+                        setShowModal(false);
+                    }else{
+                        handleHelpClick();
+                    }                    
+                    break;
+            }
+	    };
+        
+	    document.addEventListener('keydown', handleKeyPress);
+
+        return function () {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [showModal, currentFlashcard]);
 
     return (
         /**
