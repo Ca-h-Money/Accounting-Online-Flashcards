@@ -46,7 +46,7 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
         }, 1000);
     
         return () => clearTimeout(timer);
-      }, []);
+    }, []);
 
     /**
      * Moves to the next flashcard in the set.
@@ -112,12 +112,56 @@ const FlashcardContainer = ({ flashcards, category }: FlashCardContainerProps) =
             const creditHint = backData[1].charAt(0) ?? "";
             setHintLetter(`Debit: ${debitHint}...\nCredit: ${creditHint}...`);
         }else{
-        const fullAnswer = backData[0];
-        const shorten = fullAnswer.charAt(0) ?? "";
-        setHintLetter(shorten + "...");
+            const fullAnswer = backData[0];
+            const shorten = fullAnswer.charAt(0) ?? "";
+            setHintLetter(shorten + "...");
         }
         setShowModal(true)
     };
+
+    /**
+     * Keydown listeners for arrow key/spacebar events
+     * Left and Right arrow keys change to next or previous flashcards
+     * Spacebar flips the flashcard
+     * S key shuffles the flashcards
+     * H key shows/hides the hint modal
+     */
+    useEffect(() => {
+
+        const handleKeyPress = (e: KeyboardEvent) => {
+            switch (e.key){
+                case 'ArrowLeft':
+                    handlePrev();
+                    break;
+                case 'ArrowRight':
+                    handleNext()
+                    break;
+                case ' ':
+                    setIsFlipped(prevState => !prevState);
+                    setShowTooltip(false);
+                    break;
+                case 'S':
+                case 's':
+                    handleRandomize();
+                    resetFlashcards();
+                    break;
+                case 'H':
+                case 'h':
+                    if (showModal){
+                        setShowModal(false);
+                    }else{
+                        handleHelpClick();
+                    }                    
+                    break;
+            }
+	    };
+        
+	    document.addEventListener('keydown', handleKeyPress);
+
+        return function () {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [showModal, currentFlashcard]);
 
     return (
         /**

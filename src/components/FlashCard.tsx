@@ -25,7 +25,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
     if(isFlipped) {
         return (
             <motion.button
-                className="mx-6 h-[280px] md:w-[850px] md:h-[450px] flex p-6 cursor-pointer rounded-lg shadow-sm
+                className="mx-6 w-[90%] h-[280px] md:w-[750px] lg:w-[850px] md:h-[450px] flex p-6 cursor-pointer rounded-lg shadow-sm
                         bg-white dark:bg-[#31A959]  dark:border-gray-700 dark:text-black
                         hover:bg-gray-100 dark:hover:bg-[#00A86B] items-center justify-center"
                 onClick={() => {
@@ -66,7 +66,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
     else if(cardData.back.length > 1){
         return (
             <motion.button
-                className="mx-6 h-[280px] md:w-[850px] md:h-[450px] flex p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100
+                className="mx-6 w-[90%] h-[280px] md:w-[750px] lg:w-[850px] md:h-[450px] flex p-6 cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100
                             dark:bg-gray-800 dark:border-gray-700 neon-border dark:hover:bg-gray-700 items-center justify-center"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}
@@ -109,7 +109,7 @@ function FlashCard({cardData, isFlipped, setIsFlipped, showTooltip, setShowToolt
     else{
         return (
             <motion.button
-                className="mx-6 h-[280px] md:w-[850px] md:h-[450px] flex p-6 cursor-pointer bg-[#eed9c4] border border-gray-200 rounded-lg shadow-sm hover:bg-[#f7e7ce] dark:bg-gray-800
+                className="mx-6 w-[90%] h-[280px] md:w-[750px] lg:w-[850px] md:h-[450px] flex p-6 cursor-pointer bg-[#eed9c4] border border-gray-200 rounded-lg shadow-sm hover:bg-[#f7e7ce] dark:bg-gray-800
                             dark:border-gray-700 neon-border dark:hover:bg-gray-700 items-center justify-center"
                 onClick={() => setIsFlipped(true)}
                 initial={{ rotateY: 0 }}
